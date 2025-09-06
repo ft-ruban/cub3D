@@ -13,5 +13,6 @@ int main(int argc, char *argv[])
         //if fail return error with right msg + free/close
     //running part
     //write(1,"Hello, world\n", 13);
+    write(1, "return Success\n", 15);
     return (0);
 }
