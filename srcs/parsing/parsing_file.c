@@ -35,6 +35,8 @@ static int open_file_give_fd(char *file)
 // map content has to be the last
 // is the infos above? (check excalidraw/notion)
 
+//TODO PENSER A CLOSE LE FD!!!
+
 int open_and_parse_file(char *file)
 {
     int fd;
