@@ -1,7 +1,7 @@
 
 #include  "parsing.h"
 #include  "linux/limits.h"
-#include <stdio.h> //getline TORM
+#include <stdio.h> //printf TORM
 
 static char *get_path(int fd_sd, char *element)
 {
@@ -15,7 +15,8 @@ static char *get_path(int fd_sd, char *element)
     j = 0;
 
     buff = malloc(PATH_MAX); //protect
-    getline(&buff, &len, fd_sd); //IL FAUT TRANSFORMER EN NOTRE GNL
+    element = get_next_line(fd_sd);
+    printf("ici %s \n", element);
     //getnextline de fd_sd
     return(buff);
 }
@@ -28,23 +29,24 @@ static int find_texture_element_path(int fd_sd, char *element)
     while(!element)
     {
         read(fd_sd, buff, 1); //to protect
-        if(buff == '.')
+        if(buff[0] == '.')
         {
             read(fd_sd,buff, 1);//to protect
-            if(buff != '/')
+            if(buff[0] != '/')
             {
                 free(buff);
                 return(RETURN_FAILURE);
             }
             else
-                element = get_path;   
+                element = get_path(fd_sd, element);   
         }
-        else if (buff != ' ')
+        else if (buff[0] != ' ')
         {
             free(buff);
             return(RETURN_FAILURE);
         }
     }
+    return(RETURN_SUCCESS);
 }
 
 static int is_texture_valid(int fd_sd, t_settings *set, char first_letter, char second_letter)
@@ -73,6 +75,7 @@ static int is_texture_valid(int fd_sd, t_settings *set, char first_letter, char 
             return(RETURN_FAILURE);
         find_texture_element_path(fd_sd, set->rp_ea);
     }
+    return(RETURN_SUCCESS);
 } 
 
 static int element_found(int fd_sd, t_settings *set, char first_letter)
@@ -89,6 +92,7 @@ static int element_found(int fd_sd, t_settings *set, char first_letter)
     }
     //do the RGB thing
 
+    return(RETURN_SUCCESS);
 }
 
 static int all_elements_present(t_settings *set)
@@ -104,7 +108,7 @@ int collect_elements(int fd_sd, t_settings *set)
 {
     char *buff;
 
-    while(all_elements_present)
+    while(all_elements_present(set))
     {
         buff = malloc(2); //to protect
         read(fd_sd, buff, 1); //toprotect
@@ -117,6 +121,7 @@ int collect_elements(int fd_sd, t_settings *set)
         {
             element_found(fd_sd, set, buff[0]);
             printf("buff = %s\n", buff);
+            return(RETURN_SUCCESS); //temp
         }
         else
         {

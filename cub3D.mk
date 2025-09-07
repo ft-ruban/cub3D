@@ -19,4 +19,6 @@ override PARSERSRC := parsing \
 					  parsing_element \
 
 override UTILSSRC := ft_strjoin \
-					 ft_strlen
+					 ft_strlen \
+					 get_next_line \
+					 get_next_line_utils
