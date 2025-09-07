@@ -2,6 +2,7 @@
 #include "parsing.h"
 #include <sys/stat.h> //open
 #include <fcntl.h> //open
+#include <stdio.h> //printf
 
 //here we open a given file by checking in
 //the scene description folder (TODO may have to do a DEFINE here)
@@ -27,24 +28,52 @@ static int open_file_give_fd(char *file)
     return(fd);
 }
 
-// is map composed of only 6 possible chars
-// 0 for empty spaces
-// 1 for a wall
-// N,S,E,W for the player start pos + orientation at spawn
-// is map closed/surrounded by wall?
-// map content has to be the last
-// is the infos above? (check excalidraw/notion)
+// typedef struct s_settings
+// {
+//     char *rp_no;
+//     char *rp_so;
+//     char *rp_we;
+//     char *rp_ea;
+//     int floor_r;
+//     int floor_g;
+//     int floor_b;
+//     int cell_r;
+//     int cell_g;
+//     int cell_b;
+// }						t_settings;
+
+
+
+
+//here we collect all the info in the file scene descriptions
+//by reading the 2 first char, if no match found get next line
+//until we successfully get the first informations before getting to the map parsing
+
+static int read_collect_parse_fd(int fd_sd, t_settings *set)
+{
+    if(collect_elements(fd_sd, set))
+    {
+        printf("error during collect_elements\n");
+        return (RETURN_FAILURE);
+    }
+    //free(buff);
+    // printf("buff[0] = %c\n",buff[0]);
+    // printf("buff[1] = %c\n",buff[1]);
+    // //printf("buff[2] = %c\n",buff[2]);
+    set = NULL;
+    return (RETURN_SUCCESS);
+}
 
 //TODO PENSER A CLOSE LE FD!!!
 
-int open_and_parse_file(char *file)
+int open_and_parse_file(char *file, t_settings *set)
 {
     int fd;
 
     fd = open_file_give_fd(file);
     if(fd == -1)
         return(RETURN_FAILURE);
-
-    //-read into it to parse potential error (refer to notion for all possible errors)
+    if(read_collect_parse_fd(fd, set))
+        return(RETURN_FAILURE);
     return(RETURN_SUCCESS);
 }

@@ -18,7 +18,7 @@ static int	is_right_extension(char *file)
 	return (RETURN_SUCCESS);
 }
 
-int	parsing(int argc, char *argv[])
+int	parsing(int argc, char *argv[], t_settings *set)
 {
 	if (argc != 2)
     {
@@ -30,7 +30,7 @@ int	parsing(int argc, char *argv[])
         write(2,"invalid extension\n", 18);
         return (2);
     }
-    if (open_and_parse_file(argv[1]))
+    if (open_and_parse_file(argv[1], set))
     {
         write(2, "problem during read file\n", 25);
         return (3); //TODO may have to do more specific error type here in near future

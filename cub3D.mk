@@ -15,7 +15,8 @@ override MAIN := main
 
 
 override PARSERSRC := parsing \
-					  parsing_file
+					  parsing_file \
+					  parsing_element \
 
 override UTILSSRC := ft_strjoin \
 					 ft_strlen
