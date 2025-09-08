@@ -28,23 +28,6 @@ static int open_file_give_fd(char *file)
     return(fd);
 }
 
-// typedef struct s_settings
-// {
-//     char *rp_no;
-//     char *rp_so;
-//     char *rp_we;
-//     char *rp_ea;
-//     int floor_r;
-//     int floor_g;
-//     int floor_b;
-//     int cell_r;
-//     int cell_g;
-//     int cell_b;
-// }						t_settings;
-
-
-
-
 //here we collect all the info in the file scene descriptions
 //by reading the 2 first char, if no match found get next line
 //until we successfully get the first informations before getting to the map parsing
@@ -56,11 +39,7 @@ static int read_collect_parse_fd(int fd_sd, t_settings *set)
         printf("error during collect_elements\n");
         return (RETURN_FAILURE);
     }
-    //free(buff);
-    // printf("buff[0] = %c\n",buff[0]);
-    // printf("buff[1] = %c\n",buff[1]);
-    // //printf("buff[2] = %c\n",buff[2]);
-    set = NULL;
+    //set = NULL;
     return (RETURN_SUCCESS);
 }
 

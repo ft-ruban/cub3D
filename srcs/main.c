@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
         write(2, "placeholder failed parsing\n", 27);
         return(1);
     }
+    print_struct_set(set);
     //init structures/data
         //if fail return error with right msg + free close
     //init minilibx + I guess the controls? 

@@ -8,9 +8,11 @@
 # include <stdio.h> //GNL
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 1
 # endif
 
+// ft_atoi.c
+int	ft_atoi(const char *nptr);
 
 // ft_strjoin.c
 char	*ft_strjoin(char const *s1, char const *s2);
