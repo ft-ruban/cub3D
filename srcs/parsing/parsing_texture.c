@@ -35,7 +35,7 @@ static int find_texture_element_path(int fd_sd, char **element)
     }
     return(RETURN_SUCCESS);
 }
-
+//if fail here it mean we already got the information (let's assume we DO NOT accept duplicates to not make things more confusing)
 int is_texture_valid(int fd_sd, t_settings *set, char first_letter, char second_letter)
 {
     if(first_letter == 'N')

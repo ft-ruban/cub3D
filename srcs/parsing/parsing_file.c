@@ -39,7 +39,6 @@ static int read_collect_parse_fd(int fd_sd, t_settings *set)
         printf("error during collect_elements\n");
         return (RETURN_FAILURE);
     }
-    //set = NULL;
     return (RETURN_SUCCESS);
 }
 
