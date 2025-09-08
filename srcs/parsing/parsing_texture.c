@@ -2,37 +2,30 @@
 #include "utils.h"
 #include "linux/limits.h"
 
-static char *get_path(int fd_sd, char **element)
-{
-    *element = get_next_line(fd_sd);
-    return(*element);
-}
-
 static int find_texture_element_path(int fd_sd, char **element)
 {
     char *buff;
 
-    buff = malloc(1); //TOPROTECT
-    while(!*element)
+    buff = malloc(1);
+    if(!buff)
+        return(RETURN_FAILURE);
+    if(read(fd_sd, buff, 1) == -1)
     {
-        read(fd_sd, buff, 1); //to protect
-        if(buff[0] == '.')
-        {
-            read(fd_sd,buff, 1);//to protect
-            if(buff[0] != '/')
-            {
-                free(buff);
-                return(RETURN_FAILURE);
-            }
-            else
-                get_path(fd_sd, element);   
-        }
-        else if (buff[0] != ' ')
+        free(buff);
+        return(RETURN_FAILURE);
+    }
+    while(buff[0] == ' ')
+    {
+        if(read(fd_sd, buff, 1) == -1)
         {
             free(buff);
             return(RETURN_FAILURE);
         }
     }
+    free(buff);
+    *element = get_next_line(fd_sd);
+    if(!*element)
+        return(RETURN_FAILURE);
     return(RETURN_SUCCESS);
 }
 //if fail here it mean we already got the information (let's assume we DO NOT accept duplicates to not make things more confusing)
