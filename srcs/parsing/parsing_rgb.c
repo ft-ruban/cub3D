@@ -9,7 +9,7 @@ static int	ft_isnum(int c)
 	if (c >= '0' && c <= '9')
 		return (RETURN_SUCCESS);
 	else
-		return (RETURN_FAILURE); //TODO RETURN_ERROR MARCHE PAS JSP PK
+		return (RETURN_FAILURE);
 }
 
 static int blue_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
@@ -100,7 +100,6 @@ static int red_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
 
     stop_loop = false;
     read(fd_sd, buff, 1);
-    buff[1] = '\0';
     while(!stop_loop)
     {
         if(ft_isnum((int)buff[0]) && buff[0] != ',')
@@ -108,7 +107,6 @@ static int red_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
         else if (buff[0] == ',')
         {
             stop_loop = true;
-            printf("floor_rAA = %d\n", set->floor_r);
             green_fill(fd_sd, set, first_letter, buff);
         }
         else
@@ -124,39 +122,34 @@ static int red_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
                 set->cell_r = set->cell_r + ft_atoi(&buff[0]);
             }
             read(fd_sd, buff, 1);
-            buff[1] = '\0';
         }
     }
     return(RETURN_SUCCESS);
 }
 //this is not the releasable name!!!
-int rgb_thing(int fd_sd, t_settings *set, char first_letter, char second_letter)
+int rgb_thing(int fd_sd, t_settings *set, char first_letter)
 {
-    char *buff;
     bool exit_loop;
 
-    second_letter = 'b'; //TORM COMPILATOR
     exit_loop = false;
-    buff = malloc(2);//protect
     while(!exit_loop)
     {
-        read(fd_sd, buff, 1); //protect
-        buff[1] = '\0';
-        if(ft_isnum((int)buff[0]) == RETURN_SUCCESS)
+        if(read(fd_sd, set->buff, 1))
+        {
+            set->error_type = PARSING_READ_FAILURE;
+            return(RETURN_FAILURE);
+        }
+        if(ft_isnum((int)set->buff[0]) == RETURN_SUCCESS)
         {
             if(first_letter == 'F')
-                set->floor_r = ft_atoi(&buff[0]);
+                set->floor_r = ft_atoi(&set->buff[0]);
             else
-                set->cell_r = ft_atoi(&buff[0]);
-            printf("FLOOR R = %d\n", set->floor_r);
-            printf("cell R = %d\n", set->cell_r);
-            red_fill(fd_sd, set, first_letter, buff);//c un num donc faut poursuivre jusqua trouver un ,
+                set->cell_r = ft_atoi(&set->buff[0]);
+            red_fill(fd_sd, set, first_letter, set->buff);//c un num donc faut poursuivre jusqua trouver un ,
             exit_loop = true;
         }
-        else if(buff[0] != ' ')
+        else if(set->buff[0] != ' ')
             return(RETURN_FAILURE);
     }
-    //printf("TEST?????\n");
-    free(buff);
     return(RETURN_SUCCESS);
 }

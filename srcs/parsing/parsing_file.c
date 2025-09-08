@@ -38,12 +38,13 @@ int open_file_collect_elements(char *file, t_settings *set)
         set->error_type = PARSING_CANT_OPEN_FILE;
         return(RETURN_FAILURE);
     }
-    set->buff = malloc(1);
+    set->buff = malloc(2);
     if(!set->buff)
     {
         set->error_type = MALLOC_ERROR_BUFFER;
         return(RETURN_FAILURE);
     }
+    set->buff[1] = '\0';
     if(collect_elements(fd, set))
     {
         //free(set->buff);
