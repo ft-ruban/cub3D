@@ -15,15 +15,9 @@ static int open_file_give_fd(char *file)
     int   fd;
 
     path = ft_strjoin("scene_descriptions/", file);
+    if(!path)
+        return(-1);
     fd = open(path, O_RDONLY);
-    if(fd == -1)
-    {
-        write(2,"Error while opening file be sure the file exist\n", 49);
-        {
-            free(path);
-            return(-1);
-        }
-    }
     free(path);
     return(fd);
 }
@@ -32,26 +26,30 @@ static int open_file_give_fd(char *file)
 //by reading the 2 first char, if no match found get next line
 //until we successfully get the first informations before getting to the map parsing
 
-static int read_collect_parse_fd(int fd_sd, t_settings *set)
-{
-    if(collect_elements(fd_sd, set))
-    {
-        printf("error during collect_elements\n");
-        return (RETURN_FAILURE);
-    }
-    return (RETURN_SUCCESS);
-}
-
 //TODO PENSER A CLOSE LE FD!!!
 
-int open_and_parse_file(char *file, t_settings *set)
+int open_file_collect_elements(char *file, t_settings *set)
 {
     int fd;
 
     fd = open_file_give_fd(file);
-    if(fd == -1)
+    if(fd == OPEN_FAILED)
+    {
+        set->error_type = PARSING_CANT_OPEN_FILE;
         return(RETURN_FAILURE);
-    if(read_collect_parse_fd(fd, set))
+    }
+    set->buff = malloc(1);
+    if(!set->buff)
+    {
+        set->error_type = MALLOC_ERROR_BUFFER;
         return(RETURN_FAILURE);
+    }
+    if(collect_elements(fd, set))
+    {
+        //free(set->buff);
+        printf("error during collect_elements\n"); //TORM AT SOME POINT?
+        return(RETURN_FAILURE);
+    }
+        
     return(RETURN_SUCCESS);
 }

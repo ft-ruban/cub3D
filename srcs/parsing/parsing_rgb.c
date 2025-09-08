@@ -100,6 +100,7 @@ static int red_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
 
     stop_loop = false;
     read(fd_sd, buff, 1);
+    buff[1] = '\0';
     while(!stop_loop)
     {
         if(ft_isnum((int)buff[0]) && buff[0] != ',')
@@ -123,6 +124,7 @@ static int red_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
                 set->cell_r = set->cell_r + ft_atoi(&buff[0]);
             }
             read(fd_sd, buff, 1);
+            buff[1] = '\0';
         }
     }
     return(RETURN_SUCCESS);
@@ -135,10 +137,11 @@ int rgb_thing(int fd_sd, t_settings *set, char first_letter, char second_letter)
 
     second_letter = 'b'; //TORM COMPILATOR
     exit_loop = false;
-    buff = malloc(1);//protect
+    buff = malloc(2);//protect
     while(!exit_loop)
     {
         read(fd_sd, buff, 1); //protect
+        buff[1] = '\0';
         if(ft_isnum((int)buff[0]) == RETURN_SUCCESS)
         {
             if(first_letter == 'F')
@@ -154,5 +157,6 @@ int rgb_thing(int fd_sd, t_settings *set, char first_letter, char second_letter)
             return(RETURN_FAILURE);
     }
     //printf("TEST?????\n");
+    free(buff);
     return(RETURN_SUCCESS);
 }

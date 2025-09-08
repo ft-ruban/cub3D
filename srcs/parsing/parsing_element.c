@@ -8,7 +8,11 @@
 
 static int element_found(int fd_sd, t_settings *set, char first_letter, char *buff)
 {
-    read(fd_sd, buff, 1); //toprotect if fail probably bcs EOF reached before getting all the elements
+    if(read(fd_sd, buff, 1) == -1)
+    {
+        set->error_type = PARSING_READ_FAILURE;
+        return(RETURN_FAILURE);
+    }
     if(first_letter == 'N' || first_letter == 'S' || 
         first_letter == 'W' || first_letter == 'E')
     {
@@ -24,7 +28,7 @@ static int element_found(int fd_sd, t_settings *set, char first_letter, char *bu
 //that function's goal is to check if all our settings are assigned.
 //to exit the loop at collect_elements. the loop is supposed to continue
 //until everything got filled
-static int all_elements_filled(t_settings *set)
+static int are_all_elements_filled(t_settings *set)
 {
     if(!set->rp_no || !set->rp_so || !set->rp_we || !set->rp_ea || set->floor_r == NONE_ASSIGNED || set->floor_g == NONE_ASSIGNED ||
         set->floor_b == NONE_ASSIGNED || set->cell_r == NONE_ASSIGNED || set->cell_g == NONE_ASSIGNED || set->cell_b == NONE_ASSIGNED)
@@ -38,26 +42,23 @@ static int all_elements_filled(t_settings *set)
 
 int collect_elements(int fd_sd, t_settings *set)
 {
-    char *buff;
-
-    buff = malloc(1); //to protect
-    if(!buff)
-        return(RETURN_FAILURE); //TODO ERRORHANDLER
-    while(all_elements_filled(set))
+    while(are_all_elements_filled(set))
     {
-        if(read(fd_sd, buff, 1) == -1) //toprotect
+        if(read(fd_sd, set->buff, 1) == -1) //toprotect
         {
-            free(buff);
+            set->error_type = PARSING_READ_FAILURE;
             return(RETURN_FAILURE); //TODO ERRORHANDLER + FREE here if fail probably bcs EOF reached before getting all the elements
         }
-        if (buff[0] == 'N' || buff[0] == 'S' || buff[0] == 'W' || buff[0] == 'E' || buff[0] == 'F' || buff[0] == 'C')
+        if (set->buff[0] == 'N' || set->buff[0] == 'S' || set->buff[0] == 'W' || set->buff[0] == 'E' || set->buff[0] == 'F' || set->buff[0] == 'C')
         {
-            element_found(fd_sd, set, buff[0], buff); //protect?
+            if(element_found(fd_sd, set, set->buff[0], set->buff))
+            {
+                return(RETURN_FAILURE);
+            }
         }
-        else if(buff[0] != '\n')
+        else if(set->buff[0] != '\n')
         {
-            printf("ERROR INVALID FILE CONTENT ((DETAIL W.I.P))\n"); //something probably went wrong (invalid char or a format we cannot accept)
-            free(buff);
+            set->error_type = PARSING_ELEMENT_INVALID_CONTENT;
             return(RETURN_FAILURE);
         }
     }
