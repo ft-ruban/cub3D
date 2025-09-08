@@ -34,6 +34,7 @@ static void free_all(t_settings *set)
 }
 
 //TODO at the end of the project we still need to check if the info are still valid!
+//TODO Maballet had a good idea (define the msg)
 static int error_msg_handler(int error_type, t_settings *set)
 {
     if(error_type == MALLOC_ERROR_SET)
@@ -74,8 +75,6 @@ int main(int argc, char *argv[])
         return(error_msg_handler(set->error_type, set));
     print_struct_set(set); //DEBUG function to see content of struct set
 
-    
-    
     //-------------------------------------------------------
     //--------------PSEUDOCODE-------------------------------
     //-------------------------------------------------------
