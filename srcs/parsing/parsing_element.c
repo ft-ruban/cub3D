@@ -3,6 +3,7 @@
 #include  "linux/limits.h"
 #include <stdio.h> //printf TORM
 #include <stdbool.h> //bool duh
+#include <errno.h>
 
 static int element_found(int fd_sd, t_settings *set, char first_letter, char *buff)
 {
@@ -19,7 +20,7 @@ static int element_found(int fd_sd, t_settings *set, char first_letter, char *bu
     }
     else
     {
-        rgb_thing(fd_sd, set, first_letter, buff[0]);
+        rgb_thing(fd_sd, set, first_letter);
     }
     return(RETURN_SUCCESS);
 }
