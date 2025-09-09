@@ -14,7 +14,7 @@ int collect_elements(int fd_sd, t_settings *set);
 int open_file_collect_elements(char *file, t_settings *set);
 
 //parsing_rgb.c
-int rgb_thing(int fd_sd, t_settings *set, char first_letter, char second_letter);
+int rgb_thing(int fd_sd, t_settings *set, char first_letter);
 
 //parsing_texture.c
 int is_texture_valid(int fd_sd, t_settings *set, char first_letter, char second_letter);

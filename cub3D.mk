@@ -23,6 +23,7 @@ override PARSERSRC := parsing \
 					  parsing_element \
 
 override UTILSSRC := ft_atoi \
+					 ft_isnum \
 					 ft_strjoin \
 					 ft_strlen \
 					 get_next_line \

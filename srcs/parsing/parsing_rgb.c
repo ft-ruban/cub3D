@@ -4,14 +4,6 @@
 #include <stdio.h> //printf
 #include <stdbool.h> //bool duh
 
-static int	ft_isnum(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (RETURN_SUCCESS);
-	else
-		return (RETURN_FAILURE);
-}
-
 static int blue_fill(int fd_sd, t_settings *set, char first_letter, char *buff)
 {
     bool  stop_loop;
@@ -134,17 +126,25 @@ int rgb_thing(int fd_sd, t_settings *set, char first_letter)
     exit_loop = false;
     while(!exit_loop)
     {
-        if(read(fd_sd, set->buff, 1))
+        if(read(fd_sd, set->buff, 1) == -1)
         {
             set->error_type = PARSING_READ_FAILURE;
             return(RETURN_FAILURE);
         }
+
         if(ft_isnum((int)set->buff[0]) == RETURN_SUCCESS)
         {
             if(first_letter == 'F')
+            {
                 set->floor_r = ft_atoi(&set->buff[0]);
+            }
+                
             else
+            {
                 set->cell_r = ft_atoi(&set->buff[0]);
+                //red_fill(fd_sd, set, )
+            }
+                
             red_fill(fd_sd, set, first_letter, set->buff);//c un num donc faut poursuivre jusqua trouver un ,
             exit_loop = true;
         }
