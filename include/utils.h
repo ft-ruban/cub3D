@@ -12,6 +12,9 @@
 # define BUFFER_SIZE 1
 # endif
 
+//error.c
+int error_handler(t_settings *set, int error_type);
+
 // ft_atoi.c
 int	ft_atoi(const char *nptr);
 

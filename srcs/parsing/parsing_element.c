@@ -1,4 +1,3 @@
-
 #include  "parsing.h"
 #include  "linux/limits.h"
 #include <stdio.h> //printf TORM
@@ -19,9 +18,15 @@ static int element_found(int fd_sd, t_settings *set, char first_letter, char *bu
         if(is_texture_valid(fd_sd, set, first_letter, buff[0]))
             return(RETURN_FAILURE);
     }
-    else
+    else if(first_letter == 'F' || first_letter == 'C')
     {
-        rgb_thing(fd_sd, set, first_letter);
+        if((first_letter == 'F' && set->floor_r == -1) || (first_letter == 'C' && set->cell_r == -1))
+            rgb_thing(fd_sd, set, first_letter, false);
+        else
+        {
+            //printf("TEST\n");
+            return(RETURN_FAILURE);
+        }
     }
     return(RETURN_SUCCESS);
 }
@@ -53,6 +58,7 @@ int collect_elements(int fd_sd, t_settings *set)
         {
             if(element_found(fd_sd, set, set->buff[0], set->buff))
             {
+                set->error_type = PARSING_ELEMENT_INVALID_CONTENT;
                 return(RETURN_FAILURE);
             }
         }

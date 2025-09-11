@@ -29,6 +29,7 @@ int	parsing(int argc, char *argv[], t_settings *set)
     }
     if (open_file_collect_elements(argv[1], set))
     {
+        print_struct_set(set);
         write(2, "problem during read file\n", 25); //torm at some point
         return (RETURN_FAILURE); //TODO may have to do more specific error type here in near future
     }

@@ -22,7 +22,8 @@ override PARSERSRC := parsing \
 					  parsing_texture \
 					  parsing_element \
 
-override UTILSSRC := ft_atoi \
+override UTILSSRC := error \
+					 ft_atoi \
 					 ft_isnum \
 					 ft_strjoin \
 					 ft_strlen \
