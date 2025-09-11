@@ -12,7 +12,9 @@
 
 typedef enum e_error_status
 {
+    ALL_OK ,
 	MALLOC_ERROR_SET = 1 ,
+    ERR ,
     PARSING_NBR_ARGC ,
     PARSING_FILE_EXTENSION ,
     PARSING_CANT_OPEN_FILE ,
@@ -24,17 +26,18 @@ typedef enum e_error_status
 
 typedef struct s_settings
 {
-    char *buff;
-    char *rp_no;
-    char *rp_so;
-    char *rp_we;
-    char *rp_ea;
-    int floor_r;
-    int floor_g;
-    int floor_b;
-    int cell_r;
-    int cell_g;
-    int cell_b;
-    size_t error_type;
+    char    **map;
+    char    *buff;
+    char    *rp_no;
+    char    *rp_so;
+    char    *rp_we;
+    char    *rp_ea;
+    int     floor_r;
+    int     floor_g;
+    int     floor_b;
+    int     cell_r;
+    int     cell_g;
+    int     cell_b;
+    size_t  error_type;
 }						t_settings;
 #endif

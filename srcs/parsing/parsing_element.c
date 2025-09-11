@@ -2,8 +2,7 @@
 #include  "linux/limits.h"
 #include <stdio.h> //printf TORM
 #include <stdbool.h> //bool duh
-
-
+#include <errno.h>
 
 static int element_found(int fd_sd, t_settings *set, char first_letter, char *buff)
 {
@@ -68,5 +67,7 @@ int collect_elements(int fd_sd, t_settings *set)
             return(RETURN_FAILURE);
         }
     }
+    if (collect_check_map(set, fd_sd) != ALL_OK)
+        return (ERR);
     return(RETURN_SUCCESS);
 }

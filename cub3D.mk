@@ -21,6 +21,7 @@ override PARSERSRC := parsing \
 					  parsing_rgb \
 					  parsing_texture \
 					  parsing_element \
+					  parsing_map \
 
 override UTILSSRC := error \
 					 ft_atoi \

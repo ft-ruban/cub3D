@@ -51,6 +51,6 @@ int open_file_collect_elements(char *file, t_settings *set)
         printf("error during collect_elements\n"); //TORM AT SOME POINT?
         return(RETURN_FAILURE);
     }
-        
+    
     return(RETURN_SUCCESS);
 }
