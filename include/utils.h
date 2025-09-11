@@ -6,13 +6,20 @@
 # include <stdlib.h> //GNL (TOCHECKBCS OLD)
 # include <unistd.h> //GNL (TOCHECKBCS OLD)
 # include <stdio.h> //GNL
+# include "cub3D.h"
 
 # ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1
 # endif
 
+//error.c
+int error_handler(t_settings *set, int error_type);
+
 // ft_atoi.c
 int	ft_atoi(const char *nptr);
+
+// ft_isnum.c
+int	ft_isnum(int c);
 
 // ft_strjoin.c
 char	*ft_strjoin(char const *s1, char const *s2);

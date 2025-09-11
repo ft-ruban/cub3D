@@ -23,7 +23,9 @@ override PARSERSRC := parsing \
 					  parsing_element \
 					  parsing_map \
 
-override UTILSSRC := ft_atoi \
+override UTILSSRC := error \
+					 ft_atoi \
+					 ft_isnum \
 					 ft_strjoin \
 					 ft_strlen \
 					 get_next_line \
