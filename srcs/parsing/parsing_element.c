@@ -67,6 +67,7 @@ int collect_elements(int fd_sd, t_settings *set)
             return(RETURN_FAILURE);
         }
     }
+    // print_struct_set(set);
     if (collect_check_map(set, fd_sd) != ALL_OK)
         return (ERR);
     return(RETURN_SUCCESS);

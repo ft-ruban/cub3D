@@ -98,16 +98,21 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
+// TODO ! remettre le read à avant la lecure de la map,
+// actuellement on est a la fin de la map donc j'essaye
+// de copier un '\0' :/
 int get_the_map(char **map, int height, int fd)
 {
     char    *line;
     int     i;
 
     line = get_next_line(fd);
+    printf("%d\n", height);
     i = 0;
-	while (i < height && (get_next_line(fd)) != NULL)
+	while (i < height)
 	{
-		map[i] = ft_strdup(line);
+        printf("%s\n", line);
+        map[i] = ft_strdup(line);
 		free (line);
 		if (!map[i])
 		{
@@ -115,6 +120,9 @@ int get_the_map(char **map, int height, int fd)
 			close (fd);
 			return (MALLOC_ERROR_SET);
 		}
+        line = get_next_line(fd);
+        if (!line)
+            return (MALLOC_ERROR_SET);
         i++;
 	}
     if (i != height)
@@ -179,7 +187,7 @@ int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
         map_width = 0;
     }
     map_height--; // il s'est incrémenté une fois de trop et je voulais pas le faire commencer à '-1'
-    while(read(fd, set->buff, 1) != -1) // On va jusqu'au bout du fichier
+    while(read(fd, set->buff, 1) != 0) // On va jusqu'au bout du fichier
     {
         if (set->buff[0] != '\n')
             return (RETURN_FAILURE);
@@ -201,8 +209,10 @@ int collect_check_map(t_settings *set, int fd)
         set->error_type = MALLOC_ERROR_SET;
         return (RETURN_FAILURE);
     }
+    // printf("height: %d, width: %d\n", map_height, map_width);
     if (get_the_map(set->map, map_height, fd) != RETURN_SUCCESS)
         return (RETURN_FAILURE);
+    printf("test\n");
     if (element_check(set->map) != RETURN_SUCCESS)
         return (RETURN_FAILURE);
     if (closed_check(set->map) != RETURN_SUCCESS)
