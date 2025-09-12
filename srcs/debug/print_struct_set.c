@@ -5,7 +5,7 @@
 
 void print_struct_set(t_settings *set)
 {
-    printf("rp_no = %s\n",set->rp_no);
+    printf("\n\nrp_no = %s\n",set->rp_no);
     printf("rp_so = %s\n",set->rp_so);
     printf("rp_we = %s\n",set->rp_we);
     printf("rp_ea = %s\n",set->rp_ea);

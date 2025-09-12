@@ -16,7 +16,7 @@ static void init_struct_value(t_settings *set)
     set->floor_r = NONE_ASSIGNED;
     set->floor_g = NONE_ASSIGNED;
     set->floor_b = NONE_ASSIGNED;
-    set->error_type = NONE_ASSIGNED;
+    set->error_type = RETURN_SUCCESS;
 }
 static void free_all(t_settings *set)
 {
@@ -33,31 +33,15 @@ static void free_all(t_settings *set)
     get_next_line(-1);
 }
 
-//TODO at the end of the project we still need to check if the info are still valid!
-static int error_msg_handler(int error_type, t_settings *set)
+static int clean_and_exit(t_settings *set)
 {
-    if(error_type == MALLOC_ERROR_SET)
-        write(2, "Main:33 error during malloc of set\n", 35);
-    if(error_type == PARSING_NBR_ARGC)
-        write(2,"parsing:23 invalid argc value, cub3D require a single and only arg\n", 67);
-    if(error_type == PARSING_FILE_EXTENSION)
-        write(2,"parsing:28 invalid file's extension cub3d only support .cub files as arg\n",73);
-    if(error_type == PARSING_CANT_OPEN_FILE)
-        write(2,"parsing:33 parsing_file:53 Error while opening file be sure the file exist in scene_descriptions folder\n", 104);
-    if(error_type == MALLOC_ERROR_BUFFER)
-        write(2,"parsing_file:41 Malloc error during buff setup\n", 47);
-    if(error_type == PARSING_ELEMENT_INVALID_CONTENT)
-        write(2,"Invalid .cub format, make sure it follow the expected form\n", 59);
-    if(error_type == PARSING_READ_FAILURE)
-        write(2,"a read function failed, it may be because of incorrect format or reaching EOF during element collects\n", 102);
-    if(set)
-    {
-        free_all(set);
-        free(set);
-        set = NULL;
-    }
-        
-    return(error_type);
+    unsigned char return_value;
+
+    return_value = set->error_type;
+    printf("\n\nRETURN CODE : %u\n",return_value);
+    free_all(set);
+    free(set);
+    return(return_value);
 }
 
 //TODO FREE CONTENT STRUCT?
@@ -68,14 +52,12 @@ int main(int argc, char *argv[])
 
     set = malloc(sizeof(t_settings));
     if(!set)
-        return(error_msg_handler(MALLOC_ERROR_SET, NULL));
+        return(error_handler(NULL, MAL_ERR_SET, "main:70 ", MSG_1));
     init_struct_value(set);
     if(parsing(argc, argv, set))
-        return(error_msg_handler(set->error_type, set));
+        return(clean_and_exit(set));
     print_struct_set(set); //DEBUG function to see content of struct set
 
-    
-    
     //-------------------------------------------------------
     //--------------PSEUDOCODE-------------------------------
     //-------------------------------------------------------
@@ -87,8 +69,5 @@ int main(int argc, char *argv[])
     //-------------------------------------------------------
     //--------------PSEUDOCODE-------------------------------
     //-------------------------------------------------------
-    free_all(set);
-    free(set);
-    write(1, "return Success\n", 15);
-    return (EXIT_SUCCESS);
+    return(clean_and_exit(set));
 }
