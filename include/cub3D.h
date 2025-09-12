@@ -13,7 +13,9 @@
 
 typedef enum e_error_status
 {
+    ALL_OK ,
 	MAL_ERR_SET = 1 ,
+    ERR ,
     PAR_NBR_ARGC ,
     PAR_EXTENSION ,
     INV_FAIL ,
