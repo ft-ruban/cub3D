@@ -4,7 +4,7 @@
 #include <stdio.h> //printf TORM
 #include <stdbool.h> //bool duh
 
-int closed_check(char **map)
+int enclosed_check(char **map)
 {
         int i;
     int j;
@@ -195,7 +195,36 @@ int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
     return (RETURN_SUCCESS);
 }
 
-int collect_check_map(t_settings *set, int fd)
+int read_to_map_start(char *file, t_settings *set, int fd)
+{
+    char *path;
+    int new_fd;
+    int i;
+
+    i = 0;
+    close(fd);
+    path = ft_strjoin("scene_descriptions/", file);
+    if(!path)
+        return(-1);
+    new_fd = open(path, O_RDONLY);
+    if (new_fd == -1)
+        return (RETURN_FAILURE);
+    // printf("test\n");
+    while (i <= 6)
+    {
+        read(new_fd, set->buff, 1);
+        if (set->buff[0] != '\n')
+        {
+            get_next_line(new_fd);
+            i++;
+        }
+    }
+    while (set->buff[0] == '\n')
+        read(fd, set->buff, 1);
+    return (new_fd);
+}
+
+int collect_check_map(char *file, t_settings *set, int fd)
 {
     int map_width;
     int map_height;
@@ -209,13 +238,15 @@ int collect_check_map(t_settings *set, int fd)
         set->error_type = MALLOC_ERROR_SET;
         return (RETURN_FAILURE);
     }
-    // printf("height: %d, width: %d\n", map_height, map_width);
-    if (get_the_map(set->map, map_height, fd) != RETURN_SUCCESS)
+    fd = read_to_map_start(file, set, fd);
+    if (fd == RETURN_FAILURE)
         return (RETURN_FAILURE);
     printf("test\n");
+    if (get_the_map(set->map, map_height, fd) != RETURN_SUCCESS)
+        return (RETURN_FAILURE);
     if (element_check(set->map) != RETURN_SUCCESS)
         return (RETURN_FAILURE);
-    if (closed_check(set->map) != RETURN_SUCCESS)
+    if (enclosed_check(set->map) != RETURN_SUCCESS)
         return (RETURN_FAILURE);
     return (RETURN_SUCCESS);
 }

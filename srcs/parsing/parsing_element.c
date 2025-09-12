@@ -44,7 +44,7 @@ static int are_all_elements_filled(t_settings *set)
 //TODO lot of error case, need a function to warn the user with the
 //proper message + free potential things like buff for ex
 
-int collect_elements(int fd_sd, t_settings *set)
+int collect_elements(char *file, int fd_sd, t_settings *set)
 {
     while(are_all_elements_filled(set))
     {
@@ -68,7 +68,7 @@ int collect_elements(int fd_sd, t_settings *set)
         }
     }
     // print_struct_set(set);
-    if (collect_check_map(set, fd_sd) != ALL_OK)
+    if (collect_check_map(file, set, fd_sd) != ALL_OK)
         return (ERR);
     return(RETURN_SUCCESS);
 }

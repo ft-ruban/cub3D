@@ -9,8 +9,8 @@
 #define OPEN_FAILED -1
 
 //parsing_elements.c
-int collect_elements(int fd_sd, t_settings *set);
-int collect_check_map(t_settings *set, int fd);
+int collect_elements(char *file, int fd_sd, t_settings *set);
+int collect_check_map(char *file, t_settings *set, int fd);
 
 //parsing_file.c
 int open_file_collect_elements(char *file, t_settings *set);

@@ -45,7 +45,7 @@ int open_file_collect_elements(char *file, t_settings *set)
         return(RETURN_FAILURE);
     }
     set->buff[1] = '\0';
-    if(collect_elements(fd, set))
+    if(collect_elements(file, fd, set))
     {
         //free(set->buff);
         printf("error during collect_elements\n"); //TORM AT SOME POINT?
