@@ -38,7 +38,7 @@ static int clean_and_exit(t_settings *set)
     unsigned char return_value;
 
     return_value = set->error_type;
-    printf("\n\nRETURN CODE : %u\n",return_value);
+    // printf("\n\nRETURN CODE : %u\n",return_value);
     free_all(set);
     free(set);
     return(return_value);

@@ -23,15 +23,22 @@
 # define MSG_6 "a read function failed, it may be because of incorrect format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, make sure it follow the expected form\n"
 # define MSG_8 "The RGB value of C or/and F seem to be bigger than 255. each color can receive a value between 0 and 255. Check .cub entries.\n"
+# define MSG_9 "Found another map separeted by an 'end of line' character.\n"
 
 //error.c
-int error_handler(t_settings *set, int error_type, char *emplacement_error_msg, char *err_msg);
+int 	error_handler(t_settings *set, int error_type, char *emplacement_error_msg, char *err_msg);
+
+//free_map.c
+void    free_map(char **map, int line_max);
 
 // ft_atoi.c
-int	ft_atoi(const char *nptr);
+int		ft_atoi(const char *nptr);
+
+// ft_strdup.c
+char	*ft_strdup(const char *s);
 
 // ft_isnum.c
-int	ft_isnum(int c);
+int		ft_isnum(int c);
 
 // ft_strjoin.c
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -43,4 +50,5 @@ size_t	ft_strlen(const char *s);
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t element_count, size_t element_size);
 char	*ft_strchr(const char *s, int c);
+
 # endif

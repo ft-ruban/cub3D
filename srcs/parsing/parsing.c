@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:25:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/12 15:25:36 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/12 16:13:58 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	parsing(int argc, char *argv[], t_settings *set)
 		return (error_handler(set, PAR_EXTENSION, "parsing.c:27 ", MSG_3));
 	if (open_file_collect_elements(argv[1], set, &fd))
 		return (RETURN_FAILURE);
-	// PARSINGMAP
+	if (get_and_check_map(argv[1], set, fd))
+		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }

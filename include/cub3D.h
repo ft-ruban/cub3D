@@ -23,11 +23,13 @@ typedef enum e_error_status
     INV_CON ,
     INV_READ ,
     PAR_INV_RGB ,
+    INV_MAP ,
 
 }		t_error_status;
 
 typedef struct s_settings
 {
+    char **map;
     char *buff;
     char *rp_no;
     char *rp_so;
