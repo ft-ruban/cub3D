@@ -1,55 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_rgb.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/09/12 14:26:57 by ldevoude         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
+#include <fcntl.h>    //open
+#include <stdbool.h>  //bool duh
+#include <stdio.h>    //printf
 #include <sys/stat.h> //open
-#include <fcntl.h> //open
-#include <stdio.h> //printf
-#include <stdbool.h> //bool duh
 
-static int retrieve_rgb(int fd_sd, t_settings *set, int *red, bool is_blue)
+static int	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
+		bool is_blue)
 {
-    int i;
+	size_t	len_rgb_value;
 
-    i = 0;
-    *red = ft_atoi(&set->buff[0]);
-    read(fd_sd, set->buff, 1);
-    while(set->buff[0] != ',')
-    {
-        if(ft_isnum((int)set->buff[0]) || i > 3)
-            return(RETURN_FAILURE);
-        *red = *red * 10;
-        *red = *red + ft_atoi (&set->buff[0]);
-        read(fd_sd, set->buff, 1); //toprotect
-        i++;
-        if(is_blue && set->buff[0] == '\n')
-            return(RETURN_SUCCESS);
-    }
-    return(RETURN_SUCCESS);
+	len_rgb_value = 0;
+	*ptr_data_to_fill = ft_atoi(&set->buff[0]);
+	if (read(fd_sd, set->buff, 1) == -1)
+		return (error_handler(set, INV_READ, "parsing_rgb.c: ", MSG_6));
+	while (set->buff[0] != ',')
+	{
+		if (ft_isnum((int)set->buff[0]) || len_rgb_value > 3)
+			return (error_handler(set, PAR_INV_RGB, "parsing_rgb.c: ", MSG_8));
+		*ptr_data_to_fill = *ptr_data_to_fill * 10;
+		*ptr_data_to_fill = *ptr_data_to_fill + ft_atoi(&set->buff[0]);
+		if (read(fd_sd, set->buff, 1) == -1)
+			return (error_handler(set, INV_READ, "parsing_rgb.c: ", MSG_6));
+		len_rgb_value++;
+		if (is_blue && set->buff[0] == '\n')
+			break ;
+	}
+	if (*ptr_data_to_fill < 0 || *ptr_data_to_fill > 255)
+		return (error_handler(set, PAR_INV_RGB, "parsing_rgb.c: ", MSG_8));
+	return (RETURN_SUCCESS);
 }
 
-//this is not the releasable name!!!
-int rgb_thing(int fd_sd, t_settings *set, char first_letter, bool exit_loop)
+static int	retrieve_rgb_calling(int fd_sd, t_settings *set, bool floor_or_cell)
 {
-    while(!exit_loop)
-    {
-        if(read(fd_sd, set->buff, 1) == -1)
-            return(error_handler(set, PARSING_READ_FAILURE));
-        if(ft_isnum((int)set->buff[0]) == RETURN_SUCCESS)
-        {
-            if(first_letter == 'F')
-            {
-                retrieve_rgb(fd_sd, set, &set->floor_r, false);
-                retrieve_rgb(fd_sd, set, &set->floor_g, false);
-                retrieve_rgb(fd_sd, set, &set->floor_b, true);
-            }
-            else
-            {
-                retrieve_rgb(fd_sd, set, &set->cell_r, false);
-                retrieve_rgb(fd_sd, set, &set->cell_g, false);
-                retrieve_rgb(fd_sd, set, &set->cell_b, true);
-            }
-            exit_loop = true;
-        }
-        else if(set->buff[0] != ' ')
-            return(RETURN_FAILURE);
-    }
-    return(RETURN_SUCCESS);
+	if (floor_or_cell == FLOOR)
+	{
+		if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
+			return (RETURN_FAILURE);
+		if (retrieve_rgb(fd_sd, set, &set->floor_g, false))
+			return (RETURN_FAILURE);
+		if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
+			return (RETURN_FAILURE);
+	}
+	else if (floor_or_cell == CELL)
+	{
+		if (retrieve_rgb(fd_sd, set, &set->cell_r, false))
+			return (RETURN_FAILURE);
+		if (retrieve_rgb(fd_sd, set, &set->cell_g, false))
+			return (RETURN_FAILURE);
+		if (retrieve_rgb(fd_sd, set, &set->cell_b, true))
+			return (RETURN_FAILURE);
+	}
+	return (RETURN_SUCCESS);
+}
+
+// this is not the releasable name!!!
+int	rgb_thing(int fd_sd, t_settings *set, char first_letter, bool exit_loop)
+{
+	while (!exit_loop)
+	{
+		if (read(fd_sd, set->buff, 1) == -1)
+			return (error_handler(set, INV_READ, "parsing_rgb.c: ", MSG_6));
+		if (ft_isnum((int)set->buff[0]) == RETURN_SUCCESS)
+		{
+			if (first_letter == 'F')
+			{
+				if (retrieve_rgb_calling(fd_sd, set, FLOOR))
+					return (RETURN_FAILURE);
+			}
+			else
+			{
+				if (retrieve_rgb_calling(fd_sd, set, CELL))
+					return (RETURN_FAILURE);
+			}
+			exit_loop = true;
+		}
+		else if (set->buff[0] != ' ')
+			return (error_handler(set, INV_CON, "parsing_rgb.c", MSG_7));
+	}
+	return (RETURN_SUCCESS);
 }

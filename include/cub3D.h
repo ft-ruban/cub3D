@@ -2,6 +2,7 @@
 # define CUB3D_H
 
 #include "debug.h"
+//#include "utils.h"
 #include <stdlib.h> //size_t
 
 # define EXIT_SUCCESS 0
@@ -13,31 +14,31 @@
 typedef enum e_error_status
 {
     ALL_OK ,
-	MALLOC_ERROR_SET = 1 ,
+	MAL_ERR_SET = 1 ,
     ERR ,
-    PARSING_NBR_ARGC ,
-    PARSING_FILE_EXTENSION ,
-    PARSING_CANT_OPEN_FILE ,
-    MALLOC_ERROR_BUFFER ,
-    PARSING_ELEMENT_INVALID_CONTENT ,
-    PARSING_READ_FAILURE ,
+    PAR_NBR_ARGC ,
+    PAR_EXTENSION ,
+    INV_FAIL ,
+    MAL_ERR_BUFF ,
+    INV_CON ,
+    INV_READ ,
+    PAR_INV_RGB ,
 
 }		t_error_status;
 
 typedef struct s_settings
 {
-    char    **map;
-    char    *buff;
-    char    *rp_no;
-    char    *rp_so;
-    char    *rp_we;
-    char    *rp_ea;
-    int     floor_r;
-    int     floor_g;
-    int     floor_b;
-    int     cell_r;
-    int     cell_g;
-    int     cell_b;
-    size_t  error_type;
+    char *buff;
+    char *rp_no;
+    char *rp_so;
+    char *rp_we;
+    char *rp_ea;
+    int floor_r;
+    int floor_g;
+    int floor_b;
+    int cell_r;
+    int cell_g;
+    int cell_b;
+    unsigned char error_type;
 }						t_settings;
 #endif

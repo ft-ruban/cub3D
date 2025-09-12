@@ -1,10 +1,22 @@
-#include  "parsing.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/12 14:25:15 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/09/12 15:25:36 by maballet         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "parsing.h"
 #include <stdio.h> //for printf TORM
 
-//Here we check if the file sent do possess the right
+// Here we check if the file sent do possess the right
 //.cub extension
 
-static int	is_right_extension(char *file)
+static bool	is_right_extension(char *file)
 {
 	int	len;
 
@@ -15,27 +27,22 @@ static int	is_right_extension(char *file)
 	return (RETURN_SUCCESS);
 }
 
+// TODO next step would be to parse the map.
+// Or is that for later? need to talk about it
+// to know the course of action,
+// in any case need to close fd at some point! also if we need
+// to use the fd later on then would be better to save it in our set struct.
+// TORM LIGNE 31 + 32
 int	parsing(int argc, char *argv[], t_settings *set)
 {
+	int	fd;
+
 	if (argc != 2)
-    {
-        set->error_type = PARSING_NBR_ARGC;
-        return (RETURN_FAILURE);
-    }
+		return (error_handler(set, PAR_NBR_ARGC, "parsing.c:25 ", MSG_2));
 	if (is_right_extension(argv[1]))
-    {
-        set->error_type = PARSING_FILE_EXTENSION;
-        return (RETURN_FAILURE);
-    }
-    if (open_file_collect_elements(argv[1], set))
-    {
-        // print_struct_set(set);
-        write(2, "problem during read file\n", 25); //torm at some point
-        return (RETURN_FAILURE); //TODO may have to do more specific error type here in near future
-    }
-    //TODO next step would be to parse the map. Or is that for later? need to talk about it
-    //to know the course of action, in any case need to close fd at some point! also if we need
-    //to use the fd later on then would be better to save it in our set struct.
-	write(1, "parsing successful\n", 19); //TORM
+		return (error_handler(set, PAR_EXTENSION, "parsing.c:27 ", MSG_3));
+	if (open_file_collect_elements(argv[1], set, &fd))
+		return (RETURN_FAILURE);
+	// PARSINGMAP
 	return (RETURN_SUCCESS);
 }
