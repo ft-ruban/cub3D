@@ -9,9 +9,10 @@ RM              := rm -f
 RM_DIR          := rm -rf
 
 CFLAGS          := -Wall -Wextra -Werror -g3
-CPPFLAGS		:= -MMD -MP -I include
+CPPFLAGS		:= -I $(MLX_DIR)/
 INC             := -I./include
 INCLUDE         := include/
+MLXFLAGS	  	:=	-lX11 -lXext
 
 PURPLE          := \033[1;35m
 GREEN           := \033[1;32m

@@ -9,10 +9,13 @@ DEPS := $(OBJS:.o=.d)
 
 all: $(NAME)
 
-$(NAME): Makefile $(OBJS) | $(EXEC_DIR)
+MLX_LIB := $(MLX_DIR)/libmlx.a
+MLXFLAGS := -L$(MLX_DIR) -lmlx -lX11 -lXext
+
+$(NAME): Makefile $(MLX_LIB) $(OBJS) | $(EXEC_DIR)
 	echo "$(PURPLE)Compiling $(NAME) in progress...$(RESET)"
 
-		$(CC) $(CFLAGS) $(CPPFLAGS) -o $(EXEC) $(OBJS) $(RLFLAGS)
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(INC) -o $(EXEC) $(OBJS) $(MLXFLAGS)
 
 	echo "$(GREEN)$(EXEC) completed successfully!$(RESET)"
 
@@ -29,7 +32,7 @@ $(OBJS_DIR)%.o: $(SRCSDIR)%.c | $(OBJS_DIR)
 	mkdir -p $(dir $@)
 	echo "$(PURPLE)Compiling $<...$(RESET)"
 
-		$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(INC) -c -o $@ $<
 
 	echo "$(GREEN)$< completed successfully!$(RESET)"
 
@@ -42,6 +45,8 @@ $(EXEC_DIR):
 	echo "$(YELLOW)Creating $(EXEC_DIR) directory...$(RESET)"
 
 		mkdir -p $(EXEC_DIR)
+$(MLX_LIB):
+	$(MAKE) -C $(MLX_DIR)
 
 clean:
 	$(RM_DIR) $(OBJS_DIR)
@@ -49,6 +54,7 @@ clean:
 
 fclean: clean
 	$(RM_DIR) $(EXEC_DIR)
+	$(MAKE) -C $(MLX_DIR) clean
 	echo "$(GREEN)"
 	echo "┌──────────────────────────────────────────────────────────┐"
 	echo "│      Deletion finished successfully! ( ◔ ω ◔) ノシ       │"
