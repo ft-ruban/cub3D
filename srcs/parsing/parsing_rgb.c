@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/12 14:26:57 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 09:53:37 by ldevoude         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 #include <stdio.h>    //printf
 #include <sys/stat.h> //open
 
-static int	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
+// we get the first number, then we get into a loop that would continue
+// until we reach the ',' char or until an error is met. if the next char
+// is not a num error OR is bigger than 3digits ERROR
+// else we multiply by 10 and get the next number
+// into the ptr to our variable to get the right value in the end
+// if the value is not a num between 0 and 255 then it mean it is an invalid
+// rgb value
+
+static bool	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
 		bool is_blue)
 {
 	size_t	len_rgb_value;
@@ -42,9 +50,11 @@ static int	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
 	return (RETURN_SUCCESS);
 }
 
-static int	retrieve_rgb_calling(int fd_sd, t_settings *set, bool floor_or_cell)
+// we call retrieve_rgb 3 time to fill the red part, green and blue one
+
+static bool	retrieve_rgb_calling(int fd_sd, t_settings *set, bool floor_or_ceil)
 {
-	if (floor_or_cell == FLOOR)
+	if (floor_or_ceil == FLOOR)
 	{
 		if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
 			return (RETURN_FAILURE);
@@ -53,25 +63,35 @@ static int	retrieve_rgb_calling(int fd_sd, t_settings *set, bool floor_or_cell)
 		if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
 			return (RETURN_FAILURE);
 	}
-	else if (floor_or_cell == CELL)
+	else if (floor_or_ceil == CEIL)
 	{
-		if (retrieve_rgb(fd_sd, set, &set->cell_r, false))
+		if (retrieve_rgb(fd_sd, set, &set->ceil_r, false))
 			return (RETURN_FAILURE);
-		if (retrieve_rgb(fd_sd, set, &set->cell_g, false))
+		if (retrieve_rgb(fd_sd, set, &set->ceil_g, false))
 			return (RETURN_FAILURE);
-		if (retrieve_rgb(fd_sd, set, &set->cell_b, true))
+		if (retrieve_rgb(fd_sd, set, &set->ceil_b, true))
 			return (RETURN_FAILURE);
 	}
 	return (RETURN_SUCCESS);
 }
 
-// this is not the releasable name!!!
-int	rgb_thing(int fd_sd, t_settings *set, char first_letter, bool exit_loop)
+// while we didnt retrieve our rgb value we stay in loop
+// we read char by char the content, if it is a num value
+// we redirect to the next function with the right parameter
+// depending if it is about floor or ceiling and put our bool at true
+// to exit the loop. If it is a space char we get back to the start of loop
+// else it mean it is an invalid content so in consequence return an error
+bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
+		bool received_rgb_completed)
 {
-	while (!exit_loop)
+	while (!received_rgb_completed)
 	{
-		if (read(fd_sd, set->buff, 1) == -1)
-			return (error_handler(set, INV_READ, "parsing_rgb.c: ", MSG_6));
+		printf("ici?\n");
+		if(set->buff[0] == ' ')
+		{
+			if (read(fd_sd, set->buff, 1) == -1)
+				return (error_handler(set, INV_READ, "parsing_rgb.c: ", MSG_6));		
+		}
 		if (ft_isnum((int)set->buff[0]) == RETURN_SUCCESS)
 		{
 			if (first_letter == 'F')
@@ -81,13 +101,13 @@ int	rgb_thing(int fd_sd, t_settings *set, char first_letter, bool exit_loop)
 			}
 			else
 			{
-				if (retrieve_rgb_calling(fd_sd, set, CELL))
+				if (retrieve_rgb_calling(fd_sd, set, CEIL))
 					return (RETURN_FAILURE);
 			}
-			exit_loop = true;
+			received_rgb_completed = true;
 		}
 		else if (set->buff[0] != ' ')
-			return (error_handler(set, INV_CON, "parsing_rgb.c", MSG_7));
+			return (error_handler(set, INV_CON, "parsing_rgb.c: ", MSG_7));
 	}
 	return (RETURN_SUCCESS);
 }

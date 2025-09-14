@@ -23,7 +23,8 @@
 # define MSG_6 "a read function failed, it may be because of incorrect format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, make sure it follow the expected form\n"
 # define MSG_8 "The RGB value of C or/and F seem to be bigger than 255. each color can receive a value between 0 and 255. Check .cub entries.\n"
-
+# define MSG_9 "Error during get_next_line, could be related to a failed malloc\n"
+# define MSG_10 "Error during a ft_strjoin, probably related to a failed malloc\n"
 //error.c
 int error_handler(t_settings *set, int error_type, char *emplacement_error_msg, char *err_msg);
 

@@ -17,10 +17,9 @@ override MAIN := main
 
 
 override PARSERSRC := parsing \
-					  parsing_file \
+					  parsing_collect_elements \
 					  parsing_rgb \
 					  parsing_texture \
-					  parsing_element \
 
 override UTILSSRC := error \
 					 ft_atoi \

@@ -12,8 +12,8 @@ void print_struct_set(t_settings *set)
     printf("floor_r = %d\n",set->floor_r);
     printf("floor_g = %d\n",set->floor_g);
     printf("floor_b = %d\n",set->floor_b);
-    printf("cell_r = %d\n",set->cell_r);
-    printf("cell_g = %d\n",set->cell_g);
-    printf("cell_b = %d\n",set->cell_b);
+    printf("cell_r = %d\n",set->ceil_r);
+    printf("cell_g = %d\n",set->ceil_g);
+    printf("cell_b = %d\n",set->ceil_b);
     
 }

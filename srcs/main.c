@@ -10,9 +10,9 @@ static void init_struct_value(t_settings *set)
     set->rp_so = NULL;
     set->rp_we = NULL;
     set->rp_ea = NULL;
-    set->cell_r = NONE_ASSIGNED;
-    set->cell_g = NONE_ASSIGNED;
-    set->cell_b = NONE_ASSIGNED;
+    set->ceil_r = NONE_ASSIGNED;
+    set->ceil_g = NONE_ASSIGNED;
+    set->ceil_b = NONE_ASSIGNED;
     set->floor_r = NONE_ASSIGNED;
     set->floor_g = NONE_ASSIGNED;
     set->floor_b = NONE_ASSIGNED;

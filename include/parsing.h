@@ -8,19 +8,17 @@
 
 #define OPEN_FAILED -1
 #define FLOOR 0
-#define CELL 1
+#define CEIL 1
+#define MAP_FOLDER_PATH "scene_descriptions/"
 
-//parsing_elements.c
-int collect_elements(int fd_sd, t_settings *set);
-
-//parsing_file.c
-int open_file_collect_elements(char *file, t_settings *set, int *fd);
+//parsing_collect_elements.c
+bool	prepare_collect_elements(char *file, t_settings *set, int *fd);
 
 //parsing_rgb.c
-int rgb_thing(int fd_sd, t_settings *set, char first_letter,  bool exit_loop);
+bool is_rgb_valid(int fd_sd, t_settings *set, char first_letter,  bool received_rgb_completed);
 
 //parsing_texture.c
-int is_texture_valid(int fd_sd, t_settings *set, char first_letter, char second_letter);
+bool is_texture_valid(int fd_sd, t_settings *set, char first_letter, char second_letter);
 
 //parsing.c
 int parsing(int argc, char *argv[], t_settings *set);
