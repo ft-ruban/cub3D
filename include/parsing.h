@@ -1,15 +1,18 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <stdbool.h> //bool exit_loop
-#include <unistd.h> //write
-#include "utils.h" //our tools ft_X
-#include "cub3D.h"
+#include <stdbool.h>
+#include "utils.h"
 
 #define OPEN_FAILED -1
 #define FLOOR 0
 #define CEIL 1
 #define MAP_FOLDER_PATH "scene_descriptions/"
+#define FILE_ERR_1 "parsing_rgb.c:88 "
+#define FILE_ERR_2 "parsing_texture.c:56 "
+#define FILE_ERR_3 "parsing_texture.c:62 "
+#define FILE_ERR_4 "parsing_texture.c:68 "
+#define FILE_ERR_5 "parsing_texture.c:74 "
 
 //parsing_collect_elements.c
 bool	prepare_collect_elements(char *file, t_settings *set, int *fd);

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/14 12:00:27 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/09/14 12:01:09 by ldevoude         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "utils.h"
-#include <stdlib.h> //malloc
 #include <stddef.h> //NULL DEF
+#include <stdlib.h> //malloc
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
