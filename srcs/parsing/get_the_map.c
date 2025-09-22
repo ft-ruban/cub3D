@@ -3,6 +3,7 @@
 
 static int is_all_map_copied(t_settings *set, int i, int height, int fd)
 {
+	printf("i: %d, height: %d\n", i, height);
     if (i != height)
     {
         free_map(set->map, i);
@@ -17,10 +18,10 @@ int cpy_the_map(t_settings *set, char **map, int height, int fd)
     char    *line;
     int     i;
 
-    line = get_next_line(fd);
-    // printf("height: %d\n", height);
+	// printf("buff: %c\n", set->buff[0]);
     i = 0;
-	while (i < height)
+    line = get_next_line(fd);
+	while (i <= height)
 	{
         map[i] = ft_strdup(line);
 		free (line);
@@ -33,6 +34,7 @@ int cpy_the_map(t_settings *set, char **map, int height, int fd)
         line = get_next_line(fd);
         if (!line)
 			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_1));
+		printf("map[%d]: %s\n", i, set->map[i]);
         i++;
 	}
     if (is_all_map_copied(set, i, height, fd))
@@ -64,7 +66,7 @@ int read_until_map_start(char *file, t_settings *set, int fd)
         }
     }
     while (set->buff[0] == '\n')
-        read(fd, set->buff, 1);
+        	read(fd, set->buff, 1);
     return (new_fd);
 }
 
@@ -89,7 +91,6 @@ int malloc_map(t_settings *set, int w, int h, char ***map)
     return (ALL_OK);
 }
 
-// les height et width ne s'incrementent pas car on est a la fin de la map.
 int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
 {
     bool    in_map;
@@ -97,23 +98,21 @@ int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
 
     map_width = 0;
     in_map = true;
-	printf("%c", set->buff[0]);
+    if (find_map_start(set, fd))
+		return (RETURN_FAILURE);
     while(in_map == true)
     {
         while(set->buff[0] != '\n') // Lire jusqu'à la prochaine ligne
         {
             if (read(fd, set->buff, 1) == -1)
-                return(error_handler(set, INV_READ, "get_the_map.c:106", MSG_6));
+                return(error_handler(set, INV_READ, "get_the_map.c:111", MSG_6));
             map_width++;
         }
         if (read(fd, set->buff, 1) == -1) // Lire le prochain charactère et check si 2 '\n' à la suite
-            return(error_handler(set, INV_READ, "get_the_map.c:110", MSG_6));
+            return(error_handler(set, INV_READ, "get_the_map.c:116", MSG_6));
         if (set->buff[0] == '\n')
             in_map = false;
-        (*map_height)++;
-        if (map_width > *map_width_max)
-            *map_width_max = map_width;
-        map_width = 0;
+        update_width_height(&map_width, map_width_max, map_height);
     }
     map_height--; // il s'est incrémenté une fois de trop et je voulais pas le faire commencer à '-1'
     return (RETURN_SUCCESS);

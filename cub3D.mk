@@ -26,6 +26,7 @@ override PARSERSRC := check_the_map \
 					  parsing \
 
 override UTILSSRC := error \
+					 find_map_size_utils \
 					 free_map \
 					 ft_atoi \
 					 ft_isnum \
