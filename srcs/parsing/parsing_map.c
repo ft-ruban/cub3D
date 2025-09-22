@@ -10,11 +10,16 @@ int check_the_map(t_settings *set, int fd)
 {
     if (map_nbr_check(set, fd))
         return (RETURN_FAILURE);
-    if (element_check(set->map))
+    if (element_check(set, set->map))
+		return (RETURN_FAILURE);
+    if (enclosed_check(set, set->map, '\0'))
+		return (RETURN_FAILURE);
+	if (enclosed_check(set, set->map, '\n'))
+		return (RETURN_FAILURE);
+	if (enclosed_check(set, set->map, ' '))
         return (RETURN_FAILURE);
-    if (enclosed_check(set->map))
-        return (RETURN_FAILURE);
-    return (RETURN_FAILURE);
+    printf("hey\n");
+    return (RETURN_SUCCESS);
 }
 
 int get_the_map(t_settings *set, char *file, int fd)

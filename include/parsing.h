@@ -11,8 +11,8 @@
 #define CELL 1
 
 //check_the_map.c
-int		enclosed_check(char **map);
-int		element_check(char **map);
+int		enclosed_check(t_settings *set, char **map, char c);
+int		element_check(t_settings *set, char **map);
 int		map_nbr_check(t_settings *set, int fd);
 
 //find_map_size_utils.c

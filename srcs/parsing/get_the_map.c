@@ -13,29 +13,35 @@ static int is_all_map_copied(t_settings *set, int i, int height, int fd)
 	return (RETURN_SUCCESS);
 }
 
+//Trouver pk si la map finie par \0, on infinite loop
 int cpy_the_map(t_settings *set, char **map, int height, int fd)
 {
     char    *line;
     int     i;
-
-	// printf("buff: %c\n", set->buff[0]);
+	
     i = 0;
-    line = get_next_line(fd);
-	while (i <= height)
+	line = get_next_line(fd);
+	while (line[0] == '\n')
+	{
+		line = get_next_line(fd);
+        if (!line)
+			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_1));
+	}
+	while (i < height)
 	{
         map[i] = ft_strdup(line);
 		free (line);
 		if (!map[i])
 		{
-            free_map(map, i-1);
+			free_map(map, i-1);
 			close (fd);
 			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:32", MSG_1));
 		}
-        line = get_next_line(fd);
+        i++;
+		if (i < height)
+			line = get_next_line(fd);
         if (!line)
 			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_1));
-		printf("map[%d]: %s\n", i, set->map[i]);
-        i++;
 	}
     if (is_all_map_copied(set, i, height, fd))
     		return (RETURN_FAILURE);
@@ -47,8 +53,9 @@ int read_until_map_start(char *file, t_settings *set, int fd)
     char *path;
     int new_fd;
     int i;
+	char *line;
 
-    i = 0;
+    i = 1;
     close(fd);
     path = ft_strjoin("scene_descriptions/", file);
     if(!path)
@@ -61,7 +68,7 @@ int read_until_map_start(char *file, t_settings *set, int fd)
         read(new_fd, set->buff, 1);
         if (set->buff[0] != '\n')
         {
-            get_next_line(new_fd);
+            line = get_next_line(new_fd);
             i++;
         }
     }
@@ -74,11 +81,11 @@ int malloc_map(t_settings *set, int w, int h, char ***map)
 {
     int i;
 
-    *map = malloc(sizeof(int) * h);
+    *map = malloc(sizeof(int) * h + 1);
     if (!*map)
         return(error_handler(set, MAL_ERR_SET, "get_the_map.c:79", MSG_1));
     i = 0;
-    while ((*map)[i])
+    while (i <= h)
     {
         (*map)[i] = malloc(sizeof(char) * w);
         if (!(*map)[i])
@@ -88,6 +95,7 @@ int malloc_map(t_settings *set, int w, int h, char ***map)
         }
         i++;
     }
+	(*map)[h+1] = NULL;
     return (ALL_OK);
 }
 
