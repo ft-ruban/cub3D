@@ -15,18 +15,23 @@ override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 
 override MAIN := main
 
-
 override PARSERSRC := parsing \
 					  parsing_collect_elements \
 					  parsing_rgb \
 					  parsing_texture \
+            check_the_map \
+            get_the_map \
+            parsing_map \
 
 override UTILSSRC := error \
+					 find_map_size_utils \
+					 free_map \
 					 ft_atoi \
 					 ft_isnum \
+					 ft_strdup \
 					 ft_strjoin \
 					 ft_strlen \
-					 get_next_line \
-					 get_next_line_utils
+					 get_next_line_utils \
+					 get_next_line
 
 override DEBUGSRC := print_struct_set
