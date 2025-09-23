@@ -22,6 +22,10 @@ int check_the_map(t_settings *set, int fd)
     return (RETURN_SUCCESS);
 }
 
+//LDEV: TODO Voir si tu peux le mettre dans get_the_map ou changer le nom du fichier en question.
+//LDEV: TODO si tes int ne peuvent pas aller dans le neg ne pas hesiter a en faire des size_t :>
+//LDEV: 
+
 int get_the_map(t_settings *set, char *file, int fd)
 {
     int map_width;
@@ -30,7 +34,7 @@ int get_the_map(t_settings *set, char *file, int fd)
     map_width = 0;
     map_height = 0;
     if (find_map_size(set, &map_width, &map_height, fd))
-        return (RETURN_FAILURE);
+        return (RETURN_FAILURE); //LDEV DE VISU LE SOUCIS EST PAS LA
     printf("height: %d, width: %d\n", map_height, map_width);
     if (malloc_map(set, map_width, map_height, &(set->map)))
         return (RETURN_FAILURE);

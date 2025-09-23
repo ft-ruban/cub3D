@@ -13,14 +13,17 @@ static int is_all_map_copied(t_settings *set, int i, int height, int fd)
 	return (RETURN_SUCCESS);
 }
 
-//Trouver pk si la map finie par \0, on infinite loop
+//LDEV: check msg d'erreur pas forcement coherant
+//LDEV: 
+
+//Trouver pk si la map finie par EOF, on infinite loop PAS ICI DANS FIND_MAP_SIZE
 int cpy_the_map(t_settings *set, char **map, int height, int fd)
 {
     char    *line;
     int     i;
 	
     i = 0;
-	line = get_next_line(fd);
+	line = get_next_line(fd); //TODO PROTECT
 	while (line[0] == '\n')
 	{
 		line = get_next_line(fd);
@@ -29,6 +32,7 @@ int cpy_the_map(t_settings *set, char **map, int height, int fd)
 	}
 	while (i < height)
 	{
+
         map[i] = ft_strdup(line);
 		free (line);
 		if (!map[i])
@@ -48,6 +52,13 @@ int cpy_the_map(t_settings *set, char **map, int height, int fd)
 	return (RETURN_SUCCESS);
 }
 
+//LDEV: TODO (JE DOIS MOI FAIRE UN DEFINE DE SCENE_DESCRIPTION)
+//LDEV: faire un define de -1 pour dire que -1 = erreur
+//LDEV: PENSER a free path
+//LDEV: protect notre get_next_line
+//LDEV: 6 tu peux en faire un include
+//LDEV: voir pour mettre i a 0
+
 int read_until_map_start(char *file, t_settings *set, int fd)
 {
     char *path;
@@ -57,7 +68,7 @@ int read_until_map_start(char *file, t_settings *set, int fd)
 
     i = 1;
     close(fd);
-    path = ft_strjoin("scene_descriptions/", file);
+    path = ft_strjoin("scene_descriptions/", file); //MAP_FOLDER_PATH
     if(!path)
         return(-1);
     new_fd = open(path, O_RDONLY);
@@ -76,6 +87,11 @@ int read_until_map_start(char *file, t_settings *set, int fd)
         	read(fd, set->buff, 1);
     return (new_fd);
 }
+
+//LDEV : a propos du w et h :>
+//LDEV : ça peut etre bien de mettre l'assignement juste apres la declaration de i
+//LDEV : triple ptr char ***map?
+//LDEV : suspect pour nos gros soucis de segault blabaltruc
 
 int malloc_map(t_settings *set, int w, int h, char ***map)
 {
@@ -99,10 +115,16 @@ int malloc_map(t_settings *set, int w, int h, char ***map)
     return (ALL_OK);
 }
 
+//LDEV: TODO histoire chiante de PTR map width
+//LDEV: TODO transformer en BOOL
+//LDEV: TODO? update size plutot que update width height
+//LDEV: SOUCIS QUAND DERNIERE LIGNE POSSEDE LE EOF
+
 int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
 {
     bool    in_map;
     int     map_width;
+//    int     result_read;
 
     map_width = 0;
     in_map = true;
@@ -125,3 +147,5 @@ int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
     map_height--; // il s'est incrémenté une fois de trop et je voulais pas le faire commencer à '-1'
     return (RETURN_SUCCESS);
 }
+
+//
