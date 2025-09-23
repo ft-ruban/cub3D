@@ -23,7 +23,10 @@ typedef enum e_error_status
     INV_CON ,
     INV_READ ,
     PAR_INV_RGB ,
+    GNL_FAILED ,
+    STRJOIN_FAILED ,
     INV_MAP ,
+
 
 }		t_error_status;
 
@@ -38,9 +41,9 @@ typedef struct s_settings
     int floor_r;
     int floor_g;
     int floor_b;
-    int cell_r;
-    int cell_g;
-    int cell_b;
+    int ceil_r;
+    int ceil_g;
+    int ceil_b;
     unsigned char error_type;
 }						t_settings;
 #endif
