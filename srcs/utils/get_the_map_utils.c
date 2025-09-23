@@ -1,8 +1,8 @@
 #include "parsing.h"
 
-bool	is_all_map_copied(t_settings *set, int line_index, int map_height, int fd)
+bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, int fd)
 {
-	printf("i: %d, height: %d\n", line_index, map_height);
+	// printf("i: %zu, height: %zu\n", line_index, map_height);
 	if (line_index != map_height)
 	{
 		free_map(set->map, line_index);
@@ -20,7 +20,7 @@ bool	find_map_start(t_settings *set, int fd)
 	return (RETURN_SUCCESS);
 }
 
-void       update_map_size(int *map_width, int *map_width_max, int *map_height)
+void       update_map_size(size_t *map_width, size_t *map_width_max, size_t *map_height)
 {
 	(*map_height)++;
 	if (*map_width > *map_width_max)

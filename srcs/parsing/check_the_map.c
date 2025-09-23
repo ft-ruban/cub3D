@@ -1,6 +1,6 @@
 #include "parsing.h"
 
-int enclosed_check(t_settings *set, char **map, char c)
+static bool enclosed_check(t_settings *set, char **map, char c)
 {
         int i;
     int j;
@@ -35,7 +35,7 @@ static bool	character_is_invalid(char c)
 		return (RETURN_SUCCESS);
 }
 
-int element_check(t_settings *set, char **map)
+static bool element_check(t_settings *set, char **map)
 {
     int width;
     int height;
@@ -64,13 +64,31 @@ int element_check(t_settings *set, char **map)
     return (RETURN_SUCCESS);
 }
 
-int map_nbr_check(t_settings *set, int fd)
+// MABA: TODO proteger le read, faire un read_result si -1 ou 0
+
+static bool map_nbr_check(t_settings *set, int fd)
 {
     read(fd, set->buff, 1);
-    while(read(fd, set->buff, 1) != 0) // On va jusqu'au bout du fichier
+    while(read(fd, set->buff, 1) != 0)
     {
         if (set->buff[0] != '\n' && set->buff[0] != '\0')
             return(error_handler(set, INV_MAP, "check_the_map.c.c:72 ", MSG_9));
     }
+    return (RETURN_SUCCESS);
+}
+
+bool check_the_map(t_settings *set, int fd)
+{
+    if (map_nbr_check(set, fd))
+        return (RETURN_FAILURE);
+    if (element_check(set, set->map))
+		return (RETURN_FAILURE);
+    if (enclosed_check(set, set->map, '\0'))
+		return (RETURN_FAILURE);
+	if (enclosed_check(set, set->map, '\n'))
+		return (RETURN_FAILURE);
+	if (enclosed_check(set, set->map, ' '))
+        return (RETURN_FAILURE);
+    printf("hey\n");
     return (RETURN_SUCCESS);
 }

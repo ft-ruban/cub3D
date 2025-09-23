@@ -2,10 +2,10 @@
 #include "utils.h"
 
 //Trouver pk si la map finie par EOF, on infinite loop PAS ICI DANS FIND_MAP_SIZE
-static bool	cpy_the_map(t_settings *set, char **map, int map_height, int fd)
+static bool	cpy_the_map(t_settings *set, char **map, size_t map_height, int fd)
 {
-    char    *line;
-    int     line_index;
+    char	*line;
+    size_t	line_index;
 	
     line_index = 0;
 	line = get_next_line(fd);
@@ -40,12 +40,12 @@ static bool	cpy_the_map(t_settings *set, char **map, int map_height, int fd)
 
 //LDEV: TODO (JE DOIS MOI FAIRE UN DEFINE DE SCENE_DESCRIPTION)
 
-static bool	read_until_map_start(char *file, t_settings *set, int fd)
+static int	read_until_map_start(char *file, t_settings *set, int fd)
 {
-    char *path;
-    int new_fd;
-    int i;
-	char *line;
+    char	*path;
+    int		new_fd;
+    int		i;
+	char	*line;
 
     i = 0;
     close(fd);
@@ -94,10 +94,10 @@ static bool	malloc_map(t_settings *set, int map_width, int map_height)
     return (RETURN_SUCCESS);
 }
 
-static bool	find_map_size(t_settings *set, int *map_width, int *map_height, int fd)
+static bool	find_map_size(t_settings *set, size_t *map_width, size_t *map_height, int fd)
 {
-    bool    in_map;
-    int     width_counter;
+    bool	in_map;
+    size_t	width_counter;
 	int		result_read;
 
     width_counter = 0;
@@ -128,13 +128,10 @@ static bool	find_map_size(t_settings *set, int *map_width, int *map_height, int 
     return (RETURN_SUCCESS);
 }
 
-//LDEV: TODO Voir si tu peux le mettre dans get_the_map ou changer le nom du fichier en question.
-//LDEV: TODO si tes int ne peuvent pas aller dans le neg ne pas hesiter a en faire des size_t :>
-
-int get_the_map(t_settings *set, char *file, int fd)
+bool get_the_map(t_settings *set, char *file, int fd)
 {
-    int map_width;
-    int map_height;
+    size_t map_width;
+    size_t map_height;
 
     map_width = 0;
     map_height = 0;
@@ -147,6 +144,6 @@ int get_the_map(t_settings *set, char *file, int fd)
         return (RETURN_FAILURE);
 	if (cpy_the_map(set, set->map, map_height, fd))
 		return (RETURN_FAILURE);
-	// printf("height: %d, width: %d\n", map_height, map_width);
+	printf("height: %zu, width: %zu\n", map_height, map_width);
     return (RETURN_SUCCESS);
 }
