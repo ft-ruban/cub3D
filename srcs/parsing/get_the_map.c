@@ -1,85 +1,69 @@
 #include "parsing.h"
 #include "utils.h"
 
-static int is_all_map_copied(t_settings *set, int i, int height, int fd)
-{
-	printf("i: %d, height: %d\n", i, height);
-    if (i != height)
-    {
-        free_map(set->map, i);
-        close(fd);
-        return(error_handler(set, MAL_ERR_SET, "get_the_map.c:10", MSG_1));
-    }
-	return (RETURN_SUCCESS);
-}
-
-//LDEV: check msg d'erreur pas forcement coherant
-//LDEV: 
-
 //Trouver pk si la map finie par EOF, on infinite loop PAS ICI DANS FIND_MAP_SIZE
-int cpy_the_map(t_settings *set, char **map, int height, int fd)
+static bool	cpy_the_map(t_settings *set, char **map, int map_height, int fd)
 {
     char    *line;
-    int     i;
+    int     line_index;
 	
-    i = 0;
-	line = get_next_line(fd); //TODO PROTECT
+    line_index = 0;
+	line = get_next_line(fd);
+    if (!line)
+	    return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_9));
 	while (line[0] == '\n')
 	{
 		line = get_next_line(fd);
         if (!line)
-			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_1));
+			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_9));
 	}
-	while (i < height)
+	while (line_index < map_height)
 	{
-
-        map[i] = ft_strdup(line);
+        map[line_index] = ft_strdup(line);
 		free (line);
-		if (!map[i])
+		if (!map[line_index])
 		{
-			free_map(map, i-1);
+			free_map(map, line_index-1);
 			close (fd);
-			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:32", MSG_1));
+			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:32", MSG_11));
 		}
-        i++;
-		if (i < height)
+        line_index++;
+		if (line_index < map_height)
 			line = get_next_line(fd);
         if (!line)
-			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_1));
+			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_9));
 	}
-    if (is_all_map_copied(set, i, height, fd))
+    if (is_all_map_copied(set, line_index, map_height, fd))
     		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
 
 //LDEV: TODO (JE DOIS MOI FAIRE UN DEFINE DE SCENE_DESCRIPTION)
-//LDEV: faire un define de -1 pour dire que -1 = erreur
-//LDEV: PENSER a free path
-//LDEV: protect notre get_next_line
-//LDEV: 6 tu peux en faire un include
-//LDEV: voir pour mettre i a 0
 
-int read_until_map_start(char *file, t_settings *set, int fd)
+static bool	read_until_map_start(char *file, t_settings *set, int fd)
 {
     char *path;
     int new_fd;
     int i;
 	char *line;
 
-    i = 1;
+    i = 0;
     close(fd);
-    path = ft_strjoin("scene_descriptions/", file); //MAP_FOLDER_PATH
+    path = ft_strjoin("scene_descriptions/", file);
     if(!path)
-        return(-1);
-    new_fd = open(path, O_RDONLY);
+		return(READ_OR_MALLOC_ERR);
+	new_fd = open(path, O_RDONLY);
+    free(path);
     if (new_fd == -1)
-        return (RETURN_FAILURE);
-    while (i <= 6)
+        return (READ_OR_MALLOC_ERR);
+    while (i < ELEMENT_NBR)
     {
         read(new_fd, set->buff, 1);
         if (set->buff[0] != '\n')
         {
             line = get_next_line(new_fd);
+            if (!line)
+				return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_9));
             i++;
         }
     }
@@ -88,64 +72,81 @@ int read_until_map_start(char *file, t_settings *set, int fd)
     return (new_fd);
 }
 
-//LDEV : a propos du w et h :>
-//LDEV : ça peut etre bien de mettre l'assignement juste apres la declaration de i
-//LDEV : triple ptr char ***map?
-//LDEV : suspect pour nos gros soucis de segault blabaltruc
-
-int malloc_map(t_settings *set, int w, int h, char ***map)
+static bool	malloc_map(t_settings *set, int map_width, int map_height)
 {
     int i;
 
-    *map = malloc(sizeof(int) * h + 1);
-    if (!*map)
-        return(error_handler(set, MAL_ERR_SET, "get_the_map.c:79", MSG_1));
     i = 0;
-    while (i <= h)
+    set->map = malloc(sizeof(int) * map_height + 1);
+    if (!set->map)
+        return(error_handler(set, MAL_ERR_SET, "get_the_map.c:79", MSG_1));
+    while (i <= map_height)
     {
-        (*map)[i] = malloc(sizeof(char) * w);
-        if (!(*map)[i])
+        set->map[i] = malloc(sizeof(char) * map_width);
+        if (!set->map[i])
         {
-            free_map(*map, i);
+            free_map(set->map, i);
             return(error_handler(set, MAL_ERR_SET, "get_the_map.c:87", MSG_1));
         }
         i++;
     }
-	(*map)[h+1] = NULL;
-    return (ALL_OK);
+	set->map[map_height+1] = NULL;
+    return (RETURN_SUCCESS);
 }
 
-//LDEV: TODO histoire chiante de PTR map width
-//LDEV: TODO transformer en BOOL
-//LDEV: TODO? update size plutot que update width height
-//LDEV: SOUCIS QUAND DERNIERE LIGNE POSSEDE LE EOF
-
-int find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd)
+static bool	find_map_size(t_settings *set, int *map_width, int *map_height, int fd)
 {
     bool    in_map;
-    int     map_width;
-//    int     result_read;
+    int     width_counter;
+	int		result_read;
 
-    map_width = 0;
+    width_counter = 0;
     in_map = true;
     if (find_map_start(set, fd))
 		return (RETURN_FAILURE);
     while(in_map == true)
     {
-        while(set->buff[0] != '\n') // Lire jusqu'à la prochaine ligne
+        while(set->buff[0] != '\n')
         {
-            if (read(fd, set->buff, 1) == -1)
+			result_read = read(fd, set->buff, 1);
+            if (result_read == -1)
                 return(error_handler(set, INV_READ, "get_the_map.c:111", MSG_6));
-            map_width++;
+			if (result_read == 0)
+			{
+				in_map = false;
+				break;
+			}
+            width_counter++;
         }
-        if (read(fd, set->buff, 1) == -1) // Lire le prochain charactère et check si 2 '\n' à la suite
+        if (read(fd, set->buff, 1) == -1)
             return(error_handler(set, INV_READ, "get_the_map.c:116", MSG_6));
         if (set->buff[0] == '\n')
             in_map = false;
-        update_width_height(&map_width, map_width_max, map_height);
+        update_map_size(&width_counter, map_width, map_height);
     }
-    map_height--; // il s'est incrémenté une fois de trop et je voulais pas le faire commencer à '-1'
+    map_height--;
     return (RETURN_SUCCESS);
 }
 
-//
+//LDEV: TODO Voir si tu peux le mettre dans get_the_map ou changer le nom du fichier en question.
+//LDEV: TODO si tes int ne peuvent pas aller dans le neg ne pas hesiter a en faire des size_t :>
+
+int get_the_map(t_settings *set, char *file, int fd)
+{
+    int map_width;
+    int map_height;
+
+    map_width = 0;
+    map_height = 0;
+    if (find_map_size(set, &map_width, &map_height, fd))
+        	return (RETURN_FAILURE);
+	if (malloc_map(set, map_width, map_height))
+        return (RETURN_FAILURE);
+	fd = read_until_map_start(file, set, fd);
+	if (fd == READ_OR_MALLOC_ERR)
+        return (RETURN_FAILURE);
+	if (cpy_the_map(set, set->map, map_height, fd))
+		return (RETURN_FAILURE);
+	// printf("height: %d, width: %d\n", map_height, map_width);
+    return (RETURN_SUCCESS);
+}

@@ -13,6 +13,8 @@
 #define FILE_ERR_3 "parsing_texture.c:62 "
 #define FILE_ERR_4 "parsing_texture.c:68 "
 #define FILE_ERR_5 "parsing_texture.c:74 "
+#define	ELEMENT_NBR 6
+#define READ_OR_MALLOC_ERR -1
 
 
 //parsing_collect_elements.c
@@ -29,15 +31,13 @@ int		enclosed_check(t_settings *set, char **map, char c);
 int		element_check(t_settings *set, char **map);
 int		map_nbr_check(t_settings *set, int fd);
 
-//find_map_size_utils.c
-int		find_map_start(t_settings *set, int fd);
-void	update_width_height(int *map_width, int *map_width_max, int *map_height);
+//get_the_map_utils.c
+bool	is_all_map_copied(t_settings *set, int line_index, int map_height, int fd);
+bool	find_map_start(t_settings *set, int fd);
+void	update_map_size(int *map_width, int *map_width_max, int *map_height);
 
 //get_the_map.c
-int		cpy_the_map(t_settings *set, char **map, int height, int fd);
-int		read_until_map_start(char *file, t_settings *set, int fd);
-int		malloc_map(t_settings *set, int w, int h, char ***map);
-int		find_map_size(t_settings *set, int *map_width_max, int *map_height, int fd);
+int 	get_the_map(t_settings *set, char *file, int fd);
 
 //parsing_map.c
 int		get_and_check_map(char *file, t_settings *set, int fd);
