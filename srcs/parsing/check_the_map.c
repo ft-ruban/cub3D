@@ -89,6 +89,5 @@ bool check_the_map(t_settings *set, int fd)
 		return (RETURN_FAILURE);
 	if (enclosed_check(set, set->map, ' '))
         return (RETURN_FAILURE);
-    printf("hey\n");
     return (RETURN_SUCCESS);
 }

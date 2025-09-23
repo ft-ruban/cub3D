@@ -144,6 +144,6 @@ bool get_the_map(t_settings *set, char *file, int fd)
         return (RETURN_FAILURE);
 	if (cpy_the_map(set, set->map, map_height, fd))
 		return (RETURN_FAILURE);
-	printf("height: %zu, width: %zu\n", map_height, map_width);
+	// printf("height: %zu, width: %zu\n", map_height, map_width);
     return (RETURN_SUCCESS);
 }
