@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:59:44 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:41:28 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/09/24 17:35:31 by maballet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	print_struct_set(t_settings *set)
 
 void print_map(t_settings *set)
 {
-    int i;
+    size_t i;
 
     i = 0;
     printf("map:\n\n");
     while (set->map[i])
     {
-        printf("%s", set->map[i]);
+        printf("map[%zu]: %s", i, set->map[i]);
         i++;
     }
 }

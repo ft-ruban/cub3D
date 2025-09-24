@@ -14,7 +14,7 @@
 #define FILE_ERR_4 "parsing_texture.c:68 "
 #define FILE_ERR_5 "parsing_texture.c:74 "
 #define	ELEMENT_NBR 6
-#define READ_OR_MALLOC_ERR -1
+#define MALLOC_ERR -1
 
 
 //parsing_collect_elements.c
@@ -33,9 +33,14 @@ bool check_the_map(t_settings *set, int fd);
 bool 	get_the_map(t_settings *set, char *file, int fd);
 
 //get_the_map_utils.c
+void	update_map_size(size_t *map_width, size_t *map_width_max, size_t *map_height);
+bool	skip_elements(t_settings *set, char *line, int new_fd);
+bool	parse_map_line(t_settings *set, int fd, bool *in_map, size_t *w_c);
+bool	find_map_first_line(t_settings *set, char **line, int fd);
+
+//find_map_size_utils.c
 bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, int fd);
 bool	find_map_start(t_settings *set, int fd);
-void	update_map_size(size_t *map_width, size_t *map_width_max, size_t *map_height);
 
 //parsing_map.c
 bool		get_and_check_map(char *file, t_settings *set, int fd);

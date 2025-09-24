@@ -24,8 +24,10 @@ override PARSERSRC := parsing \
             parsing_map \
 
 override UTILSSRC := error \
+					 find_map_size_utils \
 					 free_map \
 					 ft_atoi \
+					 ft_bzero \
 					 ft_isnum \
 					 ft_strdup \
 					 ft_strjoin \

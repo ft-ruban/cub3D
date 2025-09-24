@@ -43,6 +43,9 @@ int		ft_atoi(const char *nptr);
 // ft_strdup.c
 char	*ft_strdup(const char *s);
 
+// ft_bzero.c
+void	ft_bzero(void *s, size_t n);
+
 // ft_isnum.c
 int		ft_isnum(int c);
 

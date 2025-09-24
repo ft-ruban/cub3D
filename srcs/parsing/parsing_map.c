@@ -13,7 +13,6 @@ bool get_and_check_map(char *file, t_settings *set, int fd)
         close(fd);
         return (RETURN_FAILURE);
     }
-    print_map(set);
     if (check_the_map(set, fd))
     {
         close(fd);
