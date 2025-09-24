@@ -27,3 +27,16 @@ void	print_struct_set(t_settings *set)
 	printf("cell_g = %d\n", set->ceil_g);
 	printf("cell_b = %d\n", set->ceil_b);
 }
+
+void print_map(t_settings *set)
+{
+    int i;
+
+    i = 0;
+    printf("map:\n\n");
+    while (set->map[i])
+    {
+        printf("%s", set->map[i]);
+        i++;
+    }
+}

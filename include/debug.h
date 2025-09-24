@@ -11,5 +11,6 @@ typedef struct s_settings t_settings; //declaration anticipé
 # define NONE_ASSIGNED -1
 
 void print_struct_set(t_settings *set);
+void print_map(t_settings *set);
 
 #endif

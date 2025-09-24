@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 14:25:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:43:20 by ldevoude         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
 // Here we check if the file sent do possess the right
@@ -42,6 +30,8 @@ int	parsing(int argc, char *argv[], t_settings *set)
 	if (is_right_extension(argv[1]))
 		return (error_handler(set, PAR_EXTENSION, "parsing.c:42 ", MSG_3));
 	if (prepare_collect_elements(argv[1], set, &fd))
+		return (RETURN_FAILURE);
+	if (get_and_check_map(argv[1], set, fd))
 		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
