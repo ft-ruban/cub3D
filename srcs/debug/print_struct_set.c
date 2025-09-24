@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:59:44 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:41:28 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/09/24 10:41:27 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "debug.h"
 #include "parsing.h"
+
+//function to print the content of set (USE IT FOR DEBUG ONLY)
 
 void	print_struct_set(t_settings *set)
 {
