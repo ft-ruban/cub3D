@@ -4,7 +4,7 @@ bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, in
 {
 	if (line_index != map_height)
 	{
-		free_map(set->map, line_index);
+		free_map(set);
 		close(fd);
 		return(error_handler(set, MAL_ERR_SET, "get_the_map.c:10", MSG_1));
 	}

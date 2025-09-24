@@ -1,4 +1,17 @@
 #include "parsing.h"
+#include "utils.h"
+
+static bool	surround_not_wall(char **map, int i, int j)
+{
+	if (map[j][i -1] == ' ' || map[j][i -1] == '\n' 
+		|| map[j][i -1] == '\0' || map[j][i +1] == ' ' 
+		|| map[j][i +1] == '\n' || map[j][i +1] == '\0'
+		|| map[j -1][i] == ' ' || map[j -1][i] == '\n'
+		|| map[j -1][i] == '\0' || map[j +1][i] == ' '
+		|| map[j +1][i] == '\n' || map[j +1][i] == '\0')
+		return (RETURN_FAILURE);
+	return (RETURN_SUCCESS);
+}
 
 static bool enclosed_check(t_settings *set, char **map)
 {
@@ -14,36 +27,14 @@ static bool enclosed_check(t_settings *set, char **map)
             if (map[j][i] == '0' || map[j][i] == 'N' || map[j][i] == 'S'
 				|| map[j][i] == 'E' || map[j][i] == 'W')
             {
-                if (map[j][i -1] == ' ' || map[j][i -1] == '\n' || map[j][i -1] == '\0'
-					|| map[j][i +1] == ' ' || map[j][i +1] == '\n' || map[j][i +1] == '\0'
-					|| map[j -1][i] == ' ' || map[j -1][i] == '\n' || map[j -1][i] == '\0'
-					|| map[j +1][i] == ' ' || map[j +1][i] == '\n' || map[j +1][i] == '\0')
+                if (surround_not_wall(map, i, j))
                 	return (error_handler(set, INV_MAP, "check_the_map.c.c:19 ", MSG_15));
             }
             i++;
         }
         j++;
-    }
+	}
     return (RETURN_SUCCESS);
-}
-
-static bool	character_is_invalid(char c)
-{
-	if (c != '1' && c != '0' && c != 'N'
-    	&& c != 'S' && c != 'E' && c != 'W'
-    	&& c != '\0' && c != '\n' && c != ' ')
-    	return (RETURN_FAILURE);
-	else
-		return (RETURN_SUCCESS);
-}
-
-bool	player_update_check(t_settings *set, bool *player)
-{
-	if (*player == true)
-		return (error_handler(set, INV_MAP, "check_the_map.c.c:55 ", MSG_13));
-	else
-		*player = true;
-	return (RETURN_SUCCESS);
 }
 
 static bool element_check(t_settings *set, char **map)

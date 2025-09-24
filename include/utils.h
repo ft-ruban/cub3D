@@ -31,11 +31,20 @@
 # define MSG_14 "One of the map character or more is not valid\n"
 # define MSG_15 "Map is not closed\n"
 
+// element_check_utils.c
+bool	character_is_invalid(char c);
+bool	player_update_check(t_settings *set, bool *player);
+
 //error.c
 int 	error_handler(t_settings *set, int error_type, char *emplacement_error_msg, char *err_msg);
 
+//find_map_size_utils.c
+bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, int fd);
+bool	find_map_start(t_settings *set, int fd);
+
 //free_map.c
-void    free_map(char **map, int line_max);
+void    free_map_on_error(char **map, int line_max);
+void    free_map(t_settings *set);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);
@@ -59,5 +68,11 @@ size_t	ft_strlen(const char *s);
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t element_count, size_t element_size);
 char	*ft_strchr(const char *s, int c);
+
+//get_the_map_utils.c
+void	update_map_size(size_t *map_width, size_t *map_width_max, size_t *map_height);
+bool	skip_elements(t_settings *set, int new_fd);
+bool	parse_map_line(t_settings *set, int fd, bool *in_map, size_t *w_c);
+bool	find_map_first_line(t_settings *set, char **line, int fd);
 
 # endif

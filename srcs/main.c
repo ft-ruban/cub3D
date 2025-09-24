@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:06:20 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/23 17:53:26 by maballet         ###   ########.fr       */
+/*   Updated: 2025/09/24 19:22:27 by maballet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	free_all(t_settings *set)
 		free(set->rp_we);
 	if (set->rp_ea)
 		free(set->rp_ea);
+	if (set->map)
+		free_map(set);
 	get_next_line(-1);
 }
 

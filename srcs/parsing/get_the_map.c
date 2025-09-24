@@ -1,8 +1,7 @@
 #include "parsing.h"
 #include "utils.h"
 
-//Trouver pk si la map finie par EOF, on infinite loop PAS ICI DANS FIND_MAP_SIZE
-static bool	copy_the_map(t_settings *set, char **map, size_t map_height, int fd)
+static bool	copy_the_map(t_settings *set, size_t map_height, int fd)
 {
     char	*line;
     size_t	line_index;
@@ -13,11 +12,11 @@ static bool	copy_the_map(t_settings *set, char **map, size_t map_height, int fd)
 		return (RETURN_FAILURE);
 	while (line_index < map_height)
 	{
-        map[line_index] = ft_strdup(line);
+        set->map[line_index] = ft_strdup(line);
 		free (line);
-		if (!map[line_index])
+		if (!set->map[line_index])
 		{
-			free_map(map, line_index-1);
+			free_map(set);
 			close (fd);
 			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:32", MSG_11));
 		}
@@ -37,10 +36,8 @@ static int	read_until_map_start(char *file, t_settings *set, int fd)
 {
     char	*path;
     int		new_fd;
-	char	*line;
 
     close(fd);
-	line = NULL;
     path = ft_strjoin("scene_descriptions/", file);
     if(!path)
 		return(MALLOC_ERR);
@@ -48,7 +45,7 @@ static int	read_until_map_start(char *file, t_settings *set, int fd)
     free(path);
     if (new_fd == -1)
         	return (OPEN_FAILED);
-	if (skip_elements(set, line, new_fd))
+	if (skip_elements(set, new_fd))
 		return (RETURN_FAILURE);
     while (set->buff[0] == '\n')
 		if (read(new_fd, set->buff, 1) == -1)
@@ -56,9 +53,9 @@ static int	read_until_map_start(char *file, t_settings *set, int fd)
     return (new_fd);
 }
 
-static bool	malloc_map(t_settings *set, int map_width, int map_height)
+static bool	malloc_map(t_settings *set, size_t map_width, size_t map_height)
 {
-    int i;
+    size_t i;
 
     i = 0;
     set->map = malloc(sizeof(char*) * (map_height + 1));
@@ -69,7 +66,7 @@ static bool	malloc_map(t_settings *set, int map_width, int map_height)
         set->map[i] = malloc(sizeof(char) * (map_width + 1));
         if (!set->map[i])
         {
-            free_map(set->map, i);
+            free_map_on_error(set->map, i);
             return(error_handler(set, MAL_ERR_SET, "get_the_map.c:87", MSG_1));
         }
 		ft_bzero(set->map[i], (map_width + 1));
@@ -119,7 +116,7 @@ bool get_the_map(t_settings *set, char *file, int fd)
 	fd = read_until_map_start(file, set, fd);
 	if (fd == OPEN_FAILED || fd == MALLOC_ERR)
         return (RETURN_FAILURE);
-	if (copy_the_map(set, set->map, map_height, fd))
+	if (copy_the_map(set, map_height, fd))
 		return (RETURN_FAILURE);
     print_map(set);
     return (RETURN_SUCCESS);

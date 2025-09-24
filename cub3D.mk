@@ -23,7 +23,8 @@ override PARSERSRC := parsing \
             get_the_map \
             parsing_map \
 
-override UTILSSRC := error \
+override UTILSSRC := element_check_utils \
+					 error \
 					 find_map_size_utils \
 					 free_map \
 					 ft_atoi \
