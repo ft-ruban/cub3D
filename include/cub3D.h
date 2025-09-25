@@ -30,18 +30,35 @@ typedef enum e_error_status
 
 typedef struct s_settings
 {
-	char			**map;
-	char			*buff;
-	char			*rp_no;
-	char			*rp_so;
-	char			*rp_we;
-	char			*rp_ea;
-	int				floor_r;
-	int				floor_g;
-	int				floor_b;
-	int				ceil_r;
-	int				ceil_g;
-	int				ceil_b;
-	unsigned char	error_type;
-}					t_settings;
+    char **map;
+    char *buff;
+    char *rp_no;
+    char *rp_so;
+    char *rp_we;
+    char *rp_ea;
+    int floor_r;
+    int floor_g;
+    int floor_b;
+    int ceil_r;
+    int ceil_g;
+    int ceil_b;
+    unsigned char error_type;
+}						t_settings;
+
+typedef struct s_img
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_img;
+
+typedef struct s_mlx
+{
+	void		*mlx;
+	void		*mlx_win;
+	t_img		img;
+}				t_mlx;
+
 #endif
