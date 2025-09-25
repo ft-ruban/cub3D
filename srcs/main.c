@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:06:20 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 14:30:34 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 10:23:19 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "set_mlx.h"
 #include "parsing.h"
 #include <unistd.h> //write
 # include "../minilibx-linux/mlx.h"
@@ -62,6 +63,7 @@ static int	clean_and_exit(t_settings *set)
 int	main(int argc, char *argv[])
 {
 	t_mlx		*screen;
+	t_set_call	param;
 	t_settings	*set;
 
 	screen = NULL;
@@ -71,6 +73,22 @@ int	main(int argc, char *argv[])
 	init_struct_value(set);
 	if (parsing(argc, argv, set))
 		return (clean_and_exit(set));
+
+
+	//WIP MLX
+	screen = calloc(1, sizeof(t_mlx)); //TODO incorporate our own ft_calloc
+	if(!screen)
+		return(RETURN_FAILURE); //TO PROTECT BETTER
+	if(init_param(&param, screen) == 1)
+		return(RETURN_FAILURE); //TOPROTECT BETTER
+	if (init_screen_mlx(screen, argv) == NULL)
+		return(RETURN_FAILURE);
+	param.screen = screen;
+	// mlx_hook(screen->mlx_win, 17, 1L << 17, close_window, &param);
+	// mlx_hook(screen->mlx_win, 2, 1L << 0, handle_keys, &param);
+	// mlx_mouse_hook(screen->mlx_win, zoom, &param);
+	// mlx_loop_hook(screen->mlx, set, &param);
+	mlx_loop(screen->mlx);
 	print_struct_set(set); // DEBUG function to see content of struct set
 	//-------------------------------------------------------
 	//--------------PSEUDOCODE-------------------------------
