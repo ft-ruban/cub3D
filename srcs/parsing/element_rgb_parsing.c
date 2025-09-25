@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_rgb.c                                      :+:      :+:    :+:   */
+/*   element_rgb_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:46:44 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 08:50:04 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static bool	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
 {
 	size_t	len_rgb_value;
 
-	len_rgb_value = 0;
+	len_rgb_value = 1;
 	*ptr_data_to_fill = ft_atoi(&set->buff[0]);
 	if (read(fd_sd, set->buff, 1) == -1)
 		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-	while (set->buff[0] != ',')
+	if (is_blue && set->buff[0] == '\n')
+		return (RETURN_SUCCESS);
+	while (set->buff[0] != ',' || is_blue)
 	{
 		if (ft_isnum((int)set->buff[0]) || len_rgb_value > 3)
 			return (error_handler(set, PAR_INV_RGB, "parsing_rgb.c:34 ",
@@ -42,33 +44,40 @@ static bool	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
 		if (is_blue && set->buff[0] == '\n')
 			break ;
 	}
-	if (*ptr_data_to_fill < 0 || *ptr_data_to_fill > 255)
+	if (*ptr_data_to_fill < 0 || *ptr_data_to_fill > 255 || len_rgb_value > 3)
 		return (error_handler(set, PAR_INV_RGB, "parsing_rgb.c:45 ", MSG_8));
 	return (RETURN_SUCCESS);
 }
 
 // we call retrieve_rgb 3 time to fill the red part, green and blue one
 
-static bool	retrieve_rgb_calling(int fd_sd, t_settings *set, bool floor_or_ceil)
+static bool	prepare_retrieve_rgb_ceil(int fd_sd, t_settings *set)
 {
-	if (floor_or_ceil == FLOOR)
-	{
-		if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
-			return (RETURN_FAILURE);
-		if (retrieve_rgb(fd_sd, set, &set->floor_g, false))
-			return (RETURN_FAILURE);
-		if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
-			return (RETURN_FAILURE);
-	}
-	else if (floor_or_ceil == CEIL)
-	{
-		if (retrieve_rgb(fd_sd, set, &set->ceil_r, false))
-			return (RETURN_FAILURE);
-		if (retrieve_rgb(fd_sd, set, &set->ceil_g, false))
-			return (RETURN_FAILURE);
-		if (retrieve_rgb(fd_sd, set, &set->ceil_b, true))
-			return (RETURN_FAILURE);
-	}
+	if (retrieve_rgb(fd_sd, set, &set->ceil_r, false))
+		return (RETURN_FAILURE);
+	if (read(fd_sd, set->buff, 1) == -1)
+		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+	if (retrieve_rgb(fd_sd, set, &set->ceil_g, false))
+		return (RETURN_FAILURE);
+	if (read(fd_sd, set->buff, 1) == -1)
+		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+	if (retrieve_rgb(fd_sd, set, &set->ceil_b, true))
+		return (RETURN_FAILURE);
+	return (RETURN_SUCCESS);
+}
+
+static bool	prepare_retrieve_rgb_floor(int fd_sd, t_settings *set)
+{
+	if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
+		return (RETURN_FAILURE);
+	if (read(fd_sd, set->buff, 1) == -1)
+		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+	if (retrieve_rgb(fd_sd, set, &set->floor_g, false))
+		return (RETURN_FAILURE);
+	if (read(fd_sd, set->buff, 1) == -1)
+		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+	if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
+		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
 
@@ -78,6 +87,9 @@ static bool	retrieve_rgb_calling(int fd_sd, t_settings *set, bool floor_or_ceil)
 // depending if it is about floor or ceiling and put our bool at true
 // to exit the loop. If it is a space char we get back to the start of loop
 // else it mean it is an invalid content so in consequence return an error
+
+//TODO  TO CHECK IF NECC? c:103
+
 bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
 		bool received_rgb_completed)
 {
@@ -88,22 +100,22 @@ bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
 			if (read(fd_sd, set->buff, 1) == -1)
 				return (error_handler(set, INV_READ, FILE_ERR_1, MSG_6));
 		}
-		if (ft_isnum((int)set->buff[0]) == RETURN_SUCCESS)
+		if (!ft_isnum((int)set->buff[0]) && set->buff[0])
 		{
 			if (first_letter == 'F')
 			{
-				if (retrieve_rgb_calling(fd_sd, set, FLOOR))
+				if (prepare_retrieve_rgb_floor(fd_sd, set))
 					return (RETURN_FAILURE);
 			}
 			else
 			{
-				if (retrieve_rgb_calling(fd_sd, set, CEIL))
+				if (prepare_retrieve_rgb_ceil(fd_sd, set))
 					return (RETURN_FAILURE);
 			}
 			received_rgb_completed = true;
 		}
 		else if (set->buff[0] != ' ')
-			return (error_handler(set, INV_CON, "parsing_rgb.c:105 ", MSG_7));
+			return (error_handler(set, INV_CON, "parsing_rgb.c:106 ", MSG_7));
 	}
 	return (RETURN_SUCCESS);
 }
