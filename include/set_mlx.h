@@ -54,6 +54,6 @@ typedef struct s_utils
 
 // placeholder.c
 int				init_param(t_set_call *param, t_mlx *screen);
-void			*init_screen_mlx(t_mlx *t_mlx, char **argv);
+void			*init_screen_mlx(t_mlx *t_mlx);
 
 #endif

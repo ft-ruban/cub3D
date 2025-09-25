@@ -27,12 +27,12 @@ int	free_all(t_mlx *screen, t_set_call *param, int error_code)
 		return (RETURN_FAILURE);
 }
 
-void	*init_screen_mlx(t_mlx *t_mlx, char **argv)
+void	*init_screen_mlx(t_mlx *t_mlx)
 {
 	t_mlx->mlx = mlx_init();
 	if (!t_mlx->mlx)
 		return (NULL);
-	t_mlx->mlx_win = mlx_new_window(t_mlx->mlx, WIN_WIDTH, WIN_HEIGHT, argv[1]);
+	t_mlx->mlx_win = mlx_new_window(t_mlx->mlx, WIN_WIDTH, WIN_HEIGHT, "Unforeseen consequences");
 	if (!t_mlx->mlx_win)
 	{
 		mlx_destroy_display(t_mlx->mlx);
