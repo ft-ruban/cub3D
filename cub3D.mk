@@ -16,12 +16,13 @@ override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 override MAIN := main
 
 override PARSERSRC := parsing \
-					  parsing_collect_elements \
-					  parsing_rgb \
-					  parsing_texture \
-            check_the_map \
-            get_the_map \
-            parsing_map \
+					  element_collect_parsing \
+					  element_collect_utils \
+					  element_rgb_parsing \
+					  element_texture_parsing \
+            		  check_the_map \
+            		  get_the_map \
+            	      parsing_map \
 
 override UTILSSRC := error \
 					 find_map_size_utils \

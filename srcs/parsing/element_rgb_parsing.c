@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_rgb.c                                      :+:      :+:    :+:   */
+/*   element_rgb_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/24 16:26:59 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/09/25 08:50:04 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static bool	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
 
 // we call retrieve_rgb 3 time to fill the red part, green and blue one
 
-static bool	retrieve_rgb_ceil(int fd_sd, t_settings *set)
+static bool	prepare_retrieve_rgb_ceil(int fd_sd, t_settings *set)
 {
 	if (retrieve_rgb(fd_sd, set, &set->ceil_r, false))
 		return (RETURN_FAILURE);
@@ -66,7 +66,7 @@ static bool	retrieve_rgb_ceil(int fd_sd, t_settings *set)
 	return (RETURN_SUCCESS);
 }
 
-static bool	retrieve_rgb_floor(int fd_sd, t_settings *set)
+static bool	prepare_retrieve_rgb_floor(int fd_sd, t_settings *set)
 {
 	if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
 		return (RETURN_FAILURE);
@@ -87,6 +87,9 @@ static bool	retrieve_rgb_floor(int fd_sd, t_settings *set)
 // depending if it is about floor or ceiling and put our bool at true
 // to exit the loop. If it is a space char we get back to the start of loop
 // else it mean it is an invalid content so in consequence return an error
+
+//TODO  TO CHECK IF NECC? c:103
+
 bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
 		bool received_rgb_completed)
 {
@@ -97,16 +100,16 @@ bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
 			if (read(fd_sd, set->buff, 1) == -1)
 				return (error_handler(set, INV_READ, FILE_ERR_1, MSG_6));
 		}
-		if (!ft_isnum((int)set->buff[0]) && set->buff[0]) //to check if necessary?
+		if (!ft_isnum((int)set->buff[0]) && set->buff[0])
 		{
 			if (first_letter == 'F')
 			{
-				if (retrieve_rgb_floor(fd_sd, set))
+				if (prepare_retrieve_rgb_floor(fd_sd, set))
 					return (RETURN_FAILURE);
 			}
 			else
 			{
-				if (retrieve_rgb_ceil(fd_sd, set))
+				if (prepare_retrieve_rgb_ceil(fd_sd, set))
 					return (RETURN_FAILURE);
 			}
 			received_rgb_completed = true;
