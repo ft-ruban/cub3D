@@ -30,6 +30,7 @@
 # define MSG_13 "Found another player position\n"
 # define MSG_14 "One of the map character or more is not valid\n"
 # define MSG_15 "Map is not closed\n"
+# define MSG_16 "No player position found\n"
 
 // element_check_utils.c
 bool	character_is_invalid(char c);

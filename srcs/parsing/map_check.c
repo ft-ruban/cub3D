@@ -61,6 +61,8 @@ static bool element_check(t_settings *set, char **map)
         }
         height++;
     }
+	if (player == false)
+		return (error_handler(set, INV_MAP, "check_the_map.c.c:65 ", MSG_16));
     return (RETURN_SUCCESS);
 }
 
