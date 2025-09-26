@@ -16,7 +16,6 @@ static bool	copy_the_map(t_settings *set, size_t map_height, int fd)
 		free (line);
 		if (!set->map[line_index])
 		{
-			free_map(set);
 			close (fd);
 			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:32", MSG_11));
 		}
@@ -25,6 +24,7 @@ static bool	copy_the_map(t_settings *set, size_t map_height, int fd)
         if (!line && line_index < map_height)
 			return(error_handler(set, MAL_ERR_SET, "get_the_map.c:36", MSG_9));
 	}
+	free(line);
     if (is_all_map_copied(set, line_index, map_height, fd))
     		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
@@ -57,21 +57,19 @@ static bool	malloc_map(t_settings *set, size_t map_width, size_t map_height)
 {
     size_t i;
 
+	(void)map_width;
     i = 0;
     set->map = malloc(sizeof(char*) * (map_height + 1));
     if (!set->map)
-        return(error_handler(set, MAL_ERR_SET, "get_the_map.c:79", MSG_1));
-    while (i < map_height)
-    {
-        set->map[i] = malloc(sizeof(char) * (map_width + 1));
-        if (!set->map[i])
-        {
-            free_map_on_error(set->map, i);
-            return(error_handler(set, MAL_ERR_SET, "get_the_map.c:87", MSG_1));
-        }
-		ft_bzero(set->map[i], (map_width + 1));
-        i++;
-    }
+        	return(error_handler(set, MAL_ERR_SET, "get_the_map.c:79", MSG_1));
+    // while (i < map_height)
+    // {
+    //     set->map[i] = malloc(sizeof(char) * (map_width + 1));
+    //     if (!set->map[i])
+    //         return(error_handler(set, MAL_ERR_SET, "get_the_map.c:87", MSG_1));
+	// 	ft_bzero(set->map[i], (map_width + 1));
+    //     i++;
+    // }
 	set->map[map_height] = NULL;
     return (RETURN_SUCCESS);
 }
@@ -102,7 +100,7 @@ static bool	find_map_size(t_settings *set, size_t *map_width, size_t *map_height
     return (RETURN_SUCCESS);
 }
 
-bool get_the_map(t_settings *set, char *file, int fd)
+bool map_collect(t_settings *set, char *file, int fd)
 {
     size_t map_width;
     size_t map_height;

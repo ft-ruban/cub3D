@@ -26,11 +26,11 @@ bool is_rgb_valid(int fd_sd, t_settings *set, char first_letter,  bool received_
 //parsing_texture.c
 bool is_texture_valid(int fd_sd, t_settings *set, char first_letter, char second_letter);
 
-//check_the_map.c
-bool check_the_map(t_settings *set, int fd);
+//map_check.c
+bool map_check(t_settings *set, int fd);
 
-//get_the_map.c
-bool 	get_the_map(t_settings *set, char *file, int fd);
+//map_collect.c
+bool 	map_collect(t_settings *set, char *file, int fd);
 
 //parsing_map.c
 bool		get_and_check_map(char *file, t_settings *set, int fd);

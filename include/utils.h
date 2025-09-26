@@ -26,7 +26,7 @@
 # define MSG_9 "Error during get_next_line, could be related to a failed malloc\n"
 # define MSG_10 "Error during a ft_strjoin, probably related to a failed malloc\n"
 # define MSG_11 "Error during a ft_strdup, probably related to a failed malloc\n"
-# define MSG_12 "Found another map separeted by an 'end of line' character\n"
+# define MSG_12 "Invalid map\n"
 # define MSG_13 "Found another player position\n"
 # define MSG_14 "One of the map character or more is not valid\n"
 # define MSG_15 "Map is not closed\n"
@@ -43,7 +43,7 @@ bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, in
 bool	find_map_start(t_settings *set, int fd);
 
 //free_map.c
-void    free_map_on_error(char **map, int line_max);
+void    free_map_on_error(t_settings *set, int line_max);
 void    free_map(t_settings *set);
 
 // ft_atoi.c

@@ -8,12 +8,12 @@
 
 bool get_and_check_map(char *file, t_settings *set, int fd)
 {
-    if (get_the_map(set, file, fd))
+    if (map_collect(set, file, fd))
     {
         close(fd);
         return (RETURN_FAILURE);
     }
-    if (check_the_map(set, fd))
+    if (map_check(set, fd))
     {
         close(fd);
         return (RETURN_FAILURE);

@@ -85,7 +85,7 @@ static bool map_nbr_check(t_settings *set, int fd)
     return (RETURN_SUCCESS);
 }
 
-bool check_the_map(t_settings *set, int fd)
+bool map_check(t_settings *set, int fd)
 {
     if (map_nbr_check(set, fd))
         return (RETURN_FAILURE);

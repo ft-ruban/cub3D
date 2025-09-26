@@ -19,9 +19,9 @@ override PARSERSRC := parsing \
 					  parsing_collect_elements \
 					  parsing_rgb \
 					  parsing_texture \
-            check_the_map \
-            get_the_map \
-            parsing_map \
+            		  map_check \
+            		  map_collect \
+            		  parsing_map \
 
 override UTILSSRC := element_check_utils \
 					 error \
