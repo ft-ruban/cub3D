@@ -42,4 +42,5 @@ override UTILSSRC := error \
 
 override DEBUGSRC := print_struct_set
 
-override MLXSETSRC := placeholder
+override MLXSETSRC := commands \
+					  placeholder

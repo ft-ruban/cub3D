@@ -51,6 +51,8 @@ void	*init_screen_mlx(t_mlx *t_mlx)
 			&(t_mlx->img.bits_per_pixel), &(t_mlx->img.line_length),
 			&(t_mlx->img.endian));
 	t_mlx->img.bits_per_pixel = t_mlx->img.bits_per_pixel >> 3;
+	my_mlx_pixel_put(&(t_mlx->img), 0, 0, 0x00FF0000);
+	mlx_put_image_to_window(t_mlx->mlx, t_mlx->mlx_win, t_mlx->img.img, 0, 0);
 	return (t_mlx);
 }
 

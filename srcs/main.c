@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:06:20 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/25 14:22:22 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/09/26 09:34:11 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	clean_and_exit(t_settings *set)
 	return (return_value);
 }
 
-static int mlx_initialization(t_mlx *screen, t_set_call *param)
+static int mlx_prepare_initialization(t_mlx *screen, t_set_call *param)
 {
 	param = calloc(1, sizeof(t_set_call));
 	screen = calloc(1, sizeof(t_mlx)); //TODO incorporate our own ft_calloc
@@ -69,6 +69,13 @@ static int mlx_initialization(t_mlx *screen, t_set_call *param)
 	if (init_screen_mlx(screen) == NULL)
 		return(RETURN_FAILURE);
 	param->screen = screen;
+	
+	
+	
+	//mlx_hook(screen->mlx_win, 17, 1L << 17, close_window, &param);
+	// mlx_hook(screen->mlx_win, 2, 1L << 0, handle_keys, &param);
+	// mlx_mouse_hook(screen->mlx_win, zoom, &param);
+	//mlx_loop_hook(screen->mlx, set, &param);
 	mlx_loop(screen->mlx);
 	return (RETURN_SUCCESS);
 }
@@ -90,7 +97,7 @@ int	main(int argc, char *argv[])
 	if (parsing(argc, argv, set))
 		return (clean_and_exit(set));
 	//WIP MLX
-	mlx_initialization(screen, param);
+	mlx_prepare_initialization(screen, param);
 	// mlx_hook(screen->mlx_win, 17, 1L << 17, close_window, &param);
 	// mlx_hook(screen->mlx_win, 2, 1L << 0, handle_keys, &param);
 	// mlx_mouse_hook(screen->mlx_win, zoom, &param);

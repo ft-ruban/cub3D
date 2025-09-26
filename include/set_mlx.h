@@ -52,6 +52,11 @@ typedef struct s_utils
 	double		xtemp;
 }				t_utils;
 
+// commands.c
+int	handle_keys(int keycode, t_set_call *param);
+int	close_window(t_set_call *param);
+
+
 // placeholder.c
 int				init_param(t_set_call *param, t_mlx *screen);
 void			*init_screen_mlx(t_mlx *t_mlx);
