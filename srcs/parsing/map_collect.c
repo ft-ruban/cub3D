@@ -4,6 +4,10 @@
 // We go to the map first line.
 // Until we copied all our map, we allocate the current line_index with the
 // result of get_next_line
+
+//LDEV: c:17 ça n'as pas sa place | ATTENTION CAR LINE DEPEND DE CA
+//LDEV: c:35 ça nous semble useless (va check quand meme dans le doute!!!) car je peux me gourrer
+
 static bool	copy_the_map(t_settings *set, size_t map_height, int fd)
 {
 	char	*line;
@@ -33,15 +37,19 @@ static bool	copy_the_map(t_settings *set, size_t map_height, int fd)
 	return (RETURN_SUCCESS);
 }
 
-// Create a new fd to start the reading of the file from the beginning,
-// skip the 6 parameters and stop when finding something else than a '\n'
+// Close then reopen fd to start the reading of the file from the beginning,
+// skip the 6 parameters and stop when finding something different than a '\n'
+
+//LDEV : ligne 49-53 pas de msg d'erreur
+//LDEV : mettre un read avant while
+
 static int	read_until_map_start(char *file, t_settings *set, int fd)
 {
 	char	*path;
 	int		new_fd;
 
 	close(fd);
-	path = ft_strjoin("scene_descriptions/", file);
+	path = ft_strjoin(MAP_FOLDER_PATH, file);
 	if (!path)
 		return (MALLOC_ERR);
 	new_fd = open(path, O_RDONLY);
@@ -51,8 +59,12 @@ static int	read_until_map_start(char *file, t_settings *set, int fd)
 	if (skip_elements(set, new_fd))
 		return (RETURN_FAILURE);
 	while (set->buff[0] == '\n')
+	{
+		printf("proutzor\n");
 		if (read(new_fd, set->buff, 1) == -1)
 			return (error_handler(set, INV_READ, "map_collect.c.c:55 ", MSG_6));
+	}
+		
 	return (new_fd);
 }
 
@@ -72,7 +84,7 @@ static bool	malloc_map_height(t_settings *set, size_t map_height)
 
 // We read the map one character at a time, line by line, to know the largest 
 // line (width) and the height that increase each time we cross a '\n'
-// We know we are out of the map if read = 0 or when we cross twoo '\n' together
+// We know we are out of the map if read = 0 or when we cross two '\n' together
 static bool	find_map_size(t_settings *set, size_t *map_height, int fd)
 {
 	bool	in_map;

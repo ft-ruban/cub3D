@@ -28,7 +28,7 @@ bool	skip_elements(t_settings *set, int new_fd)
 	return (RETURN_SUCCESS);
 }
 
-// We run through the entire line until we find a '\n'
+// We browse through the entire line until we find a '\n'
 // If we reach the end of the file, we are no longer in the map
 bool	parse_map_line(t_settings *set, int fd, bool *in_map)
 {
@@ -58,6 +58,7 @@ bool	find_map_first_line(t_settings *set, char **line, int fd)
 		return (error_handler(set, MAL_ERR_SET, "get_the_map.c:58 ", MSG_9));
 	while (*line[0] == '\n')
 	{
+		printf("prout\n");
 		free(*line);
 		*line = get_next_line(fd);
 		if (!*line)

@@ -16,6 +16,10 @@ static bool	surround_check(char **map, int i, int j)
 
 // While reading through the map with j (map height) and i (line_width),
 // we stop on each floor or the player position to check the surrounding cases.
+
+//LDEV: SIZE_TTTTTT
+//LDEV: I / J c'est mieux avec taille et largeur
+
 static bool	enclosed_check(t_settings *set, char **map)
 {
 	int	i;
@@ -43,6 +47,9 @@ static bool	enclosed_check(t_settings *set, char **map)
 
 // We check every single characteres of the map to see if it is a valid one.
 // We check if there is no more than one player position.
+
+//LDEV: map element check comme nom
+//LDEV: character is invalid check N S E W alors que un else if semble tout aussi bien si mieux.
 static bool	element_check(t_settings *set, char **map)
 {
 	int		width;
@@ -75,6 +82,11 @@ static bool	element_check(t_settings *set, char **map)
 // We just collected the map with gnl, so our first read will be on the
 // character right after the map end.
 // From here we read until the EOF to be sure we only have '\n'.
+
+//LDEV: rename en un truc genre is_map_single
+//LDEV: check pour le \0
+//LDEV: 
+
 static bool	map_nbr_check(t_settings *set, int fd)
 {
 	bool	map_end;

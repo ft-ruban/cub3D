@@ -5,8 +5,8 @@
 #include <stdio.h> //printf TORM
 #include <stdbool.h> //bool duh
 
-// We collect the map with all her possible flaws
-// We check if the map respect our conditions
+// We collect the map wathever it is a valid one or not.
+// Then we check if the map respect our conditions
 bool	get_and_check_map(char *file, t_settings *set, int fd)
 {
 	if (map_collect(set, file, fd))
