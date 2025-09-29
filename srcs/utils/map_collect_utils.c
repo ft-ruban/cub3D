@@ -12,7 +12,7 @@ bool	skip_elements(t_settings *set, int new_fd)
 	i = 0;
 	while (i < ELEMENT_NBR)
 	{
-		if (read(new_fd, set->buff, 1) == -1)
+		if (read(new_fd, set->buff, 1) == READ_ERR)
 			return (error_handler(set, INV_READ,
 					"map_collect_utils.c:16 ", MSG_6));
 		if (set->buff[0] != '\n')
@@ -38,9 +38,9 @@ bool	parse_map_line(t_settings *set, int fd, bool *in_map)
 	while (set->buff[0] != '\n')
 	{
 		result_read = read(fd, set->buff, 1);
-		if (result_read == -1)
+		if (result_read == READ_ERR)
 			return (error_handler(set, INV_READ, "get_the_map.c:41 ", MSG_6));
-		if (result_read == 0)
+		if (result_read == END_OF_FILE)
 		{
 			*in_map = false;
 			break ;
@@ -58,7 +58,6 @@ bool	find_map_first_line(t_settings *set, char **line, int fd)
 		return (error_handler(set, MAL_ERR_SET, "get_the_map.c:58 ", MSG_9));
 	while (*line[0] == '\n')
 	{
-		printf("prout\n");
 		free(*line);
 		*line = get_next_line(fd);
 		if (!*line)

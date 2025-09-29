@@ -44,7 +44,6 @@ bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, in
 bool	find_map_start(t_settings *set, int fd);
 
 //free_map.c
-void    free_map_on_error(t_settings *set, int line_max);
 void    free_map(t_settings *set);
 
 // ft_atoi.c

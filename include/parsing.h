@@ -5,6 +5,10 @@
 #include "utils.h"
 
 #define OPEN_FAILED -1
+#define MALLOC_ERR -1
+#define READ_OR_MALLOC_ERR -1
+#define READ_ERR -1
+#define END_OF_FILE 0
 #define FLOOR 0
 #define CEIL 1
 #define MAP_FOLDER_PATH "scene_descriptions/"
@@ -14,7 +18,6 @@
 #define FILE_ERR_4 "parsing_texture.c:68 "
 #define FILE_ERR_5 "parsing_texture.c:74 "
 #define	ELEMENT_NBR 6
-#define MALLOC_ERR -1
 
 
 //parsing_collect_elements.c

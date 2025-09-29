@@ -16,41 +16,35 @@ static bool	surround_check(char **map, int i, int j)
 
 // While reading through the map with j (map height) and i (line_width),
 // we stop on each floor or the player position to check the surrounding cases.
-
-//LDEV: SIZE_TTTTTT
-//LDEV: I / J c'est mieux avec taille et largeur
-
 static bool	enclosed_check(t_settings *set, char **map)
 {
-	int	i;
-	int	j;
+	size_t	height;
+	size_t	width;
 
-	j = 0;
-	while (map[j])
+	height = 0;
+	while (map[height])
 	{
-		i = 0;
-		while (map[j][i])
+		width = 0;
+		while (map[height][width])
 		{
-			if (map[j][i] == '0' || map[j][i] == 'N' || map[j][i] == 'S'
-				|| map[j][i] == 'E' || map[j][i] == 'W')
+			if (map[height][width] == '0' || map[height][width] == 'N'
+				|| map[height][width] == 'S' || map[height][width] == 'E'
+				|| map[height][width] == 'W')
 			{
-				if (surround_check(map, i, j))
-					return (error_handler(set, INV_MAP, "map_check.c:34 ",
+				if (surround_check(map, width, height))
+					return (error_handler(set, INV_MAP, "map_check.c:35 ",
 							MSG_15));
 			}
-			i++;
+			width++;
 		}
-		j++;
+		height++;
 	}
 	return (RETURN_SUCCESS);
 }
 
 // We check every single characteres of the map to see if it is a valid one.
 // We check if there is no more than one player position.
-
-//LDEV: map element check comme nom
-//LDEV: character is invalid check N S E W alors que un else if semble tout aussi bien si mieux.
-static bool	element_check(t_settings *set, char **map)
+static bool	map_character_check(t_settings *set, char **map)
 {
 	int		width;
 	int		height;
@@ -69,39 +63,34 @@ static bool	element_check(t_settings *set, char **map)
 				if (player_update_check(set, &player))
 					return (RETURN_FAILURE);
 			if (character_is_invalid(map[height][width]))
-				return (error_handler(set, INV_MAP, "map_check.c:65 ", MSG_14));
+				return (error_handler(set, INV_MAP, "map_check.c:66 ", MSG_14));
 			width++;
 		}
 		height++;
 	}
 	if (player == false)
-		return (error_handler(set, INV_MAP, "map_check.c:71 ", MSG_16));
+		return (error_handler(set, INV_MAP, "map_check.c:72 ", MSG_16));
 	return (RETURN_SUCCESS);
 }
 
 // We just collected the map with gnl, so our first read will be on the
 // character right after the map end.
 // From here we read until the EOF to be sure we only have '\n'.
-
-//LDEV: rename en un truc genre is_map_single
-//LDEV: check pour le \0
-//LDEV: 
-
-static bool	map_nbr_check(t_settings *set, int fd)
+static bool	is_map_single(t_settings *set, int fd)
 {
-	bool	map_end;
+	bool	eof;
 	int		read_result;
 
-	map_end = false;
-	while (map_end != true)
+	eof = false;
+	while (eof == false)
 	{
 		read_result = read(fd, set->buff, 1);
-		if (read_result == -1)
-			return (error_handler(set, INV_READ, "map_check.c:88 ", MSG_6));
-		if (read_result == 0)
-			map_end = true;
-		if (set->buff[0] != '\n' && set->buff[0] != '\0' && map_end != true)
-			return (error_handler(set, INV_MAP, "map_check.c:92 ", MSG_12));
+		if (read_result == READ_ERR)
+			return (error_handler(set, INV_READ, "map_check.c:89 ", MSG_6));
+		if (read_result == END_OF_FILE)
+			eof = true;
+		if (set->buff[0] != '\n' && eof == false)
+			return (error_handler(set, INV_MAP, "map_check.c:93 ", MSG_12));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -111,9 +100,9 @@ static bool	map_nbr_check(t_settings *set, int fd)
 // We test if the floor is surrounded by walls.
 bool	map_check(t_settings *set, int fd)
 {
-	if (map_nbr_check(set, fd))
+	if (is_map_single(set, fd))
 		return (RETURN_FAILURE);
-	if (element_check(set, set->map))
+	if (map_character_check(set, set->map))
 		return (RETURN_FAILURE);
 	if (enclosed_check(set, set->map))
 		return (RETURN_FAILURE);
