@@ -1,5 +1,8 @@
 {
 	"files.associations": {
 		"limits.h": "c"
-	}
+	},
+	"editor.rulers": [
+		80
+	]
 }

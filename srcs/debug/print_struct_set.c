@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:59:44 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/24 17:35:31 by maballet         ###   ########.fr       */
+/*   Updated: 2025/09/29 14:09:21 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	print_struct_set(t_settings *set)
 	printf("cell_b = %d\n", set->ceil_b);
 }
 
-void print_map(t_settings *set)
+void	print_map(t_settings *set)
 {
-    size_t i;
+	size_t	i;
 
-    i = 0;
-    printf("map:\n\n");
-    while (set->map[i])
-    {
-        printf("map[%zu]: %s", i, set->map[i]);
-        i++;
-    }
+	i = 0;
+	printf("\nMAP:\n\n");
+	while (set->map[i])
+	{
+		printf("map[%zu]: %s", i, set->map[i]);
+		i++;
+	}
 }

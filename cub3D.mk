@@ -23,8 +23,7 @@ override PARSERSRC := parsing \
             		  map_collect \
             		  parsing_map \
 
-override UTILSSRC := element_check_utils \
-					 error \
+override UTILSSRC := error \
 					 find_map_size_utils \
 					 free_map \
 					 ft_atoi \
@@ -35,6 +34,7 @@ override UTILSSRC := element_check_utils \
 					 ft_strlen \
 					 get_next_line_utils \
 					 get_next_line \
-					 get_the_map_utils
+					 map_check_utils \
+					 map_collect_utils
 
 override DEBUGSRC := print_struct_set

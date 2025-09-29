@@ -71,9 +71,8 @@ void	*ft_calloc(size_t element_count, size_t element_size);
 char	*ft_strchr(const char *s, int c);
 
 //get_the_map_utils.c
-void	update_map_size(size_t *map_width, size_t *map_width_max, size_t *map_height);
 bool	skip_elements(t_settings *set, int new_fd);
-bool	parse_map_line(t_settings *set, int fd, bool *in_map, size_t *w_c);
+bool	parse_map_line(t_settings *set, int fd, bool *in_map);
 bool	find_map_first_line(t_settings *set, char **line, int fd);
 
 # endif
