@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/14 12:06:20 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 14:30:34 by ldevoude         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "parsing.h"
 #include <unistd.h> //write
@@ -43,6 +33,8 @@ static void	free_all(t_settings *set)
 		free(set->rp_we);
 	if (set->rp_ea)
 		free(set->rp_ea);
+	if (set->map)
+		free_map(set);
 	get_next_line(-1);
 }
 

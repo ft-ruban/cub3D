@@ -32,23 +32,36 @@ each color can receive a value between 0 and 255. Check .cub entries.\n"
 could be related to a failed malloc\n"
 # define MSG_10 "Error during a ft_strjoin, \
 	probably related to a failed malloc\n"
-# define MSG_11 "Found another map separeted by an 'end of line' character\n"
-# define MSG_12 "Found another player position\n"
-# define MSG_13 "One of the map character or more is not valid\n"
-# define MSG_14 "Map is not closed\n"
+# define MSG_11 "Error during a ft_strdup, probably related to a failed malloc\n"
+# define MSG_12 "Invalid map\n"
+# define MSG_13 "Found another player position\n"
+# define MSG_14 "One of the map character or more is not valid\n"
+# define MSG_15 "Map is not closed\n"
+# define MSG_16 "No player position found\n"
+
+// element_check_utils.c
+bool	character_is_invalid(char c);
+bool	player_update_check(t_settings *set, bool *player);
 
 // error.c
 int		error_handler(t_settings *set, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
-// free_map.c
-void	free_map(char **map, int line_max);
+//find_map_size_utils.c
+bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, int fd);
+bool	find_map_start(t_settings *set, int fd);
+
+//free_map.c
+void    free_map(t_settings *set);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);
 
 // ft_strdup.c
 char	*ft_strdup(const char *s);
+
+// ft_bzero.c
+void	ft_bzero(void *s, size_t n);
 
 // ft_isnum.c
 int		ft_isnum(int c);
@@ -64,4 +77,9 @@ char	*get_next_line(int fd);
 void	*ft_calloc(size_t element_count, size_t element_size);
 char	*ft_strchr(const char *s, int c);
 
-#endif
+//get_the_map_utils.c
+bool	skip_elements(t_settings *set, int new_fd);
+bool	parse_map_line(t_settings *set, int fd, bool *in_map);
+bool	find_map_first_line(t_settings *set, char **line, int fd);
+
+# endif
