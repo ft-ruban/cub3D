@@ -82,7 +82,7 @@ static bool	find_map_size(t_settings *set, size_t *map_height, int fd)
 	{
 		if (parse_map_line(set, fd, &in_map))
 			return (RETURN_FAILURE);
-		if (read(fd, set->buff, 1) == READ_ERR)
+		if (read(fd, set->buff, 1) == READ_FAILED)
 			return (error_handler(set, INV_READ, "map_collect.c.c:86 ", MSG_6));
 		if (set->buff[0] == '\n')
 			in_map = false;

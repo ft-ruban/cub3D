@@ -31,7 +31,7 @@ int	parsing(int argc, char *argv[], t_settings *set)
 		return (error_handler(set, PAR_EXTENSION, "parsing.c:30 ", MSG_3));
 	if (prepare_collect_elements(argv[1], set, &fd, &set->buff))
 		return (RETURN_FAILURE);
-	// if (get_and_check_map(argv[1], set, fd))
-	// 	return (RETURN_FAILURE);
+	if (get_and_check_map(argv[1], set, fd))
+		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
