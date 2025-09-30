@@ -6,6 +6,7 @@
 # include <stdlib.h> //size_t
 # include <stdlib.h> //GNL (TOCHECKBCS OLD)
 # include <unistd.h> //GNL (TOCHECKBCS OLD)
+# include <stdbool.h>
 
 // PARSING_NBR_ARGC_MSG
 // PARSING_FILE_EXTENSION_MSG

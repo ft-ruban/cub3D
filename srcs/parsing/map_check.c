@@ -85,7 +85,7 @@ static bool	is_map_single(t_settings *set, int fd)
 	while (eof == false)
 	{
 		read_result = read(fd, set->buff, 1);
-		if (read_result == READ_ERR)
+		if (read_result == READ_FAILED)
 			return (error_handler(set, INV_READ, "map_check.c:89 ", MSG_6));
 		if (read_result == END_OF_FILE)
 			eof = true;

@@ -15,6 +15,7 @@ typedef struct s_settings	t_settings; //declaration anticipe
 # define TYPE_TEXTURE 1
 # define TYPE_EMPTY_LINE 2
 # define INVALID -42
+# define ELEMENT_NBR 6
 # define CEIL 1
 # define FLOOR 0
 # define MAP_FOLDER_PATH "scene_descriptions/"
