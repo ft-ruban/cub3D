@@ -1,5 +1,5 @@
 
-C 1,250,2
+
 
 
 SO ./path_to_the_south_texture
@@ -7,8 +7,8 @@ SO ./path_to_the_south_texture
 
 
 WE ./path_to_the_west_texture
-
-F 0,0,000
+C 5,,500,10
+F 220,10,0
 EA ./path_to_the_east_texture
 
 
