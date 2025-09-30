@@ -3,12 +3,14 @@ override MAINDIR :=
 override PARSERDIR := parsing/
 override UTILSDIR := utils/
 override DEBUGDIR := debug/
+override MLX_DIR := minilibx-linux/
 
 SRC += $(addprefix $(MAINDIR), $(addsuffix .c, $(MAIN)))
 SRC += $(addprefix $(PARSERDIR), $(addsuffix .c, $(PARSERSRC)))
 SRC += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRC)))
 SRC += $(addprefix $(DEBUGDIR), $(addsuffix .c, $(DEBUGSRC)))
 
+#MLX_LIB := $(MLX_DIR)/libmlx.a
 
 override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 
@@ -16,12 +18,13 @@ override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 override MAIN := main
 
 override PARSERSRC := parsing \
-					  parsing_collect_elements \
-					  parsing_rgb \
-					  parsing_texture \
-            		  map_check \
-            		  map_collect \
-            		  parsing_map \
+					  element_collect_parsing \
+					  element_collect_utils \
+					  element_rgb_parsing \
+					  element_texture_parsing \
+            map_check \
+            map_collect \
+            parsing_map \
 
 override UTILSSRC := error \
 					 find_map_size_utils \

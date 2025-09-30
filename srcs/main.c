@@ -1,17 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/14 12:06:20 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/24 19:22:27 by maballet         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "parsing.h"
 #include <unistd.h> //write
+# include "../minilibx-linux/mlx.h"
 
 // We init them at those value for further processing in the parsing
 static void	init_struct_value(t_settings *set)
@@ -62,8 +53,10 @@ static int	clean_and_exit(t_settings *set)
 
 int	main(int argc, char *argv[])
 {
+	t_mlx		*screen;
 	t_settings	*set;
 
+	screen = NULL;
 	set = malloc(sizeof(t_settings));
 	if (!set)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
