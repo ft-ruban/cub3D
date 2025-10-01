@@ -1,28 +1,18 @@
 
-C 1,250,2
+WE prout
+SO xd
 
-
-SO ./path_to_the_south_texture
-
-
-
-WE ./path_to_the_west_texture
-
-F 0,0,000
 EA ./path_to_the_east_texture
+NO ./path_to_the_north_texture    
+
+C 5,255,55
+F 220,100,0
 
 
-NO ./path_to_the_north_texture
 
-
-
-
-
-111111
-1001N111
-10101
-11001
-11111
-10001
-11111
-
+11111111111
+11111000001
+100011100111111111
+1110E1 111000000001   
+111101111111111111
+11111111111

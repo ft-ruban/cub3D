@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/25 08:50:04 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/09/30 10:42:53 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,37 +49,61 @@ static bool	retrieve_rgb(int fd_sd, t_settings *set, int *ptr_data_to_fill,
 	return (RETURN_SUCCESS);
 }
 
+static bool	prepare_retrieve_rgb(int fd_sd, t_settings *set, bool is_blue,
+		int *ptr_data_to_fill)
+{
+	if (retrieve_rgb(fd_sd, set, ptr_data_to_fill, is_blue))
+		return (RETURN_FAILURE);
+	if (!is_blue)
+	{
+		if (read(fd_sd, set->buff, 1) == -1)
+			return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+		if (ft_isnum((int)set->buff[0]))
+			return (error_handler(set, PAR_INV_RGB, "parsing_rgb.c:60 ",
+					MSG_8));
+	}
+	return (RETURN_SUCCESS);
+}
+
 // we call retrieve_rgb 3 time to fill the red part, green and blue one
 
-static bool	prepare_retrieve_rgb_ceil(int fd_sd, t_settings *set)
+static bool	ceil_or_floor_rgb(int fd_sd, t_settings *set, bool ceil_or_floor)
 {
-	if (retrieve_rgb(fd_sd, set, &set->ceil_r, false))
-		return (RETURN_FAILURE);
-	if (read(fd_sd, set->buff, 1) == -1)
-		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-	if (retrieve_rgb(fd_sd, set, &set->ceil_g, false))
-		return (RETURN_FAILURE);
-	if (read(fd_sd, set->buff, 1) == -1)
-		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-	if (retrieve_rgb(fd_sd, set, &set->ceil_b, true))
-		return (RETURN_FAILURE);
+	if (ceil_or_floor == CEIL)
+	{
+		if (prepare_retrieve_rgb(fd_sd, set, false, &set->ceil_r))
+			return (RETURN_FAILURE);
+		if (prepare_retrieve_rgb(fd_sd, set, false, &set->ceil_g))
+			return (RETURN_FAILURE);
+		if (prepare_retrieve_rgb(fd_sd, set, true, &set->ceil_b))
+			return (RETURN_FAILURE);
+	}
+	else if (ceil_or_floor == FLOOR)
+	{
+		if (prepare_retrieve_rgb(fd_sd, set, false, &set->floor_r))
+			return (RETURN_FAILURE);
+		if (prepare_retrieve_rgb(fd_sd, set, false, &set->floor_g))
+			return (RETURN_FAILURE);
+		if (prepare_retrieve_rgb(fd_sd, set, true, &set->floor_b))
+			return (RETURN_FAILURE);
+	}
 	return (RETURN_SUCCESS);
 }
 
-static bool	prepare_retrieve_rgb_floor(int fd_sd, t_settings *set)
-{
-	if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
-		return (RETURN_FAILURE);
-	if (read(fd_sd, set->buff, 1) == -1)
-		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-	if (retrieve_rgb(fd_sd, set, &set->floor_g, false))
-		return (RETURN_FAILURE);
-	if (read(fd_sd, set->buff, 1) == -1)
-		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-	if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
-		return (RETURN_FAILURE);
-	return (RETURN_SUCCESS);
-}
+// static bool	prepare_retrieve_rgb_floor(int fd_sd, t_settings *set)
+// {
+// 	if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
+// 		return (RETURN_FAILURE);
+// 	if (read(fd_sd, set->buff, 1) == -1)
+// 		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+// 	if (retrieve_rgb(fd_sd, set, &set->floor_g, false))
+// 		return (RETURN_FAILURE);
+// 	if (read(fd_sd, set->buff, 1) == -1)
+// 		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
+// 	if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
+// 		return (RETURN_FAILURE);
+// 	return (RETURN_SUCCESS);
+// }
 
 // while we didnt retrieve our rgb value we stay in loop
 // we read char by char the content, if it is a num value
@@ -88,7 +112,7 @@ static bool	prepare_retrieve_rgb_floor(int fd_sd, t_settings *set)
 // to exit the loop. If it is a space char we get back to the start of loop
 // else it mean it is an invalid content so in consequence return an error
 
-//TODO  TO CHECK IF NECC? c:103
+// TODO  TO CHECK IF NECC? c:103
 
 bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
 		bool received_rgb_completed)
@@ -104,12 +128,12 @@ bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
 		{
 			if (first_letter == 'F')
 			{
-				if (prepare_retrieve_rgb_floor(fd_sd, set))
+				if (ceil_or_floor_rgb(fd_sd, set, FLOOR))
 					return (RETURN_FAILURE);
 			}
 			else
 			{
-				if (prepare_retrieve_rgb_ceil(fd_sd, set))
+				if (ceil_or_floor_rgb(fd_sd, set, CEIL))
 					return (RETURN_FAILURE);
 			}
 			received_rgb_completed = true;

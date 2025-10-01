@@ -1,13 +1,14 @@
 #include "parsing.h"
 
-void    free_map(char **map, int line_max)
+void	free_map(t_settings *set)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i >= line_max)
-    {
-        free(map[i]);
-        i++;
-    }
+	i = 0;
+	while (set->map[i])
+	{
+		free(set->map[i]);
+		i++;
+	}
+	free(set->map);
 }
