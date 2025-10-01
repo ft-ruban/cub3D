@@ -1,5 +1,4 @@
-
-
+#include "set_mlx.h"
 #include "parsing.h"
 #include <unistd.h> //write
 # include "../minilibx-linux/mlx.h"
@@ -49,13 +48,37 @@ static int	clean_and_exit(t_settings *set)
 	return (return_value);
 }
 
+static int mlx_prepare_initialization(t_mlx *screen, t_set_call *param)
+{
+	param = calloc(1, sizeof(t_set_call));
+	screen = calloc(1, sizeof(t_mlx)); //TODO incorporate our own ft_calloc
+	if(!screen)
+		return(RETURN_FAILURE); //TO PROTECT BETTER
+	if(init_param(param, screen) == 1)
+		return(RETURN_FAILURE); //TOPROTECT BETTER
+	if (init_screen_mlx(screen) == NULL)
+		return(RETURN_FAILURE);
+	param->screen = screen;
+	
+	
+	
+	//mlx_hook(screen->mlx_win, 17, 1L << 17, close_window, &param);
+	// mlx_hook(screen->mlx_win, 2, 1L << 0, handle_keys, &param);
+	// mlx_mouse_hook(screen->mlx_win, zoom, &param);
+	//mlx_loop_hook(screen->mlx, set, &param);
+	mlx_loop(screen->mlx);
+	return (RETURN_SUCCESS);
+}
+
 // TODO FREE CONTENT STRUCT?
 
 int	main(int argc, char *argv[])
 {
+	t_set_call	*param;
 	t_mlx		*screen;
 	t_settings	*set;
 
+	param = NULL;
 	screen = NULL;
 	set = malloc(sizeof(t_settings));
 	if (!set)
@@ -63,6 +86,13 @@ int	main(int argc, char *argv[])
 	init_struct_value(set);
 	if (parsing(argc, argv, set))
 		return (clean_and_exit(set));
+	//WIP MLX
+	mlx_prepare_initialization(screen, param);
+	// mlx_hook(screen->mlx_win, 17, 1L << 17, close_window, &param);
+	// mlx_hook(screen->mlx_win, 2, 1L << 0, handle_keys, &param);
+	// mlx_mouse_hook(screen->mlx_win, zoom, &param);
+	// mlx_loop_hook(screen->mlx, set, &param);
+	//mlx_loop(screen->mlx);
 	print_struct_set(set); // DEBUG function to see content of struct set
 	//-------------------------------------------------------
 	//--------------PSEUDOCODE-------------------------------

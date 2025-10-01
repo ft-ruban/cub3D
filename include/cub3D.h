@@ -45,20 +45,20 @@ typedef struct s_settings
     unsigned char error_type;
 }						t_settings;
 
-typedef struct s_img
-{
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_img;
+// typedef struct s_img
+// {
+// 	void		*img;
+// 	char		*addr;
+// 	int			bits_per_pixel;
+// 	int			line_length;
+// 	int			endian;
+// }				t_img;
 
-typedef struct s_mlx
-{
-	void		*mlx;
-	void		*mlx_win;
-	t_img		img;
-}				t_mlx;
+// typedef struct s_mlx
+// {
+// 	void		*mlx;
+// 	void		*mlx_win;
+// 	t_img		img;
+// }				t_mlx;
 
 #endif
