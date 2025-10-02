@@ -10,6 +10,7 @@
 # define RETURN_SUCCESS 0
 # define RETURN_FAILURE 1
 # define NONE_ASSIGNED -1
+# define MSG_ERR_MLX "MLX initiation failed\n"
 
 typedef enum e_error_status
 {
@@ -26,6 +27,7 @@ typedef enum e_error_status
 	GNL_FAILED,
 	STRJOIN_FAILED,
 	INV_MAP,
+    INIT_LIBX_FAILED ,
 }					t_error_status;
 
 typedef struct s_settings
@@ -45,20 +47,27 @@ typedef struct s_settings
     unsigned char error_type;
 }						t_settings;
 
-typedef struct s_img
-{
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_img;
+//main_utils.c
+void	init_struct_value(t_settings *set);
+void	free_all(t_settings *set);
+int	    clean_and_exit(t_settings *set);
 
-typedef struct s_mlx
-{
-	void		*mlx;
-	void		*mlx_win;
-	t_img		img;
-}				t_mlx;
+
+
+// typedef struct s_img
+// {
+// 	void		*img;
+// 	char		*addr;
+// 	int			bits_per_pixel;
+// 	int			line_length;
+// 	int			endian;
+// }				t_img;
+
+// typedef struct s_mlx
+// {
+// 	void		*mlx;
+// 	void		*mlx_win;
+// 	t_img		img;
+// }				t_mlx;
 
 #endif
