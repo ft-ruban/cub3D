@@ -8,6 +8,8 @@
 # define FALSE 0
 # define WIN_WIDTH 500
 # define WIN_HEIGHT 500
+# define KEY_ESC 65307
+# define KEY_UNKNOWN 0
 
 typedef struct s_img
 {
@@ -29,11 +31,9 @@ typedef struct s_mlx
 int	handle_keys(int keycode, t_mlx *screen);
 int	close_window(t_mlx *screen);
 
-
-// placeholder.c
-int				init_param();
-void			*init_screen_mlx(t_mlx *t_mlx);
+// mlx_utils.c
+void 	hook_and_loop(t_mlx *screen);
+void 	destroy_free_screen(t_mlx *screen);
+void	*init_screen_mlx(t_mlx *t_mlx);
 // int				free_all_mlx(t_mlx *screen, t_set_call *param, int error_code);
-int	draw(t_mlx *mlx);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 #endif

@@ -10,6 +10,7 @@
 # define RETURN_SUCCESS 0
 # define RETURN_FAILURE 1
 # define NONE_ASSIGNED -1
+# define MSG_ERR_MLX "MLX initiation failed\n"
 
 typedef enum e_error_status
 {
@@ -26,6 +27,7 @@ typedef enum e_error_status
 	GNL_FAILED,
 	STRJOIN_FAILED,
 	INV_MAP,
+    INIT_LIBX_FAILED ,
 }					t_error_status;
 
 typedef struct s_settings
