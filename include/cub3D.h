@@ -45,6 +45,13 @@ typedef struct s_settings
     unsigned char error_type;
 }						t_settings;
 
+//main_utils.c
+void	init_struct_value(t_settings *set);
+void	free_all(t_settings *set);
+int	    clean_and_exit(t_settings *set);
+
+
+
 // typedef struct s_img
 // {
 // 	void		*img;

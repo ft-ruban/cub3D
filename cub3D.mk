@@ -18,7 +18,8 @@ SRC += $(addprefix $(MLXSETDIR), $(addsuffix .c, $(MLXSETSRC)))
 override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 
 
-override MAIN := main
+override MAIN := main \
+				 main_utils
 
 override PARSERSRC := parsing \
 					  element_collect_parsing \
