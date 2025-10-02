@@ -35,7 +35,12 @@ int	main(int argc, char *argv[])
 	//mlx_loop_hook(screen->mlx, set, &screen);
 	mlx_loop_hook(screen->mlx, draw, screen);
 	mlx_loop(screen->mlx);
+	mlx_destroy_image(screen->mlx, screen->img.img);
+	mlx_destroy_window(screen->mlx, screen->mlx_win);
+	mlx_destroy_display(screen->mlx);
+	free(screen->mlx);
+	free(screen);
 	print_struct_set(set); // DEBUG function to see content of struct set
-
+	free_map(set);
 	return (clean_and_exit(set));
 }

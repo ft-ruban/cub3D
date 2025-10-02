@@ -17,11 +17,11 @@ int	close_window(t_mlx *screen)
 	// return(0);
 
 	mlx_loop_end(screen->mlx);
-	mlx_destroy_image(screen->mlx, screen->img.img);
-	mlx_destroy_window(screen->mlx, screen->mlx_win);
-	mlx_destroy_display(screen->mlx);
-	free(screen->mlx);
-	exit(0);
+	// mlx_destroy_image(screen->mlx, screen->img.img);
+	// mlx_destroy_window(screen->mlx, screen->mlx_win);
+	//mlx_destroy_display(screen->mlx);
+	//free(screen->mlx);
+	return(0);
 }
 
 // int	key_move(int keycode, t_set_call *param)

@@ -8,18 +8,18 @@ int	draw(t_mlx *mlx)
 
 	y = 0;
 	x = 0;
-	// while (y < WIN_HEIGHT)
-	// {
-	// 	x = 0;
-	// 	while (x < WIN_WIDTH)
-	// 	{
-	// 		my_mlx_pixel_put(&(mlx->img), x, y, 0x00FF0000);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
-	//my_mlx_pixel_put(&(mlx->img), x, y, 0x00FF0000);
-	mlx_pixel_put(mlx->mlx, mlx->mlx_win, 10, 10, 0x00FF0000);
+	while (y < WIN_HEIGHT)
+	{
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			my_mlx_pixel_put(&(mlx->img), x, y, 0x00FF0000);
+			x++;
+		}
+		y++;
+	}
+	// my_mlx_pixel_put(&(mlx->img), x, y, 0x00FF0000);
+	// mlx_pixel_put(mlx->mlx, mlx->mlx_win, 10, 10, 0x00FF0000);
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.img, 0, 0);
 	return (0);
 }
