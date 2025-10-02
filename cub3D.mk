@@ -4,18 +4,23 @@ override PARSERDIR := parsing/
 override UTILSDIR := utils/
 override DEBUGDIR := debug/
 override MLX_DIR := minilibx-linux/
+override MLXSETDIR := mlx/
+override EXECDIR := exec/
 
 SRC += $(addprefix $(MAINDIR), $(addsuffix .c, $(MAIN)))
 SRC += $(addprefix $(PARSERDIR), $(addsuffix .c, $(PARSERSRC)))
 SRC += $(addprefix $(UTILSDIR), $(addsuffix .c, $(UTILSSRC)))
 SRC += $(addprefix $(DEBUGDIR), $(addsuffix .c, $(DEBUGSRC)))
+SRC += $(addprefix $(MLXSETDIR), $(addsuffix .c, $(MLXSETSRC)))
+SRC += $(addprefix $(EXECDIR), $(addsuffix .c, $(EXECSRC)))
 
 #MLX_LIB := $(MLX_DIR)/libmlx.a
 
 override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 
 
-override MAIN := main
+override MAIN := main \
+				 main_utils
 
 override PARSERSRC := parsing \
 					  element_collect_parsing \
@@ -41,3 +46,8 @@ override UTILSSRC := error \
 					 map_collect_utils
 
 override DEBUGSRC := print_struct_set
+
+override MLXSETSRC := commands \
+					  mlx_utils
+
+override EXECSRC := draw

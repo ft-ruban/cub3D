@@ -1,56 +1,16 @@
-
-
+#include "../minilibx-linux/mlx.h"
+#include "exec.h"
 #include "parsing.h"
+#include "set_mlx.h"
 #include <unistd.h> //write
-# include "../minilibx-linux/mlx.h"
 
-// We init them at those value for further processing in the parsing
-static void	init_struct_value(t_settings *set)
-{
-	set->buff = NULL;
-	set->rp_no = NULL;
-	set->rp_so = NULL;
-	set->rp_we = NULL;
-	set->rp_ea = NULL;
-	set->ceil_r = NONE_ASSIGNED;
-	set->ceil_g = NONE_ASSIGNED;
-	set->ceil_b = NONE_ASSIGNED;
-	set->floor_r = NONE_ASSIGNED;
-	set->floor_g = NONE_ASSIGNED;
-	set->floor_b = NONE_ASSIGNED;
-	set->error_type = RETURN_SUCCESS;
-}
+// WIP DOC : we init our setting structure, then its value then we parse the
+// arguments + content of the file in (parsing) before handling the initiation
+// of MLX that would lead to the loop/hook that handle event and interaction
+// with our project
 
-static void	free_all(t_settings *set)
-{
-	if (set->buff)
-		free(set->buff);
-	if (set->rp_no)
-		free(set->rp_no);
-	if (set->rp_so)
-		free(set->rp_so);
-	if (set->rp_we)
-		free(set->rp_we);
-	if (set->rp_ea)
-		free(set->rp_ea);
-	if (set->map)
-		free_map(set);
-	get_next_line(-1);
-}
-
-static int	clean_and_exit(t_settings *set)
-{
-	unsigned char	return_value;
-
-	return_value = set->error_type;
-	printf("\n\nRETURN CODE : %u\n", return_value); //TORM THIS IS DEBBUG LINE
-	free_all(set);
-	free(set);
-	return (return_value);
-}
-
-// TODO FREE CONTENT STRUCT?
-
+// TODO util main function to clean up things depending of the error case!
+// TODO when work is finished to describe the main in commentaries
 int	main(int argc, char *argv[])
 {
 	t_mlx		*screen;
@@ -63,17 +23,38 @@ int	main(int argc, char *argv[])
 	init_struct_value(set);
 	if (parsing(argc, argv, set))
 		return (clean_and_exit(set));
-	print_struct_set(set); // DEBUG function to see content of struct set
-	//-------------------------------------------------------
-	//--------------PSEUDOCODE-------------------------------
-	//-------------------------------------------------------
-	// init structures/data
-	// if fail return error with right msg + free close
-	// init minilibx + I guess the controls?
-	// if fail return error with right msg + free/close
-	// running part
-	//-------------------------------------------------------
-	//--------------PSEUDOCODE-------------------------------
-	//-------------------------------------------------------
+	// WIP MLX
+	screen = init_screen_mlx(screen); // TOPROTECT
+	if (!screen)
+	{
+		error_handler(set, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
+		free_map(set);
+		return (clean_and_exit(set));
+	}
+	hook_and_loop(screen);
+	destroy_free_screen(screen);
+	print_struct_set(set); // TODLDEBUG function to see content of struct set
+	free_map(set);
 	return (clean_and_exit(set));
 }
+//-----------------------------------------------------------------------------
+// to free everything before leaving
+// CECI EST UNE FONCTION QUE J'AI FAIS DANS UN AUTRE PROJET QUI POURRAIT SERVIR
+// PLUS TARD POUR GAGNER DU TEMPS
+
+// int	free_all_mlx(t_mlx *screen, t_set_call *param, int error_code)
+// {
+// 	if (screen)
+// 		free(screen);
+// 	if (param->c)
+// 		free(param->c);
+// 	if (param->z)
+// 		free(param->z);
+// 	if (error_code == 6)
+// 		return (RETURN_FAILURE);
+// 	if (error_code == -1)
+// 		return (1);
+// 	else
+// 		return (RETURN_FAILURE);
+// }
+//-----------------------------------------------------------------------------
