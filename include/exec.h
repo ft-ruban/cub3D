@@ -3,14 +3,22 @@
 
 # include "cub3D.h"
 # include "set_mlx.h"
+# include "math.h"
 
-typedef struct s_player_pos
+# define M_PI 3.141592653589793238462643383279502984
+
+typedef struct s_data
 {
-	float pos_x;
-	float pos_y;
-	float delta;
-	
-} t_player_pos;
+	float wall_pos_x;
+	float wall_pos_y;
+	float player_pos_x;
+	float player_pos_y;
+	float player_orientation;
+	float radian;
+	float v_radian;
+	float *main_ray_dir;
+	float *all_ray_dir;
+}			   t_data;
 
 //draw.c
 int	    draw(t_mlx *mlx);
