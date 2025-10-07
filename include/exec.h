@@ -5,7 +5,7 @@
 # include "set_mlx.h"
 # include "math.h"
 
-# define M_PI 3.141592653589793238462643383279502984
+# define M_PI 3.14159
 
 typedef struct s_data
 {
@@ -16,9 +16,10 @@ typedef struct s_data
 	float 		player_orientation;
 	float 		radian;
 	float 		v_radian;
-	float 		*main_ray_dir;
-	float 		*main_ray_plane;
-	float 		*all_ray_dir;
+	float 		main_ray_dir_x;
+	float 		main_ray_dir_y;
+	float 		main_ray_plane_x;
+	float 		main_ray_plane_y;
 	t_texture	*texture;
 }				t_data;
 

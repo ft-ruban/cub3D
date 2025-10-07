@@ -8,6 +8,8 @@
 # define FALSE 0
 # define WIN_WIDTH 500
 # define WIN_HEIGHT 500
+# define TEXTURE_WIDTH 1000
+# define TEXTURE_HEIGHT 1000
 # define KEY_ESC 65307
 # define KEY_UNKNOWN 0
 
