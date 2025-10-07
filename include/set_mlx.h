@@ -20,6 +20,16 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
+typedef struct s_texture
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_texture;
+
+
 typedef struct s_mlx
 {
 	void		*mlx;

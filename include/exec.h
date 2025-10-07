@@ -9,16 +9,18 @@
 
 typedef struct s_data
 {
-	float wall_pos_x;
-	float wall_pos_y;
-	float player_pos_x;
-	float player_pos_y;
-	float player_orientation;
-	float radian;
-	float v_radian;
-	float *main_ray_dir;
-	float *all_ray_dir;
-}			   t_data;
+	float 		wall_pos_x;
+	float 		wall_pos_y;
+	float 		player_pos_x;
+	float 		player_pos_y;
+	float 		player_orientation;
+	float 		radian;
+	float 		v_radian;
+	float 		*main_ray_dir;
+	float 		*main_ray_plane;
+	float 		*all_ray_dir;
+	t_texture	*texture;
+}				t_data;
 
 //draw.c
 int	    draw(t_mlx *mlx);
