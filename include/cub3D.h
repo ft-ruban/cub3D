@@ -45,6 +45,7 @@ typedef struct s_settings
     int ceil_g;
     int ceil_b;
     unsigned char error_type;
+	t_texture *texture;
 }						t_settings;
 
 //main_utils.c
