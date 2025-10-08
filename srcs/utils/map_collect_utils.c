@@ -4,7 +4,7 @@
 // We read until we find something else than a '\n'.
 // we skip it with a get_next_line.
 // And so on for the element number of time we have to repeat it.
-bool	skip_elements(t_settings *set, int new_fd)
+bool	skip_elements(t_parsing *parsing, int new_fd)
 {
 	char	*line;
 	size_t	i;
@@ -12,14 +12,14 @@ bool	skip_elements(t_settings *set, int new_fd)
 	i = 0;
 	while (i < ELEMENT_NBR)
 	{
-		if (read(new_fd, set->buff, 1) == READ_FAILED)
-			return (error_handler(set, INV_READ,
+		if (read(new_fd, parsing->buff, 1) == READ_FAILED)
+			return (error_handler(parsing, INV_READ,
 					"map_collect_utils.c:16 ", MSG_6));
-		if (set->buff[0] != '\n')
+		if (parsing->buff[0] != '\n')
 		{
 			line = get_next_line(new_fd);
 			if (!line)
-				return (error_handler(set, MAL_ERR_SET,
+				return (error_handler(parsing, MAL_ERR_SET,
 						"map_collect_utils.c:22 ", MSG_9));
 			free(line);
 			i++;

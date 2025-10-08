@@ -5,7 +5,7 @@
 # include "set_mlx.h"
 # include "math.h"
 
-# define M_PI 3.14159
+//# define M_PI 3.14159
 
 typedef struct s_ray
 {
@@ -19,13 +19,13 @@ typedef struct s_ray
 	float 		main_ray_plane_y;
 }			t_ray;
 
-typedef struct s_player
+typedef struct s_map
 {
 	char 		**map;
 	float 		player_pos_x;
 	float 		player_pos_y;
 	float 		player_orientation;
-}			t_player;
+}			t_map;
 
 //draw.c
 int	    draw(t_mlx *mlx);

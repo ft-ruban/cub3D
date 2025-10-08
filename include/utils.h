@@ -42,15 +42,15 @@ could be related to a failed malloc\n"
 
 // element_check_utils.c
 bool	character_is_invalid(char c);
-bool	player_update_check(t_settings *set, bool *player);
+bool	player_update_check(t_parsing *parsing, bool *player);
 
 // error.c
-int		error_handler(t_settings *set, int error_type,
+int		error_handler(t_parsing *parsing, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c
-bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height, int fd);
-bool	find_map_start(t_settings *set, int fd);
+bool	is_all_map_copied(t_parsing *parsing, size_t line_index, size_t map_height, int fd);
+bool	find_map_start(t_parsing *parsing, int fd);
 
 //free_map.c
 void    free_map(t_settings *set);

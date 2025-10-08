@@ -20,15 +20,15 @@ void	print_struct_set(t_settings *set)
 	printf("cell_b = %d\n", set->ceil_b);
 }
 
-void	print_map(t_settings *set)
+void	print_map(t_map *map_info)
 {
 	size_t	i;
 
 	i = 0;
 	printf("\nMAP:\n\n");
-	while (set->map[i])
+	while (map_info->map[i])
 	{
-		printf("map[%zu]: %s", i, set->map[i]);
+		printf("map[%zu]: %s", i, map_info->map[i]);
 		i++;
 	}
 }

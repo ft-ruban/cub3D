@@ -8,15 +8,15 @@ bool	is_all_map_copied(t_settings *set, size_t line_index, size_t map_height,
 	{
 		free_map(set);
 		close(fd);
-		return (error_handler(set, MAL_ERR_SET, "get_the_map.c:10", MSG_1));
+		return (error_handler(parsing, MAL_ERR_SET, "get_the_map.c:10", MSG_1));
 	}
 	return (RETURN_SUCCESS);
 }
 
-bool	find_map_start(t_settings *set, int fd)
+bool	find_map_start(t_parsing *parsing, int fd)
 {
-	while (set->buff[0] == '\n')
-		if (read(fd, set->buff, 1) == -1)
-			return (error_handler(set, INV_READ, "get_the_map.c:104", MSG_6));
+	while (parsing->buff[0] == '\n')
+		if (read(fd, parsing->buff, 1) == -1)
+			return (error_handler(parsing, INV_READ, "get_the_map.c:104", MSG_6));
 	return (RETURN_SUCCESS);
 }

@@ -16,7 +16,7 @@ static bool	surround_check(char **map, int i, int j)
 
 // While reading through the map with j (map height) and i (line_width),
 // we stop on each floor or the player position to check the surrounding cases.
-static bool	enclosed_check(t_settings *set, char **map)
+static bool	enclosed_check(t_parsing *parsing, char **map)
 {
 	size_t	height;
 	size_t	width;
@@ -32,7 +32,7 @@ static bool	enclosed_check(t_settings *set, char **map)
 				|| map[height][width] == 'W')
 			{
 				if (surround_check(map, width, height))
-					return (error_handler(set, INV_MAP, "map_check.c:35 ",
+					return (error_handler(parsing, INV_MAP, "map_check.c:35 ",
 							MSG_15));
 			}
 			width++;
@@ -44,7 +44,7 @@ static bool	enclosed_check(t_settings *set, char **map)
 
 // We check every single characteres of the map to see if it is a valid one.
 // We check if there is no more than one player position.
-static bool	map_character_check(t_settings *set, char **map)
+static bool	map_character_check(t_parsing *parsing, char **map)
 {
 	int		width;
 	int		height;
@@ -60,23 +60,23 @@ static bool	map_character_check(t_settings *set, char **map)
 		{
 			if (map[height][width] == 'N' || map[height][width] == 'S'
 				|| map[height][width] == 'E' || map[height][width] == 'W')
-				if (player_update_check(set, &player))
+				if (player_update_check(parsing, &player))
 					return (RETURN_FAILURE);
 			if (character_is_invalid(map[height][width]))
-				return (error_handler(set, INV_MAP, "map_check.c:66 ", MSG_14));
+				return (error_handler(parsing, INV_MAP, "map_check.c:66 ", MSG_14));
 			width++;
 		}
 		height++;
 	}
 	if (player == false)
-		return (error_handler(set, INV_MAP, "map_check.c:72 ", MSG_16));
+		return (error_handler(parsing, INV_MAP, "map_check.c:72 ", MSG_16));
 	return (RETURN_SUCCESS);
 }
 
 // We just collected the map with gnl, so our first read will be on the
 // character right after the map end.
 // From here we read until the EOF to be sure we only have '\n'.
-static bool	is_map_single(t_settings *set, int fd)
+static bool	is_map_single(t_parsing *parsing, int fd)
 {
 	bool	eof;
 	int		read_result;
@@ -84,13 +84,13 @@ static bool	is_map_single(t_settings *set, int fd)
 	eof = false;
 	while (eof == false)
 	{
-		read_result = read(fd, set->buff, 1);
+		read_result = read(fd, parsing->buff, 1);
 		if (read_result == READ_FAILED)
-			return (error_handler(set, INV_READ, "map_check.c:89 ", MSG_6));
+			return (error_handler(parsing, INV_READ, "map_check.c:89 ", MSG_6));
 		if (read_result == END_OF_FILE)
 			eof = true;
-		if (set->buff[0] != '\n' && eof == false)
-			return (error_handler(set, INV_MAP, "map_check.c:93 ", MSG_12));
+		if (parsing->buff[0] != '\n' && eof == false)
+			return (error_handler(parsing, INV_MAP, "map_check.c:93 ", MSG_12));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -98,13 +98,13 @@ static bool	is_map_single(t_settings *set, int fd)
 // We make sure to have only one map.
 // We check all the map characters validity.
 // We test if the floor is surrounded by walls.
-bool	map_check(t_settings *set, int fd)
+bool	map_check(t_parsing *parsing, int fd, t_map *map_info)
 {
-	if (is_map_single(set, fd))
+	if (is_map_single(parsing, fd))
 		return (RETURN_FAILURE);
-	if (map_character_check(set, set->map))
+	if (map_character_check(parsing, map_info->map))
 		return (RETURN_FAILURE);
-	if (enclosed_check(set, set->map))
+	if (enclosed_check(parsing, map_info->map))
 		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }

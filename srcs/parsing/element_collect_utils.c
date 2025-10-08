@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:49:00 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/25 08:49:20 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:11:01 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	open_sd_file_give_fd(char *file)
 	return (fd_sd);
 }
 
-int	which_element_type(char letter, t_settings *set)
+int	which_element_type(char letter, t_parsing *parsing)
 {
-	if ((letter == 'F' && set->floor_r == NONE_ASSIGNED) || (letter == 'C'
-			&& set->ceil_r == NONE_ASSIGNED))
+	if ((letter == 'F' && parsing->floor_r == NONE_ASSIGNED) || (letter == 'C'
+			&& parsing->ceil_r == NONE_ASSIGNED))
 		return (TYPE_RGB);
 	else if (letter == 'N' || letter == 'S' || letter == 'W' || letter == 'E')
 		return (TYPE_TEXTURE);
@@ -49,12 +49,12 @@ int	which_element_type(char letter, t_settings *set)
 // if nothing is missed then return false to make the loop stop
 // else it send a true to make it continue
 
-bool	an_element_is_missing(t_settings *set)
+bool	an_element_is_missing(t_parsing *parsing)
 {
-	if (!set->rp_no || !set->rp_so || !set->rp_we || !set->rp_ea
-		|| set->floor_r == NONE_ASSIGNED || set->floor_g == NONE_ASSIGNED
-		|| set->floor_b == NONE_ASSIGNED || set->ceil_r == NONE_ASSIGNED
-		|| set->ceil_g == NONE_ASSIGNED || set->ceil_b == NONE_ASSIGNED)
+	if (!parsing->rp_no || !parsing->rp_so || !parsing->rp_we || !parsing->rp_ea
+		|| parsing->floor_r == NONE_ASSIGNED || parsing->floor_g == NONE_ASSIGNED
+		|| parsing->floor_b == NONE_ASSIGNED || parsing->ceil_r == NONE_ASSIGNED
+		|| parsing->ceil_g == NONE_ASSIGNED || parsing->ceil_b == NONE_ASSIGNED)
 		return (true);
 	else
 		return (false);
