@@ -30,9 +30,19 @@ typedef enum e_error_status
     INIT_LIBX_FAILED ,
 }					t_error_status;
 
+typedef struct s_cub3D
+{
+    t_parsing *parsing;
+    t_ray     *ray;
+    t_player  *player;
+    t_texture *texture;
+    t_mlx     *mlx;
+}               t_cub3D;
+
+//typedef struct s_
+
 typedef struct s_settings
 {
-    char **map;
     char *buff;
     char *rp_no;
     char *rp_so;

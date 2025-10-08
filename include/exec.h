@@ -7,21 +7,25 @@
 
 # define M_PI 3.14159
 
-typedef struct s_data
+typedef struct s_ray
 {
 	float 		wall_pos_x;
 	float 		wall_pos_y;
-	float 		player_pos_x;
-	float 		player_pos_y;
-	float 		player_orientation;
 	float 		radian;
-	float 		v_radian;
+	float 		main_vector; //v_radian anciennement
 	float 		main_ray_dir_x;
 	float 		main_ray_dir_y;
 	float 		main_ray_plane_x;
 	float 		main_ray_plane_y;
-	t_texture	*texture;
-}				t_data;
+}			t_ray;
+
+typedef struct s_player
+{
+	char 		**map;
+	float 		player_pos_x;
+	float 		player_pos_y;
+	float 		player_orientation;
+}			t_player;
 
 //draw.c
 int	    draw(t_mlx *mlx);

@@ -24,6 +24,22 @@ typedef struct s_settings	t_settings; //declaration anticipe
 # define FILE_ERR_3 "parsing_texture.c:62 "
 # define FILE_ERR_4 "parsing_texture.c:68 "
 # define FILE_ERR_5 "parsing_texture.c:74 "
+    
+typedef struct s_parsing
+{
+    char *buff;
+    char *rp_no;
+    char *rp_so;
+    char *rp_we;
+    char *rp_ea;
+    int floor_r;
+    int floor_g;
+    int floor_b;
+    int ceil_r;
+    int ceil_g;
+    int ceil_b;
+    unsigned char error_type;
+}						t_parsing;
 
 // element_collect_parsing.c
 bool	prepare_collect_elements(char *cub_file, t_settings *set, int *fd_sd,
