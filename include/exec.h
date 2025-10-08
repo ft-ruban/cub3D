@@ -9,17 +9,23 @@
 
 typedef struct s_data
 {
-	float 		wall_pos_x;
-	float 		wall_pos_y;
-	float 		player_pos_x;
-	float 		player_pos_y;
-	float 		player_orientation;
-	float 		radian;
-	float 		v_radian;
-	float 		main_ray_dir_x;
-	float 		main_ray_dir_y;
-	float 		main_ray_plane_x;
-	float 		main_ray_plane_y;
+	unsigned int	side;
+	unsigned int	map_x;
+	unsigned int	map_y;
+	int				step_x;
+	int				step_y;
+	float 			pos_x;
+	float 			pos_y;
+	float 			wall_dist_x;
+	float 			wall_dist_y;
+	float 			perp_wall_dist;
+	float 			player_orientation;
+	float 			main_ray_dir_x;
+	float 			main_ray_dir_y;
+	float 			main_ray_plane_x;
+	float 			main_ray_plane_y;
+	float			ray_dir_x;
+	float			ray_dir_y;
 	t_texture	*texture;
 }				t_data;
 
