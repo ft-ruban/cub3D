@@ -6,6 +6,8 @@
 # include "math.h"
 
 //# define M_PI 3.14159
+typedef struct s_mlx	t_mlx;
+typedef struct s_img	t_img;
 
 typedef struct s_ray
 {

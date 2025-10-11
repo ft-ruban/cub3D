@@ -21,7 +21,7 @@ int	main(int argc, char *argv[])
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
 	if (parsing_init(argc, argv, cub3d))
-		return (clean_and_exit(NULL));
+		return(RETURN_FAILURE);//return (clean_and_exit(NULL));
 	// WIP MLX
 	// t_mlx = init_screen_mlx(t_mlx); // TOPROTECT
 	// if (!t_mlx)
@@ -32,8 +32,8 @@ int	main(int argc, char *argv[])
 	// }
 	// hook_and_loop(t_mlx);
 	// destroy_free_screen(t_mlx);
-	// print_struct_set(set); // TODLDEBUG function to see content of struct set
-	// free_map(set);
+	print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
+	free_map(cub3d->map);
 	// return (clean_and_exit(set));
 	return(0);
 }

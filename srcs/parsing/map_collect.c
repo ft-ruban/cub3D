@@ -56,14 +56,14 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing, int fd)
 
 // allocate the suffiscient height memory, the individual lines will be
 // allocated later when copying the map.
-static bool	malloc_map_height(t_settings *set, size_t map_height, t_map *map_info)
+static bool	malloc_map_height(t_parsing *parsing, size_t map_height, t_map *map_info)
 {
 	size_t	i;
 
 	i = 0;
 	map_info->map = malloc(sizeof(char *) * (map_height + 1));
 	if (!map_info->map)
-		return (error_handler(set, MAL_ERR_SET, "map_collect.c.c:66 ", MSG_1));
+		return (error_handler(parsing, MAL_ERR_SET, "map_collect.c.c:66 ", MSG_1));
 	map_info->map[map_height] = NULL;
 	return (RETURN_SUCCESS);
 }

@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 # define UTILS_H
 # include "cub3D.h"
+# include "parsing.h"
 # include <fcntl.h>  //GNL (TOCHECKBCS OLD)
 # include <stdio.h>  //GNL
 # include <stdlib.h> //size_t
@@ -11,7 +12,11 @@
 // PARSING_NBR_ARGC_MSG
 // PARSING_FILE_EXTENSION_MSG
 
-typedef struct s_settings	t_settings; //declaration anticipe
+typedef struct s_parsing	t_parsing; //declaration anticipe
+typedef struct s_cub3d		t_cub3d;
+typedef struct s_map		t_map;
+
+
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -49,11 +54,11 @@ int		error_handler(t_parsing *parsing, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c
-bool	is_all_map_copied(t_parsing *parsing, size_t line_index, size_t map_height, int fd);
+bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height, int fd);
 bool	find_map_start(t_parsing *parsing, int fd);
 
 //free_map.c
-void    free_map(t_settings *set);
+void    free_map(t_map *map_info);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);
@@ -79,8 +84,8 @@ void	*ft_calloc(size_t element_count, size_t element_size);
 char	*ft_strchr(const char *s, int c);
 
 //get_the_map_utils.c
-bool	skip_elements(t_settings *set, int new_fd);
-bool	parse_map_line(t_settings *set, int fd, bool *in_map);
-bool	find_map_first_line(t_settings *set, char **line, int fd);
+bool	skip_elements(t_parsing *parsing, int new_fd);
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map);
+bool	find_map_first_line(t_parsing *parsing, char **line, int fd);
 
 # endif
