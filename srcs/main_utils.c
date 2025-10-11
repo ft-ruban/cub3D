@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/08 15:55:12 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/11 15:24:07 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,38 @@ void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d)
 // free everything in set (may be nice to modify that function to create smth)
 // that handle all of our struct maybe?
 
-// void	free_all(t_settings *set)
-// {
-// 	if (set->buff)
-// 		free(set->buff);
-// 	if (set->rp_no)
-// 		free(set->rp_no);
-// 	if (set->rp_so)
-// 		free(set->rp_so);
-// 	if (set->rp_we)
-// 		free(set->rp_we);
-// 	if (set->rp_ea)
-// 		free(set->rp_ea);
-// 	get_next_line(-1);
-// }
+void	free_parsing_content(t_parsing *parsing)
+{
+	if (parsing->buff)
+		free(parsing->buff);
+	if (parsing->rp_no)
+		free(parsing->rp_no);
+	if (parsing->rp_so)
+		free(parsing->rp_so);
+	if (parsing->rp_we)
+		free(parsing->rp_we);
+	if (parsing->rp_ea)
+		free(parsing->rp_ea);
+	get_next_line(-1); //necessary at the end
+}
 
 // call free all and return the error value
 
-// int	clean_and_exit(t_settings *set)
-// {
-// 	unsigned char	return_value;
+int	clean_and_exit(t_cub3d *cub3d, t_parsing *parsing)
+{
+	unsigned char	return_value;
 
-// 	return_value = set->error_type;
-// 	printf("\n\nRETURN CODE : %u\n", return_value); // TORM THIS IS DEBBUG LINE
-// 	free_all(set);
-// 	free(set);
-// 	return (return_value);
-// }
+	if(parsing)
+	{
+		return_value = parsing->error_type;
+		printf("\n\nRETURN CODE : %u\n", return_value); // TORM THIS IS DEBBUG LINE
+		free_parsing_content(parsing);
+		free(parsing);
+		free(cub3d);
+		return (return_value);
+	}
+
+	printf("fail malloc parsing\n");
+	free(cub3d);
+	return(2); //TODEFINE
+}

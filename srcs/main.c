@@ -21,7 +21,9 @@ int	main(int argc, char *argv[])
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
 	if (parsing_init(argc, argv, cub3d))
-		return(RETURN_FAILURE);//return (clean_and_exit(NULL));
+	{
+		return (clean_and_exit(cub3d, cub3d->parsing));
+	}
 	// WIP MLX
 	// t_mlx = init_screen_mlx(t_mlx); // TOPROTECT
 	// if (!t_mlx)

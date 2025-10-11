@@ -63,7 +63,7 @@ typedef struct s_cub3d
 //main_utils.c
 //void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d);
 // void	free_all(t_settings *set);
-// int	    clean_and_exit(t_settings *set);
+int	    clean_and_exit(t_cub3d *cub3d, t_parsing *parsing);
 
 
 

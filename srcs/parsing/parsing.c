@@ -38,20 +38,26 @@ static void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d)
 // TODO we parse the map and save its content inside of a variable(s)
 // TODO if in the end parsing can only end up in two ways, turn it into a bool
 
+//TODO msg error dans cub3d plutot ca serais mieux je pense.
+//je vais rentrer et je reprend demain c'est un peu difficile avec le chat
+
 int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 {
 	int	fd;
 	t_parsing *parsing;
 	t_map 	  *map_info;
 
-	parsing = malloc (sizeof(t_parsing));
+	parsing = NULL;//malloc (sizeof(t_parsing));
 	if (!parsing)
-		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
+	{
+		return (RETURN_FAILURE);
+	}
+	init_parsing_struct(parsing, cub3d);
 	if (argc != 2)
 		return (error_handler(parsing, PAR_NBR_ARGC, "parsing.c:28 ", MSG_2));
-	init_parsing_struct(parsing, cub3d);
 	if (!is_file_cub_extension(argv[1]))
 		return (error_handler(parsing, PAR_EXTENSION, "parsing.c:30 ", MSG_3));
+	//nice a partir de la
 	if (prepare_collect_elements(argv[1], parsing, &fd, &parsing->buff))
 		return (RETURN_FAILURE);
 	map_info = malloc (sizeof(t_map));
