@@ -20,6 +20,7 @@ int	main(int argc, char *argv[])
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
+	cub3d->error_type = EXIT_SUCCESS;
 	if (parsing_init(argc, argv, cub3d))
 	{
 		return (clean_and_exit(cub3d, cub3d->parsing));

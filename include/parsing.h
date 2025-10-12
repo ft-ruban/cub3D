@@ -40,11 +40,10 @@ typedef struct s_parsing
     int ceil_r;
     int ceil_g;
     int ceil_b;
-    unsigned char error_type;
 }						t_parsing;
 
 // element_collect_parsing.c
-bool	prepare_collect_elements(char *cub_file, t_parsing *parsing, int *fd_sd,
+bool	prepare_collect_elements(char *cub_file, t_cub3d *cub3d, int *fd_sd,
 			char **read_buff);
 
 // element_collect_utils.c
@@ -53,21 +52,21 @@ int		which_element_type(char letter, t_parsing *parsing);
 int		open_sd_file_give_fd(char *file);
 
 // element_rgb_parsing.c
-bool	is_rgb_valid(int fd_sd, t_parsing *parsing, char first_letter,
+bool	is_rgb_valid(int fd_sd, t_cub3d *cub3d, char first_letter,
 			bool received_rgb_completed);
 
 // element_texture_parsing.c
-bool	is_texture_valid(int fd_sd, t_parsing *parsing, char first_letter,
-			char second_letter);
+bool	is_texture_valid(int fd_sd, t_cub3d *cub3d, char fl,
+			char sl);
 
 //map_check.c
-bool map_check(t_parsing *parsing, int fd, t_map *map_info);
+bool map_check(t_cub3d *cub3d, int fd, t_map *map_info);
 
 //map_collect.c
-bool 	map_collect(t_parsing *parsing, t_map *map, char *file, int fd);
+bool 	map_collect(t_cub3d *cub3d, t_map *map, char *file, int fd);
 
 //parsing_map.c
-bool		get_and_check_map(char *file, t_parsing *parsing, int fd, t_map *map);
+bool		get_and_check_map(char *file, t_cub3d *cub3d, int fd, t_map *map);
 
 // parsing.c
 int		parsing_init(int argc, char *argv[], t_cub3d *cub3d);

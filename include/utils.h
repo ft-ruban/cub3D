@@ -47,10 +47,10 @@ could be related to a failed malloc\n"
 
 // element_check_utils.c
 bool	character_is_invalid(char c);
-bool	player_update_check(t_parsing *parsing, bool *player);
+bool	player_update_check(t_cub3d *cub3d, bool *player);
 
 // error.c
-int		error_handler(t_parsing *parsing, int error_type,
+int		error_handler(t_cub3d *cub3d, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c
@@ -84,8 +84,8 @@ void	*ft_calloc(size_t element_count, size_t element_size);
 char	*ft_strchr(const char *s, int c);
 
 //get_the_map_utils.c
-bool	skip_elements(t_parsing *parsing, int new_fd);
-bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map);
-bool	find_map_first_line(t_parsing *parsing, char **line, int fd);
+bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d);
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map, t_cub3d *cub3d);
+bool	find_map_first_line(char **line, int fd);
 
 # endif

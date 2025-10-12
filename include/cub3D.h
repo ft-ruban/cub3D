@@ -40,6 +40,7 @@ typedef struct s_cub3d
     //t_ray     *ray;
     //t_texture *texture;
     //t_mlx     *mlx;
+	unsigned char error_type;
 }               t_cub3d;
 
 //typedef struct s_

@@ -15,8 +15,14 @@ static bool	is_file_cub_extension(char *file)
 	return (true);
 }
 
-static void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d)
+static bool	init_parsing_struct(t_cub3d *cub3d)
 {
+	t_parsing *parsing;
+
+	parsing = malloc (sizeof(t_parsing));
+	if (!parsing)
+		return(RETURN_FAILURE);
+	cub3d->parsing = parsing;
 	parsing->buff = NULL;
 	parsing->rp_no = NULL;
 	parsing->rp_so = NULL;
@@ -28,8 +34,7 @@ static void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d)
 	parsing->floor_r = NONE_ASSIGNED;
 	parsing->floor_g = NONE_ASSIGNED;
 	parsing->floor_b = NONE_ASSIGNED;
-	parsing->error_type = RETURN_SUCCESS;
-	cub3d->parsing = parsing;
+	return(RETURN_SUCCESS);
 }
 
 // we check if the user entered 1 param and nothing more.
@@ -44,27 +49,22 @@ static void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d)
 int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 {
 	int	fd;
-	t_parsing *parsing;
 	t_map 	  *map_info;
 
-	parsing = NULL;//malloc (sizeof(t_parsing));
-	if (!parsing)
-	{
-		return (RETURN_FAILURE);
-	}
-	init_parsing_struct(parsing, cub3d);
 	if (argc != 2)
-		return (error_handler(parsing, PAR_NBR_ARGC, "parsing.c:28 ", MSG_2));
+		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:28 ", MSG_2));
 	if (!is_file_cub_extension(argv[1]))
-		return (error_handler(parsing, PAR_EXTENSION, "parsing.c:30 ", MSG_3));
+		return (error_handler(cub3d, PAR_EXTENSION, "parsing.c:30 ", MSG_3));
 	//nice a partir de la
-	if (prepare_collect_elements(argv[1], parsing, &fd, &parsing->buff))
+	if(init_parsing_struct(cub3d))
+		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:28 ", MSG_2));
+	if (prepare_collect_elements(argv[1], cub3d, &fd, &cub3d->parsing->buff))
 		return (RETURN_FAILURE);
 	map_info = malloc (sizeof(t_map));
 	if(!map_info)
-		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1)); //tocomplete
+		return (error_handler(cub3d, MAL_ERR_SET, "main:TOFILL ", MSG_1)); //tocomplete
 	cub3d->map = map_info;
-	if (get_and_check_map(argv[1], parsing, fd, map_info))
+	if (get_and_check_map(argv[1], cub3d, fd, map_info))
 		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }

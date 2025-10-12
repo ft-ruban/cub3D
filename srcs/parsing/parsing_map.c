@@ -7,14 +7,14 @@
 
 // We collect the map wathever it is a valid one or not.
 // Then we check if the map respect our conditions
-bool	get_and_check_map(char *file, t_parsing *parsing, int fd, t_map *map_info)
+bool	get_and_check_map(char *file, t_cub3d *cub3d, int fd, t_map *map_info)
 {
-	if (map_collect(parsing, map_info, file, fd))
+	if (map_collect(cub3d, map_info, file, fd))
 	{
 		close(fd);
 		return (RETURN_FAILURE);
 	}
-	if (map_check(parsing, fd, map_info))
+	if (map_check(cub3d, fd, map_info))
 	{
 		close(fd);
 		return (RETURN_FAILURE);
