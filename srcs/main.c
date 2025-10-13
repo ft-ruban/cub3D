@@ -37,7 +37,8 @@ int	main(int argc, char *argv[])
 	// destroy_free_screen(t_mlx);
 	print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
 	free_map(cub3d->map);
-	// return (clean_and_exit(set));
+	free(cub3d->map);
+	return (clean_and_exit(cub3d, cub3d->parsing));
 	return(0);
 }
 //-----------------------------------------------------------------------------

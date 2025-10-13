@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/12 07:31:41 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:41:47 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int	clean_and_exit(t_cub3d *cub3d, t_parsing *parsing)
 
 	return_value = cub3d->error_type;
 	printf("\n\nRETURN CODE : %u\n", return_value); // TORM THIS IS DEBBUG LINE
-	
+	if(return_value <= BEFORE_PARSING_INIT && return_value != EXIT_SUCCESS)
+	{
+		free(cub3d);
+		return(return_value);
+	}
 	free_parsing_content(parsing);
 	free(parsing);
 	free(cub3d);

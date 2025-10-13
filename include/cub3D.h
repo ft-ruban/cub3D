@@ -14,6 +14,7 @@ typedef struct s_map	t_map;
 # define RETURN_FAILURE 1
 # define NONE_ASSIGNED -1
 # define MSG_ERR_MLX "MLX initiation failed\n"
+# define BEFORE_PARSING_INIT 5
 
 typedef enum e_error_status
 {
@@ -22,6 +23,7 @@ typedef enum e_error_status
 	ERR,
 	PAR_NBR_ARGC,
 	PAR_EXTENSION,
+	PARSING_INIT_FAIL,
 	INV_FAIL,
 	MAL_ERR_BUFF,
 	INV_CON,

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:49:00 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/08 16:11:01 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:28:43 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	which_element_type(char letter, t_parsing *parsing)
 bool	an_element_is_missing(t_parsing *parsing)
 {
 	if (!parsing->rp_no || !parsing->rp_so || !parsing->rp_we || !parsing->rp_ea
-		|| parsing->floor_r == NONE_ASSIGNED || parsing->floor_g == NONE_ASSIGNED
+		|| parsing->floor_r == NONE_ASSIGNED
+		|| parsing->floor_g == NONE_ASSIGNED
 		|| parsing->floor_b == NONE_ASSIGNED || parsing->ceil_r == NONE_ASSIGNED
 		|| parsing->ceil_g == NONE_ASSIGNED || parsing->ceil_b == NONE_ASSIGNED)
 		return (true);

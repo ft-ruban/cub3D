@@ -52,17 +52,17 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 	t_map 	  *map_info;
 
 	if (argc != 2)
-		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:28 ", MSG_2));
+		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:TOFILL ", MSG_2));
 	if (!is_file_cub_extension(argv[1]))
-		return (error_handler(cub3d, PAR_EXTENSION, "parsing.c:30 ", MSG_3));
-	//nice a partir de la
+		return (error_handler(cub3d, PAR_EXTENSION, "parsing.c:TOFILL ", MSG_3));
 	if(init_parsing_struct(cub3d))
-		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:28 ", MSG_2));
+		return (error_handler(cub3d, PARSING_INIT_FAIL, "parsing.c:TOFILL ", MSG_17));
 	if (prepare_collect_elements(argv[1], cub3d, &fd, &cub3d->parsing->buff))
 		return (RETURN_FAILURE);
+	//Semble safe a partir de ici
 	map_info = malloc (sizeof(t_map));
 	if(!map_info)
-		return (error_handler(cub3d, MAL_ERR_SET, "main:TOFILL ", MSG_1)); //tocomplete
+		return (error_handler(cub3d, 42, "main:TOFILL ", MSG_1)); //tocomplete
 	cub3d->map = map_info;
 	if (get_and_check_map(argv[1], cub3d, fd, map_info))
 		return (RETURN_FAILURE);

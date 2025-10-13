@@ -22,7 +22,7 @@ typedef struct s_map		t_map;
 #  define BUFFER_SIZE 1
 # endif
 
-# define MSG_1 "error during malloc of set structure\n"
+# define MSG_1 "error during malloc of cub3d structure\n"
 # define MSG_2 "invalid argc value, cub3D require a single and only arg\n"
 # define MSG_3 "invalid file's extension cub3d only support .cub files as arg\n"
 # define MSG_4 "Error while opening file be sure the file \
@@ -31,7 +31,7 @@ exist in scene_descriptions folder\n"
 # define MSG_6 "a read function failed, it may be because of incorrect \
 format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, \
-	make sure it follow the expected form\n"
+make sure it follow the expected form\n"
 # define MSG_8 "The RGB value of C or/and F seem to be bigger than 255. \
 each color can receive a value between 0 and 255. Check .cub entries.\n"
 # define MSG_9 "Error during get_next_line, \
@@ -44,6 +44,7 @@ could be related to a failed malloc\n"
 # define MSG_14 "One of the map character or more is not valid\n"
 # define MSG_15 "Map is not closed\n"
 # define MSG_16 "No player position found\n"
+# define MSG_17 "Malloc failure during init of parsing struct\n"
 
 // element_check_utils.c
 bool	character_is_invalid(char c);

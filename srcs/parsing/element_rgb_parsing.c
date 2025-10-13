@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/12 10:59:26 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/13 07:33:52 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static bool	retrieve_rgb(int fd_sd, t_cub3d *cub3d, int *ptr_data_to_fill,
 			return (error_handler(cub3d, PAR_INV_RGB, "parsing_rgb.c:34 ",
 					MSG_8));
 		*ptr_data_to_fill = *ptr_data_to_fill * 10;
-		*ptr_data_to_fill = *ptr_data_to_fill + ft_atoi(&cub3d->parsing->buff[0]);
+		*ptr_data_to_fill = *ptr_data_to_fill
+			+ ft_atoi(&cub3d->parsing->buff[0]);
 		if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
 			return (error_handler(cub3d, INV_READ, "parsing_rgb.c:39 ", MSG_6));
 		len_rgb_value++;
@@ -56,7 +57,7 @@ static bool	prepare_retrieve_rgb(int fd_sd, t_cub3d *cub3d, bool is_blue,
 		return (RETURN_FAILURE);
 	if (!is_blue)
 	{
-		if (read(fd_sd,cub3d->parsing->buff, 1) == -1)
+		if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
 			return (error_handler(cub3d, INV_READ, "parsing_rgb.c:30 ", MSG_6));
 		if (ft_isnum((int)cub3d->parsing->buff[0]))
 			return (error_handler(cub3d, PAR_INV_RGB, "parsing_rgb.c:60 ",
@@ -90,29 +91,12 @@ static bool	ceil_or_floor_rgb(int fd_sd, t_cub3d *cub3d, bool ceil_or_floor)
 	return (RETURN_SUCCESS);
 }
 
-// static bool	prepare_retrieve_rgb_floor(int fd_sd, t_settings *set)
-// {
-// 	if (retrieve_rgb(fd_sd, set, &set->floor_r, false))
-// 		return (RETURN_FAILURE);
-// 	if (read(fd_sd, set->buff, 1) == -1)
-// 		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-// 	if (retrieve_rgb(fd_sd, set, &set->floor_g, false))
-// 		return (RETURN_FAILURE);
-// 	if (read(fd_sd, set->buff, 1) == -1)
-// 		return (error_handler(set, INV_READ, "parsing_rgb.c:30 ", MSG_6));
-// 	if (retrieve_rgb(fd_sd, set, &set->floor_b, true))
-// 		return (RETURN_FAILURE);
-// 	return (RETURN_SUCCESS);
-// }
-
 // while we didnt retrieve our rgb value we stay in loop
 // we read char by char the content, if it is a num value
 // we redirect to the next function with the right parameter
 // depending if it is about floor or ceiling and put our bool at true
 // to exit the loop. If it is a space char we get back to the start of loop
 // else it mean it is an invalid content so in consequence return an error
-
-// TODO  TO CHECK IF NECC? c:103
 
 bool	is_rgb_valid(int fd_sd, t_cub3d *cub3d, char first_letter,
 		bool received_rgb_completed)
