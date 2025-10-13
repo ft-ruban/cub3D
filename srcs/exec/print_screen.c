@@ -6,22 +6,22 @@
 // one dist_next_x or y. then everytime we move to the next edge, we keep an
 // eye on where we are by updating the map_x or y with the right step(+1 or -1).
 // the side variable is here to indicate if we hit a wall on the x or y side.
-void	until_we_hit_a_wall(t_data *data, t_settings *set,
+void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			unsigned int dist_next_x,unsigned int dist_next_y)
 {
-	while (set->map[data->map_y][data->map_x] != 1)
+	while (map->map[map->wall_pos_y][map->wall_pos_x] != 1)
 	{
-		if (data->wall_dist_x < data->wall_dist_y)
+		if (ray->wall_dist_x < ray->wall_dist_y)
 		{
-			data->wall_dist_x += dist_next_x;
-			data->map_x += data->step_x;
-			data->side = 0;
+			ray->wall_dist_x += dist_next_x;
+			map->wall_pos_x += ray->step_x;
+			ray->side = 0;
 		}
 		else
 		{
-			data->wall_dist_y += dist_next_y;
-			data->map_y += data->step_y;
-			data->side = 1;
+			ray->wall_dist_y += dist_next_y;
+			map->wall_pos_y += ray->step_y;
+			ray->side = 1;
 		}
 	}
 }
@@ -34,28 +34,32 @@ void	until_we_hit_a_wall(t_data *data, t_settings *set,
 // So to find the distance between the player and the first time we enconter
 // the x edge, we add dist_next_x that we multipy by a number bellow 1.
 // here 4 + 1 - 4.8 = 0.2. so dist_next_x will be multiplied by 0.2. 
-void	stop_at_first_edge(t_data *data, unsigned int dist_next_x,
-											unsigned int dist_next_y)
+void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
+													unsigned int dist_next_y)
 {
-	if (data->ray_dir_x < 0)
+	if (ray->dir_x < 0)
 	{
-		data->step_x = -1;
-		data->wall_dist_x = (data->pos_x - data->map_x) * dist_next_x;
+		ray->step_x = -1;
+		ray->wall_dist_x = (map->player_pos_x - map->wall_pos_x) *
+															dist_next_x;
 	}
 	else
 	{
-		data->step_x = 1;
-		data->wall_dist_x = (data->map_x + 1 - data->pos_x) * dist_next_x;
+		ray->step_x = 1;
+		ray->wall_dist_x = (map->wall_pos_x + 1 - map->player_pos_x) *
+															dist_next_x;
 	}
-	if (data->ray_dir_y < 0)
+	if (ray->dir_y < 0)
 	{
-		data->step_y = -1;
-		data->wall_dist_y = (data->pos_y - data->map_y) * dist_next_y;
+		ray->step_y = -1;
+		ray->wall_dist_y = (map->player_pos_y - map->wall_pos_y) *
+															dist_next_y;
 	}
 	else
 	{
-		data->step_y = 1;
-		data->wall_dist_y = (data->map_y + 1 - data->pos_y) * dist_next_y;
+		ray->step_y = 1;
+		ray->wall_dist_y = (map->wall_pos_y + 1 - map->player_pos_y) *
+															dist_next_y;
 	}
 }
 
@@ -65,15 +69,15 @@ void	stop_at_first_edge(t_data *data, unsigned int dist_next_x,
 // the same as this distance(x to x + 1). So we also find this exact distance.
 // Now it's easy, from where we are now, (wich is exactly on the edge of an 
 // axe), we add dist_next_x or y to be exactly on the next edge x or y.
-void	detect_first_wall(t_data *data, t_settings *set)
+void	detect_first_wall(t_cub3d *cub3d)
 {
 	unsigned int	dist_next_x;
 	unsigned int	dist_next_y;
 
-	dist_next_x = 1 / data->ray_dir_x;
-	dist_next_y = 1 / data->ray_dir_y;
-	stop_at_first_edge(data, dist_next_x, dist_next_y);
-	until_we_hit_a_wall(data, set, dist_next_x, dist_next_y);
+	dist_next_x = 1 / cub3d->ray->dir_x;
+	dist_next_y = 1 / cub3d->ray->dir_y;
+	stop_at_first_edge(cub3d->ray, cub3d->map, dist_next_x, dist_next_y);
+	until_we_hit_a_wall(cub3d->map, cub3d->map->map, dist_next_x, dist_next_y);
 }
 
 // after getting the main_ray_dir and his plane vecteur, we calculate the rays
@@ -82,25 +86,25 @@ void	detect_first_wall(t_data *data, t_settings *set)
 // and then we move to the next ray.
 // for every time we calculate a ray direction, the camera orient a tiny bit to
 // the left, updating itself with the current ray_dir we are calculating.
-void	curr_ray_dir(t_data *data)
+void	curr_ray_dir(t_cub3d *cub3d)
 {
 	float	camera;
 
-	camera = 2 * (data->curr_column / WIN_WIDTH) - 1;
-	data->ray_dir_x = data->main_ray_dir_x +
-					(data->main_ray_plane_x * camera);
-	data->ray_dir_y = data->main_ray_dir_y +
-					(data->main_ray_plane_y * camera);
+	camera = 2 * (cub3d->curr_column / WIN_WIDTH) - 1;
+	cub3d->ray->dir_x = cub3d->ray->main_ray_dir_x +
+					(cub3d->ray->main_ray_plane_x * camera);
+	cub3d->ray->dir_y = cub3d->ray->main_ray_dir_y +
+					(cub3d->ray->main_ray_plane_y * camera);
 }
 
-print_screen(t_data *data, t_settings *set, t_mlx *mlx, t_texture *texture)
+print_screen(t_cub3d *cub3d)
 {
-	data->curr_column = 0;
-	while (data->curr_column < WIN_WIDTH)
+	cub3d->curr_column = 0;
+	while (cub3d->curr_column < WIN_WIDTH)
 	{
-		curr_ray_dir(data);
-		detect_first_wall(data, set);
-		draw_column(data, mlx, texture);
-		data->curr_column++;
+		curr_ray_dir(cub3d);
+		detect_first_wall(cub3d);
+		draw_column(cub3d);
+		cub3d->curr_column++;
 	}
 }

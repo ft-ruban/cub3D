@@ -6,39 +6,22 @@
 // stock the address of mlx image we got in a char *, update bits_per_pixel to
 // know how many bits to have a complete pixel (here it is 32). We can now pick the pixel
 // we need in that linear tab of char going from .
-bool	get_texture_data(t_settings *set, t_mlx *mlx, t_texture *texture)
+bool	get_texture_data(t_cub3d *cub3d, t_img *img, char *path)
 {
-	texture->no_img = mlx_xpm_file_to_image(mlx->mlx, set->rp_no, TEXTURE_WIDTH,
-			TEXTURE_HEIGHT); // TODO LDEV : protect
-	texture->no_addr = mlx_get_data_addr(texture->no_img,
-			&(texture->bits_per_pixel), &(texture->line_length),
-			&(texture->endian)); // TODO : protect. Check if necessary 
-								 // (mlx or texture ?)
-	texture->so_img = mlx_xpm_file_to_image(mlx->mlx, set->rp_so, TEXTURE_WIDTH,
-			TEXTURE_HEIGHT); // TODO LDEV : protect
-	texture->so_addr = mlx_get_data_addr(texture->so_img,
-			&(texture->bits_per_pixel), &(texture->line_length),
-			&(texture->endian)); // TODO : protect. Check if necessary 
-								 // (mlx or texture ?)
-	texture->we_img = mlx_xpm_file_to_image(mlx->mlx, set->rp_we, TEXTURE_WIDTH,
-			TEXTURE_HEIGHT); // TODO LDEV : protect
-	texture->we_addr = mlx_get_data_addr(texture->we_img,
-			&(texture->bits_per_pixel), &(texture->line_length),
-			&(texture->endian)); // TODO : protect. Check if necessary 
-								 // (mlx or texture ?)
-	texture->ea_img = mlx_xpm_file_to_image(mlx->mlx, set->rp_ea, TEXTURE_WIDTH,
-			TEXTURE_HEIGHT); // TODO LDEV : protect
-	texture->ea_addr = mlx_get_data_addr(texture->ea_img,
-			&(texture->bits_per_pixel), &(texture->line_length),
-			&(texture->endian)); // TODO : protect. Check if necessary 
-								 // (mlx or texture ?)
+	img->img = mlx_xpm_file_to_image(cub3d->mlx->mlx, path,
+								TEXTURE_WIDTH, TEXTURE_HEIGHT); // TODO LDEV : protect
+	if (!img->img)
+		return (error_handler(cub3d, MAL_ERR_SET, "exec:TOFILL ", MSG_1));
+	img->addr = mlx_get_data_addr(img->img,
+			&(img->bits_per_pixel), &(img->line_length),
+			&(img->endian));
+	if (!img->addr)
+		return (error_handler(cub3d, MAL_ERR_SET, "exec:TOFILL ", MSG_1));
+	return (RETURN_SUCCESS);
 }
 
-
-
-
-int		exec(t_data *data, t_settings *set, t_mlx *mlx, char **map)
+int		exec(t_cub3d *cub3d)
 {
-	init_player_data(data, map);
-	print_screen(data, set, mlx);
+	init_player_data(cub3d);
+	print_screen(cub3d);
 }

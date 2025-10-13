@@ -37,11 +37,12 @@ typedef enum e_error_status
 
 typedef struct s_cub3d
 {
-    t_parsing   *parsing;
-	t_map  		*map;
-    //t_ray     *ray;
-    //t_texture *texture;
-    //t_mlx     *mlx;
+	unsigned int	curr_column;
+    t_parsing   	*parsing;
+	t_map  			*map;
+    t_ray     		*ray;
+    t_texture 		*texture;
+    t_mlx     		*mlx;
 	unsigned char error_type;
 }               t_cub3d;
 

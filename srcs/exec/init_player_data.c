@@ -2,9 +2,32 @@
 #include "set_mlx.h"
 #include "exec.h"
 
+// we are looking for the direction of the ray in the center of the player 
+// vision.
+// here 0 is x and 1 is y, two numbers for the main vecteur in 2D.
+void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
+{
+	ray->main_ray_dir_x = cos(player_orientation);
+	ray->main_ray_dir_y = sin(player_orientation);
+	ray->main_ray_plane_x = cos(player_orientation + M_PI * 0.5);
+	ray->main_ray_plane_y = sin(player_orientation + M_PI * 0.5);
+}
+
+void	assign_player_orientation(t_map *map, char player_tile)
+{
+	if (player_tile = 'N')
+		map->player_orientation = M_PI * 0.5;
+	if (player_tile = 'S')
+		map->player_orientation = M_PI + M_PI * 0.5;
+	if (player_tile = 'W')
+		map->player_orientation = M_PI;
+	if (player_tile = 'E')
+		map->player_orientation = 0.0;
+}
+
 // first, find the exact position of our player, adding 0.5 to pu him in the 
 // center of the case mesuring 1 * 1.
-void	find_player_pos(t_data *data, char **map)
+char	find_player_pos(t_map *map_info, char **map)
 {
 	int	width;
 	int	height;
@@ -18,38 +41,24 @@ void	find_player_pos(t_data *data, char **map)
 			if (map[height][width] == 'N' || map[height][width] == 'S' ||
 				map[height][width] == 'W' || map[height][width] == 'E')
 				{
-					data->map_x = width;
-					data->map_y = height;
-					data->pos_x = width + 0.5;
-					data->pos_y = height + 0.5;
-					assign_player_orientation(data, map[height][width]);
+					map_info->wall_pos_x = width;
+					map_info->wall_pos_y = height;
+					map_info->player_pos_x = width + 0.5;
+					map_info->player_pos_y = height + 0.5;
 					break;
 				}
 			width++;
 		}
 		height++;
 	}
+	return(map[height][width]);
 }
 
-void	assign_player_orientation(t_data *data, char c)
+void	init_player_data(t_cub3d *cub3d)
 {
-	if (c = 'N')
-		data->player_orientation = M_PI * 0.5;
-	if (c = 'S')
-		data->player_orientation = M_PI + M_PI * 0.5;
-	if (c = 'W')
-		data->player_orientation = M_PI;
-	if (c = 'E')
-		data->player_orientation = 0.0;
-}
+	char	player_tile;
 
-// we are looking for the direction of the ray in the center of the player 
-// vision.
-// here 0 is x and 1 is y, two numbers for the main vecteur in 2D.
-void	set_main_ray_dir_and_plane(t_data *data, float player_orientation)
-{
-	data->main_ray_dir_x = cos(data->player_orientation);
-	data->main_ray_dir_y = sin(data->player_orientation);
-	data->main_ray_plane_x = cos(data->player_orientation + M_PI * 0.5);
-	data->main_ray_plane_y = sin(data->player_orientation + M_PI * 0.5);
+	player_tile = find_player_pos(cub3d->map, cub3d->map->map);
+	assign_player_orientation(cub3d->map, player_tile);
+	set_main_ray_dir_and_plane(cub3d->ray, cub3d->map->player_orientation);
 }

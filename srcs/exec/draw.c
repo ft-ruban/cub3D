@@ -3,7 +3,7 @@
 // function to draw our pixels
 // ATM it just paint all pixel into RED color simple
 
-int	draw(t_mlx *mlx)
+int	draw_pixel(t_cub3d *cub3d, char *area, unsigned int pixel)
 {
 	int	y;
 	int	x;
@@ -15,7 +15,7 @@ int	draw(t_mlx *mlx)
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
-			my_mlx_pixel_put(&(mlx->img), x, y, 0x00F0FF00);
+			my_mlx_pixel_put(&(cub3d->mlx->img), x, y, 0x00F0FF00);
 			x++;
 		}
 		y++;

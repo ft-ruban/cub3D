@@ -13,6 +13,13 @@
 # define KEY_ESC 65307
 # define KEY_UNKNOWN 0
 
+typedef struct s_mlx
+{
+	void		*mlx;
+	void		*mlx_win;
+	t_img		img;
+}				t_mlx;
+
 typedef struct s_img
 {
 	void		*img;
@@ -24,28 +31,18 @@ typedef struct s_img
 
 typedef struct s_texture
 {
-	void			*no_img;
-	char			*no_addr;
-	void			*so_img;
-	char			*so_addr;
-	void			*we_img;
-	char			*we_addr;
-	void			*ea_img;
-	char			*ea_addr;
-	int				bits_per_pixel;
-	int				line_length;
-	int				endian;
-	float			step;
-	unsigned int	tex_y;
-	unsigned int	tex_x;
+	unsigned int	wall_pixel_height;
+	unsigned int	pixel_color;
+	unsigned int	*ceil_hex;
+	unsigned int	*floor_hex;
+	float			render;
+	unsigned int	y;
+	unsigned int	x;
+	t_img			*no;
+	t_img			*so;
+	t_img			*we;
+	t_img			*ea;
 }				t_texture;
-
-typedef struct s_mlx
-{
-	void		*mlx;
-	void		*mlx_win;
-	t_img		img;
-}				t_mlx;
 
 // commands.c
 int	handle_keys(int keycode, t_mlx *screen);
