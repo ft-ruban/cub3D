@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_check.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/13 10:25:39 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/10/13 10:25:40 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 #include "utils.h"
 
 // we check if the case surrounding a floor is valid
 static bool	surround_check(char **map, int i, int j)
 {
-	if (map[j][i -1] == ' ' || map[j][i -1] == '\n'
-		|| map[j][i -1] == '\0' || map[j][i +1] == ' '
-		|| map[j][i +1] == '\n' || map[j][i +1] == '\0'
-		|| map[j -1][i] == ' ' || map[j -1][i] == '\n'
-		|| map[j -1][i] == '\0' || map[j +1][i] == ' '
-		|| map[j +1][i] == '\n' || map[j +1][i] == '\0')
+	if (map[j][i - 1] == ' ' || map[j][i - 1] == '\n' || map[j][i - 1] == '\0'
+		|| map[j][i + 1] == ' ' || map[j][i + 1] == '\n' || map[j][i
+		+ 1] == '\0' || map[j - 1][i] == ' ' || map[j - 1][i] == '\n' || map[j
+		- 1][i] == '\0' || map[j + 1][i] == ' ' || map[j + 1][i] == '\n'
+		|| map[j + 1][i] == '\0')
 		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
@@ -32,7 +43,7 @@ static bool	enclosed_check(char **map)
 				|| map[height][width] == 'W')
 			{
 				if (surround_check(map, width, height))
-					return(RETURN_FAILURE);
+					return (RETURN_FAILURE);
 			}
 			width++;
 		}
@@ -62,7 +73,7 @@ static bool	map_character_check(char **map, t_cub3d *cub3d)
 				if (player_update_check(cub3d, &player))
 					return (RETURN_FAILURE);
 			if (character_is_invalid(map[height][width]))
-				return(RETURN_FAILURE);
+				return (RETURN_FAILURE);
 			width++;
 		}
 		height++;
@@ -104,7 +115,6 @@ bool	map_check(t_cub3d *cub3d, int fd, t_map *map_info)
 	if (map_character_check(map_info->map, cub3d))
 		return (error_handler(cub3d, INV_MAP, "map_check.c:66 ", MSG_14));
 	if (enclosed_check(map_info->map))
-		return (error_handler(cub3d, INV_MAP, "map_check.c:35 ",
-							MSG_15));
+		return (error_handler(cub3d, INV_MAP, "map_check.c:35 ", MSG_15));
 	return (RETURN_SUCCESS);
 }

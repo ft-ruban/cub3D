@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_collect.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/10/13 10:26:52 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 #include "utils.h"
 
@@ -16,7 +28,7 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 	while (line_index < map_height)
 	{
 		map_info->map[line_index] = ft_strdup(line);
-		free (line);
+		free(line);
 		if (!map_info->map[line_index])
 			return (RETURN_FAILURE);
 		line_index++;
@@ -33,7 +45,8 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 
 // Close then reopen fd to start the reading of the file from the beginning,
 // skip the 6 parameters and stop.
-static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing, int fd, t_cub3d *cub3d)
+static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
+		int fd, t_cub3d *cub3d)
 {
 	char	*path;
 	int		new_fd;
@@ -49,7 +62,7 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing, int fd,
 	free(path);
 	if (new_fd == OPEN_FAILED)
 		return (OPEN_FAILED);
-	if (skip_elements(parsing, new_fd,cub3d))
+	if (skip_elements(parsing, new_fd, cub3d))
 		return (READ_OR_MALLOC_ERR);
 	return (new_fd);
 }
@@ -68,10 +81,11 @@ static bool	malloc_map_height(size_t map_height, t_map *map_info)
 	return (RETURN_SUCCESS);
 }
 
-// We read the map one character at a time, line by line, to know the largest 
+// We read the map one character at a time, line by line, to know the largest
 // line (width) and the height that increase each time we cross a '\n'
 // We know we are out of the map if read = 0 or when we cross two '\n' together
-static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd, t_cub3d *cub3d)
+static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd,
+		t_cub3d *cub3d)
 {
 	bool	in_map;
 
@@ -83,7 +97,8 @@ static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd, t_cub3
 		if (parse_map_line(parsing, fd, &in_map, cub3d))
 			return (RETURN_FAILURE);
 		if (read(fd, parsing->buff, 1) == READ_FAILED)
-			return (error_handler(cub3d, INV_READ, "map_collect.c.c:86 ", MSG_6));
+			return (error_handler(cub3d, INV_READ, "map_collect.c.c:86 ",
+					MSG_6));
 		if (parsing->buff[0] == '\n')
 			in_map = false;
 		(*map_height)++;
@@ -103,20 +118,19 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 	if (find_map_size(cub3d->parsing, &map_height, fd, cub3d))
 		return (RETURN_FAILURE);
 	if (malloc_map_height(map_height, map_info))
-		return (error_handler(cub3d, MAL_ERR_SET, "map_collect.c.c:66 ", MSG_1));
+		return (error_handler(cub3d, MAL_ERR_SET, "map_collect.c.c:66 ",
+				MSG_1));
 	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d);
 	if (fd == OPEN_FAILED || fd == MALLOC_ERR)
 	{
 		free(map_info->map);
 		return (RETURN_FAILURE);
 	}
-	//safe a partir de la	
 	if (copy_the_map(map_height, fd, map_info))
 	{
 		close(fd);
 		free(map_info->map);
-		return (error_handler(cub3d, MAL_ERR_SET,
-			"get_the_map.c:64 ", MSG_9));
+		return (error_handler(cub3d, MAL_ERR_SET, "get_the_map.c:64 ", MSG_9));
 	}
 	print_map(map_info);
 	return (RETURN_SUCCESS);
