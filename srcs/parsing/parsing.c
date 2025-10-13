@@ -37,10 +37,10 @@ static bool	init_parsing_struct(t_cub3d *cub3d)
 	return (RETURN_SUCCESS);
 }
 
-static void convert_rgb_hex(t_parsing *parsing, t_texture *texture)
-{
+// static void convert_rgb_hex(t_parsing *parsing, t_texture *texture)
+// {
 
-}
+// }
 
 static void texture_struct_setup(t_cub3d *cub3d)
 {
@@ -49,8 +49,7 @@ static void texture_struct_setup(t_cub3d *cub3d)
 	texture = malloc (sizeof(t_texture));
 	if (!texture)
 		return(RETURN_FAILURE);
-	convert_rgb_hex(cub3d->parsing);
-		
+	//convert_rgb_hex(cub3d->parsing);	
 }
 
 // we check if the user entered 1 param and nothing more.
@@ -86,6 +85,6 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 		free(map_info);
 		return (RETURN_FAILURE);
 	}
-	texture_struct_setup;
+	texture_struct_setup(cub3d);
 	return (RETURN_SUCCESS);
 }
