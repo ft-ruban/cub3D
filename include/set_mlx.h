@@ -24,13 +24,21 @@ typedef struct s_img
 
 typedef struct s_texture
 {
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
+	void			*no_img;
+	char			*no_addr;
+	void			*so_img;
+	char			*so_addr;
+	void			*we_img;
+	char			*we_addr;
+	void			*ea_img;
+	char			*ea_addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+	float			step;
+	unsigned int	tex_y;
+	unsigned int	tex_x;
 }				t_texture;
-
 
 typedef struct s_mlx
 {

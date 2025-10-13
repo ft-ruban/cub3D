@@ -29,6 +29,15 @@ typedef struct s_map
 	float 		player_orientation;
 }			t_map;
 
+//draw_column.c
+void	draw_column(t_data *data, t_mlx *mlx, t_texture *texture);
+
+//print_screen.c
+void	print_screen(t_data *data, t_settings *set, t_mlx *mlx, t_texture *texture);
+
+//exec.c
+int		exec(t_data *data, t_settings *set, t_mlx *mlx, char **map);
+
 //draw.c
 int	    draw(t_mlx *mlx);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
