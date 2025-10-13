@@ -18,14 +18,14 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 		map_info->map[line_index] = ft_strdup(line);
 		free (line);
 		if (!map_info->map[line_index])
-		{
-			close (fd);
 			return (RETURN_FAILURE);
-		}
 		line_index++;
 		line = get_next_line(fd);
-		if (!line && line_index < map_height) //TODO CHECK ABOUT CLOSE FD SAFE
+		if (!line && line_index < map_height)
+		{
+			free(map_info->map[line_index - 1]);
 			return (RETURN_FAILURE);
+		}
 	}
 	free(line);
 	return (RETURN_SUCCESS);
@@ -106,10 +106,18 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 		return (error_handler(cub3d, MAL_ERR_SET, "map_collect.c.c:66 ", MSG_1));
 	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d);
 	if (fd == OPEN_FAILED || fd == MALLOC_ERR)
+	{
+		free(map_info->map);
 		return (RETURN_FAILURE);
+	}
+	//safe a partir de la	
 	if (copy_the_map(map_height, fd, map_info))
+	{
+		close(fd);
+		free(map_info->map);
 		return (error_handler(cub3d, MAL_ERR_SET,
-					"get_the_map.c:64 ", MSG_9));
+			"get_the_map.c:64 ", MSG_9));
+	}
 	print_map(map_info);
 	return (RETURN_SUCCESS);
 }

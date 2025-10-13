@@ -59,12 +59,16 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 		return (error_handler(cub3d, PARSING_INIT_FAIL, "parsing.c:TOFILL ", MSG_17));
 	if (prepare_collect_elements(argv[1], cub3d, &fd, &cub3d->parsing->buff))
 		return (RETURN_FAILURE);
-	//Semble safe a partir de ici
 	map_info = malloc (sizeof(t_map));
 	if(!map_info)
 		return (error_handler(cub3d, 42, "main:TOFILL ", MSG_1)); //tocomplete
 	cub3d->map = map_info;
+	//Semble safe a partir de ici
 	if (get_and_check_map(argv[1], cub3d, fd, map_info))
+	{
+		free(map_info);
 		return (RETURN_FAILURE);
+	}
+
 	return (RETURN_SUCCESS);
 }
