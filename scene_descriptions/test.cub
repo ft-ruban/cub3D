@@ -1,13 +1,10 @@
 
-WE prout
 SO xd
-
+WE prout
 EA ./path_to_the_east_texture
 NO ./path_to_the_north_texture    
-
 C 5,255,55
 F 220,100,0
-
 
 
 11111111111

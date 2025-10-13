@@ -1,14 +1,14 @@
 #include "parsing.h"
 
-void	free_map(t_settings *set)
+void	free_map(t_map *map_info)
 {
 	int	i;
 
 	i = 0;
-	while (set->map[i])
+	while (map_info->map[i])
 	{
-		free(set->map[i]);
+		free(map_info->map[i]);
 		i++;
 	}
-	free(set->map);
+	free(map_info->map);
 }

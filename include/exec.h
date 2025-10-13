@@ -5,32 +5,29 @@
 # include "set_mlx.h"
 # include "math.h"
 
-# define M_PI 3.14159
+//# define M_PI 3.14159
+typedef struct s_mlx	t_mlx;
+typedef struct s_img	t_img;
 
-typedef struct s_data
+typedef struct s_ray
 {
-	unsigned int	side;
-	unsigned int	map_x;
-	unsigned int	map_y;
-	unsigned int	wall_pixel_height;
-	unsigned int	curr_column;
-	int				step_x;
-	int				step_y;
-	float 			pos_x;
-	float 			pos_y;
-	float 			wall_dist_x;
-	float 			wall_dist_y;
-	float 			perp_wall_dist;
-	float 			player_orientation;
-	float 			main_ray_dir_x;
-	float 			main_ray_dir_y;
-	float 			main_ray_plane_x;
-	float 			main_ray_plane_y;
-	float			ray_dir_x;
-	float			ray_dir_y;
-	int				pixel_color;
-	t_texture	*texture;
-}				t_data;
+	float 		wall_pos_x;
+	float 		wall_pos_y;
+	float 		radian;
+	float 		main_vector; //v_radian anciennement
+	float 		main_ray_dir_x;
+	float 		main_ray_dir_y;
+	float 		main_ray_plane_x;
+	float 		main_ray_plane_y;
+}			t_ray;
+
+typedef struct s_map
+{
+	char 		**map;
+	float 		player_pos_x;
+	float 		player_pos_y;
+	float 		player_orientation;
+}			t_map;
 
 //draw_column.c
 void	draw_column(t_data *data, t_mlx *mlx, t_texture *texture);

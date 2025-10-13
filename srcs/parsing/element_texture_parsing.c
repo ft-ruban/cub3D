@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_texture.c                                  :+:      :+:    :+:   */
+/*   element_texture_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:43:54 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/10/13 07:32:44 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,28 @@
 // if not it would be detected during the init of minilibx anyway
 
 static bool	find_texture_element_path(int fd_sd, char **element,
-		t_settings *set)
+		t_parsing *parsing, t_cub3d *cub3d)
 {
 	char	*element_buff;
 
 	element_buff = NULL;
-	if (read(fd_sd, set->buff, 1) == -1)
-		return (error_handler(set, INV_READ, "parsing_texture.c:27 ", MSG_6));
-	while (set->buff[0] == ' ')
+	if (read(fd_sd, parsing->buff, 1) == -1)
+		return (error_handler(cub3d, INV_READ, "parsing_texture.c:27 ", MSG_6));
+	while (parsing->buff[0] == ' ')
 	{
-		if (read(fd_sd, set->buff, 1) == -1)
-			return (error_handler(set, INV_READ, "parsing_texture.c:31 ",
+		if (read(fd_sd, parsing->buff, 1) == -1)
+			return (error_handler(cub3d, INV_READ, "parsing_texture.c:31 ",
 					MSG_6));
 	}
 	element_buff = get_next_line(fd_sd);
 	if (!element_buff)
-		return (error_handler(set, GNL_FAILED, "parsing_texture.c:35 ", MSG_9));
-	*element = ft_strjoin(set->buff, element_buff);
+		return (error_handler(cub3d, GNL_FAILED, "parsing_texture.c:35 ",
+				MSG_9));
+	*element = ft_strjoin(parsing->buff, element_buff);
 	if (!*element)
 	{
 		free(element_buff);
-		return (error_handler(set, STRJOIN_FAILED, "parsing_texture.c:38 ",
+		return (error_handler(cub3d, STRJOIN_FAILED, "parsing_texture.c:38 ",
 				MSG_10));
 	}
 	free(element_buff);
@@ -48,32 +49,28 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 // so invalid file's content. Else we go to find the path
 // to fill the ptr that point to the right variable in oru struct
 
-bool	is_texture_valid(int fd_sd, t_settings *set, char first_letter,
-		char second_letter)
+bool	is_texture_valid(int fd_sd, t_cub3d *cub3d, char fl, char sl)
 {
-	if (first_letter == 'N')
+	if (((fl == 'N' && sl == 'O') && !cub3d->parsing->rp_no))
 	{
-		if (set->rp_no || second_letter != 'O')
-			return (error_handler(set, INV_CON, FILE_ERR_2, MSG_7));
-		return (find_texture_element_path(fd_sd, &set->rp_no, set));
+		return (find_texture_element_path(fd_sd, &cub3d->parsing->rp_no,
+				cub3d->parsing, cub3d));
 	}
-	else if (first_letter == 'S')
+	else if (((fl == 'S' && sl == 'O') && !cub3d->parsing->rp_so))
 	{
-		if (set->rp_so || second_letter != 'O')
-			return (error_handler(set, INV_CON, FILE_ERR_3, MSG_7));
-		return (find_texture_element_path(fd_sd, &set->rp_so, set));
+		return (find_texture_element_path(fd_sd, &cub3d->parsing->rp_so,
+				cub3d->parsing, cub3d));
 	}
-	else if (first_letter == 'W')
+	else if ((fl == 'W' && sl == 'E') && !cub3d->parsing->rp_we)
 	{
-		if (set->rp_we || second_letter != 'E')
-			return (error_handler(set, INV_CON, FILE_ERR_4, MSG_7));
-		return (find_texture_element_path(fd_sd, &set->rp_we, set));
+		return (find_texture_element_path(fd_sd, &cub3d->parsing->rp_we,
+				cub3d->parsing, cub3d));
 	}
-	else if (first_letter == 'E')
+	else if (fl == 'E' && sl == 'A' && !cub3d->parsing->rp_ea)
 	{
-		if (set->rp_ea || second_letter != 'A')
-			return (error_handler(set, INV_CON, FILE_ERR_5, MSG_7));
-		return (find_texture_element_path(fd_sd, &set->rp_ea, set));
+		return (find_texture_element_path(fd_sd, &cub3d->parsing->rp_ea,
+				cub3d->parsing, cub3d));
 	}
+	return (error_handler(cub3d, INV_CON, FILE_ERR_2, MSG_7));
 	return (RETURN_FAILURE);
 }

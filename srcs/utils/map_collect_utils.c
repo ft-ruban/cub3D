@@ -4,7 +4,7 @@
 // We read until we find something else than a '\n'.
 // we skip it with a get_next_line.
 // And so on for the element number of time we have to repeat it.
-bool	skip_elements(t_settings *set, int new_fd)
+bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d)
 {
 	char	*line;
 	size_t	i;
@@ -12,14 +12,14 @@ bool	skip_elements(t_settings *set, int new_fd)
 	i = 0;
 	while (i < ELEMENT_NBR)
 	{
-		if (read(new_fd, set->buff, 1) == READ_FAILED)
-			return (error_handler(set, INV_READ,
+		if (read(new_fd, parsing->buff, 1) == READ_FAILED)
+			return (error_handler(cub3d, INV_READ,
 					"map_collect_utils.c:16 ", MSG_6));
-		if (set->buff[0] != '\n')
+		if (parsing->buff[0] != '\n')
 		{
 			line = get_next_line(new_fd);
 			if (!line)
-				return (error_handler(set, MAL_ERR_SET,
+				return (error_handler(cub3d, MAL_ERR_SET,
 						"map_collect_utils.c:22 ", MSG_9));
 			free(line);
 			i++;
@@ -30,16 +30,16 @@ bool	skip_elements(t_settings *set, int new_fd)
 
 // We browse through the entire line until we find a '\n'
 // If we reach the end of the file, we are no longer in the map
-bool	parse_map_line(t_settings *set, int fd, bool *in_map)
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map, t_cub3d *cub3d)
 {
 	int	result_read;
 
 	result_read = 0;
-	while (set->buff[0] != '\n')
+	while (parsing->buff[0] != '\n')
 	{
-		result_read = read(fd, set->buff, 1);
+		result_read = read(fd, parsing->buff, 1);
 		if (result_read == READ_FAILED)
-			return (error_handler(set, INV_READ, "get_the_map.c:41 ", MSG_6));
+			return (error_handler(cub3d, INV_READ, "get_the_map.c:41 ", MSG_6));
 		if (result_read == END_OF_FILE)
 		{
 			*in_map = false;
@@ -51,18 +51,17 @@ bool	parse_map_line(t_settings *set, int fd, bool *in_map)
 
 // We check if the next line is just a '\n'
 // We stop when we find anything else
-bool	find_map_first_line(t_settings *set, char **line, int fd)
+bool	find_map_first_line(char **line, int fd)
 {
 	*line = get_next_line(fd);
 	if (!*line)
-		return (error_handler(set, MAL_ERR_SET, "get_the_map.c:58 ", MSG_9));
+		return (RETURN_FAILURE);
 	while (*line[0] == '\n')
 	{
 		free(*line);
 		*line = get_next_line(fd);
 		if (!*line)
-			return (error_handler(set, MAL_ERR_SET,
-					"get_the_map.c:64 ", MSG_9));
+			return (RETURN_FAILURE);
 	}
 	return (RETURN_SUCCESS);
 }

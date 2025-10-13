@@ -13,29 +13,33 @@
 // TODO when work is finished to describe the main in commentaries
 int	main(int argc, char *argv[])
 {
-	t_mlx		*screen;
-	t_settings	*set;
+	t_cub3d		*cub3d;
+	//t_mlx		*mlx;
+	//t_parsing	*parsing;
 
-	screen = NULL;
-	set = malloc(sizeof(t_settings));
-	if (!set)
+	cub3d = malloc(sizeof(t_cub3d));
+	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
-	init_struct_value(set);
-	if (parsing(argc, argv, set))
-		return (clean_and_exit(set));
-	// WIP MLX
-	screen = init_screen_mlx(screen); // TOPROTECT
-	if (!screen)
+	cub3d->error_type = EXIT_SUCCESS;
+	if (parsing_init(argc, argv, cub3d))
 	{
-		error_handler(set, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
-		free_map(set);
-		return (clean_and_exit(set));
+		return (clean_and_exit(cub3d, cub3d->parsing));
 	}
-	hook_and_loop(screen);
-	destroy_free_screen(screen);
-	print_struct_set(set); // TODLDEBUG function to see content of struct set
-	free_map(set);
-	return (clean_and_exit(set));
+	// WIP MLX
+	// t_mlx = init_screen_mlx(t_mlx); // TOPROTECT
+	// if (!t_mlx)
+	// {
+	// 	error_handler(set, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
+	// 	free_map(set);
+	// 	return (clean_and_exit(set));
+	// }
+	// hook_and_loop(t_mlx);
+	// destroy_free_screen(t_mlx);
+	print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
+	free_map(cub3d->map);
+	free(cub3d->map);
+	return (clean_and_exit(cub3d, cub3d->parsing));
+	return(0);
 }
 //-----------------------------------------------------------------------------
 // to free everything before leaving

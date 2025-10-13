@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:27:19 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/25 08:48:45 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/13 07:34:22 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,25 @@
 
 // TODO warning new version that is untested yet
 
-static bool	element_found(int fd_sd, t_settings *set, char first_letter,
+static bool	element_found(int fd_sd, t_cub3d *cub3d, char first_letter,
 		int element_type)
 {
-	if (read(fd_sd, set->buff, 1) == -1)
-		return (error_handler(set, INV_READ, "parsing_collect_elements.c:23 ",
-				MSG_6));
+	if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
+		return (error_handler(cub3d, INV_READ,
+				"parsing_collect_elements.c:TOFILL ", MSG_6));
 	else if (element_type == TYPE_TEXTURE)
 	{
-		if (is_texture_valid(fd_sd, set, first_letter, set->buff[0]))
+		if (is_texture_valid(fd_sd, cub3d, first_letter,
+				cub3d->parsing->buff[0]))
 			return (RETURN_FAILURE);
 	}
 	else if (element_type == TYPE_RGB)
 	{
-		if (set->buff[0] != ' ' && ft_isnum((int)set->buff[0]))
-			return (error_handler(set, INV_CON,
+		if (cub3d->parsing->buff[0] != ' '
+			&& ft_isnum((int)cub3d->parsing->buff[0]))
+			return (error_handler(cub3d, INV_CON,
 					"parsing_collect_elements.c:34 ", MSG_7));
-		else if (is_rgb_valid(fd_sd, set, first_letter, false))
+		else if (is_rgb_valid(fd_sd, cub3d, first_letter, false))
 			return (RETURN_FAILURE);
 	}
 	return (RETURN_SUCCESS);
@@ -52,25 +54,26 @@ static bool	element_found(int fd_sd, t_settings *set, char first_letter,
 // we send an error as well. It continue until we found an error
 // or until we got all of our necessary elements.
 
-static bool	browse_to_find_elements(int fd_sd, t_settings *set, char *read_buff)
+static bool	browse_to_find_elements(int fd_sd, t_cub3d *cub3d,
+		t_parsing *parsing, char *read_buff)
 {
 	int	element_type;
 
 	element_type = NONE_ASSIGNED;
-	while (an_element_is_missing(set))
+	while (an_element_is_missing(parsing))
 	{
 		if (read(fd_sd, read_buff, 1) == -1)
-			return (error_handler(set, INV_READ,
+			return (error_handler(cub3d, INV_READ,
 					"parsing_collect_elements.c:80 ", MSG_6));
-		element_type = which_element_type(read_buff[0], set);
+		element_type = which_element_type(read_buff[0], parsing);
 		if (element_type == TYPE_RGB || element_type == TYPE_TEXTURE)
 		{
-			if (element_found(fd_sd, set, read_buff[0], element_type))
+			if (element_found(fd_sd, cub3d, read_buff[0], element_type))
 				return (RETURN_FAILURE);
 		}
 		else if (element_type != TYPE_EMPTY_LINE)
-			return (error_handler(set, INV_CON,
-					"parsing_collect_elements.c:90 ", MSG_7));
+			return (error_handler(cub3d, INV_CON,
+					"parsing_collect_elements.c:TOFILL ", MSG_7));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -86,22 +89,22 @@ static bool	browse_to_find_elements(int fd_sd, t_settings *set, char *read_buff)
 
 // TODO? rename cub_file en sd_file
 
-bool	prepare_collect_elements(char *cub_file, t_settings *set, int *fd_sd,
+bool	prepare_collect_elements(char *cub_file, t_cub3d *cub3d, int *fd_sd,
 		char **read_buff)
 {
 	*fd_sd = open_sd_file_give_fd(cub_file);
 	if (*fd_sd == OPEN_FAILED)
-		return (error_handler(set, INV_FAIL, "parsing_collect_elements.c:126 ",
-				MSG_4));
+		return (error_handler(cub3d, INV_FAIL,
+				"parsing_collect_elements.c:TOFILL ", MSG_4));
 	*read_buff = malloc(2);
 	if (!*read_buff)
 	{
 		close(*fd_sd);
-		return (error_handler(set, MAL_ERR_BUFF,
+		return (error_handler(cub3d, MAL_ERR_BUFF,
 				"parsing_collect_elements.c:130 ", MSG_5));
 	}
 	(*read_buff)[1] = '\0';
-	if (browse_to_find_elements(*fd_sd, set, *read_buff))
+	if (browse_to_find_elements(*fd_sd, cub3d, cub3d->parsing, *read_buff))
 	{
 		close(*fd_sd);
 		return (RETURN_FAILURE);

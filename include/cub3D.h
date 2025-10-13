@@ -5,12 +5,16 @@
 //#include "utils.h"
 # include <stdlib.h> //size_t
 
+typedef struct s_parsing	t_parsing;
+typedef struct s_map	t_map;
+
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define RETURN_SUCCESS 0
 # define RETURN_FAILURE 1
 # define NONE_ASSIGNED -1
 # define MSG_ERR_MLX "MLX initiation failed\n"
+# define BEFORE_PARSING_INIT 5
 
 typedef enum e_error_status
 {
@@ -19,6 +23,7 @@ typedef enum e_error_status
 	ERR,
 	PAR_NBR_ARGC,
 	PAR_EXTENSION,
+	PARSING_INIT_FAIL,
 	INV_FAIL,
 	MAL_ERR_BUFF,
 	INV_CON,
@@ -30,28 +35,38 @@ typedef enum e_error_status
     INIT_LIBX_FAILED ,
 }					t_error_status;
 
-typedef struct s_settings
+typedef struct s_cub3d
 {
-    char **map;
-    char *buff;
-    char *rp_no;
-    char *rp_so;
-    char *rp_we;
-    char *rp_ea;
-    int floor_r;
-    int floor_g;
-    int floor_b;
-    int ceil_r;
-    int ceil_g;
-    int ceil_b;
-    unsigned char error_type;
-	t_texture *texture;
-}						t_settings;
+    t_parsing   *parsing;
+	t_map  		*map;
+    //t_ray     *ray;
+    //t_texture *texture;
+    //t_mlx     *mlx;
+	unsigned char error_type;
+}               t_cub3d;
+
+//typedef struct s_
+
+// typedef struct s_settings
+// {
+//     char *buff;
+//     char *rp_no;
+//     char *rp_so;
+//     char *rp_we;
+//     char *rp_ea;
+//     int floor_r;
+//     int floor_g;
+//     int floor_b;
+//     int ceil_r;
+//     int ceil_g;
+//     int ceil_b;
+//     unsigned char error_type;
+// }						t_settings;
 
 //main_utils.c
-void	init_struct_value(t_settings *set);
-void	free_all(t_settings *set);
-int	    clean_and_exit(t_settings *set);
+//void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d);
+// void	free_all(t_settings *set);
+int	    clean_and_exit(t_cub3d *cub3d, t_parsing *parsing);
 
 
 
