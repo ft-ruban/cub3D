@@ -2,18 +2,7 @@
 #include "set_mlx.h"
 #include "exec.h"
 
-// 
-void	avoid_fish_eye(t_data *data)
-{
-	if (data->side = 0)
-		data->perp_wall_dist = (data->map_x - data->pos_x +
-						(1 - data->step_x) / 2) / data->ray_dir_x;
-	else
-		data->perp_wall_dist = (data->map_y - data->pos_y +
-						(1 - data->step_y) / 2) / data->ray_dir_y;
-}
-
-// here we are now on the edge of x and y, so to go forward we are gonna add
+// we are now on the edge of x and y, so to go forward we are gonna add
 // one dist_next_x or y. then everytime we move to the next edge, we keep an
 // eye on where we are by updating the map_x or y with the right step(+1 or -1).
 // the side variable is here to indicate if we hit a wall on the x or y side.
@@ -35,10 +24,9 @@ void	until_we_hit_a_wall(t_data *data, t_settings *set,
 			data->side = 1;
 		}
 	}
-	avoid_fish_eye(data);
 }
 
-// here, depending on where we are on a cellule of the map, we will be more or
+// depending on where we are on a cellule of the map, we will be more or
 // less close to the edges. also this distance is different if we go on the
 // right, left, up or dow direction.
 // let's say pos_x = 4.8. then map_x = 4. if we go on the right direction, then
@@ -94,26 +82,25 @@ void	detect_first_wall(t_data *data, t_settings *set)
 // and then we move to the next ray.
 // for every time we calculate a ray direction, the camera orient a tiny bit to
 // the left, updating itself with the current ray_dir we are calculating.
-void	update_ray_dir(t_data *data, unsigned int curr_column)
+void	curr_ray_dir(t_data *data)
 {
 	float	camera;
 
-	camera = 2 * (curr_column / WIN_WIDTH) - 1;
+	camera = 2 * (data->curr_column / WIN_WIDTH) - 1;
 	data->ray_dir_x = data->main_ray_dir_x +
 					(data->main_ray_plane_x * camera);
 	data->ray_dir_y = data->main_ray_dir_y +
 					(data->main_ray_plane_y * camera);
 }
 
-update_screen(t_data *data, t_settings *set)
+print_screen(t_data *data, t_settings *set, t_mlx *mlx, t_texture *texture)
 {
-	unsigned int curr_column;
-
-	curr_column = 0;
-	while (curr_column < WIN_WIDTH)
+	data->curr_column = 0;
+	while (data->curr_column < WIN_WIDTH)
 	{
-		update_ray_dir(data, curr_column);
+		curr_ray_dir(data);
 		detect_first_wall(data, set);
-		curr_column++;
+		draw_column(data, mlx, texture);
+		data->curr_column++;
 	}
 }

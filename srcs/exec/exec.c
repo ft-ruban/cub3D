@@ -34,31 +34,11 @@ bool	get_texture_data(t_settings *set, t_mlx *mlx, t_texture *texture)
 								 // (mlx or texture ?)
 }
 
-// the texture is contain in a linear tab of char, so to find the pixel we want,
-// we are gonna find the right position in this tab, then we retrieve the pixel
-// by taking all the four char wich represent rgba at once in a int.
-// char = 8 bits, int = 32 bits. so casting an int to retrieve from a char tab,
-// its gonna take four char at once (32 bits).
-// the x is the column of the pixel we want, y is the line.
-// to go from a line to the next one, we add line_length and not TEXTURE_WIDTH
-// since the TEXTURE_WIDTH is equal to the number of pixel before next line,
-// and line_length is equal to the number of char berfore next line.
-unsigned int	get_texture_pixel(t_data *data, int x, int y, void *texture_adr)
-{
-	char			*pixel_addr;
-	unsigned int	pixel_color;
-
-	pixel_addr = texture_adr + (y * data->texture->line_length + x *
-							data->texture->bits_per_pixel / 8);
-	pixel_color = *(unsigned int *)pixel_addr;
-	return (pixel_color);
-}
 
 
 
-
-int		exec(t_data *data, char **map)
+int		exec(t_data *data, t_settings *set, t_mlx *mlx, char **map)
 {
 	init_player_data(data, map);
-	update_screen(data);
+	print_screen(data, set, mlx);
 }

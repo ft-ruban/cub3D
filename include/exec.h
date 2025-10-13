@@ -12,6 +12,8 @@ typedef struct s_data
 	unsigned int	side;
 	unsigned int	map_x;
 	unsigned int	map_y;
+	unsigned int	wall_pixel_height;
+	unsigned int	curr_column;
 	int				step_x;
 	int				step_y;
 	float 			pos_x;
@@ -26,8 +28,18 @@ typedef struct s_data
 	float 			main_ray_plane_y;
 	float			ray_dir_x;
 	float			ray_dir_y;
+	int				pixel_color;
 	t_texture	*texture;
 }				t_data;
+
+//draw_column.c
+void	draw_column(t_data *data, t_mlx *mlx, t_texture *texture);
+
+//print_screen.c
+void	print_screen(t_data *data, t_settings *set, t_mlx *mlx, t_texture *texture);
+
+//exec.c
+int		exec(t_data *data, t_settings *set, t_mlx *mlx, char **map);
 
 //draw.c
 int	    draw(t_mlx *mlx);
