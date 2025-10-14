@@ -5,28 +5,30 @@
 // we are looking for the direction of the ray in the center of the player 
 // vision.
 // here 0 is x and 1 is y, two numbers for the main vecteur in 2D.
+
 void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
 {
 	ray->main_ray_dir_x = cos(player_orientation);
 	ray->main_ray_dir_y = sin(player_orientation);
-	ray->main_ray_plane_x = cos(player_orientation + M_PI * 0.5);
-	ray->main_ray_plane_y = sin(player_orientation + M_PI * 0.5);
+	ray->main_ray_plane_x = cos(player_orientation + PI * 0.5);
+	ray->main_ray_plane_y = sin(player_orientation + PI * 0.5);
 }
 
 void	assign_player_orientation(t_map *map, char player_tile)
 {
 	if (player_tile = 'N')
-		map->player_orientation = M_PI * 0.5;
+		map->player_orientation = PI * 0.5;
 	if (player_tile = 'S')
-		map->player_orientation = M_PI + M_PI * 0.5;
+		map->player_orientation = PI + PI * 0.5;
 	if (player_tile = 'W')
-		map->player_orientation = M_PI;
+		map->player_orientation = PI;
 	if (player_tile = 'E')
 		map->player_orientation = 0.0;
 }
 
 // first, find the exact position of our player, adding 0.5 to pu him in the 
 // center of the case mesuring 1 * 1.
+
 char	find_player_pos(t_map *map_info, char **map)
 {
 	int	width;

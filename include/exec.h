@@ -5,7 +5,8 @@
 # include "set_mlx.h"
 # include "math.h"
 
-# define M_PI 3.14159
+# define PI 3.14159
+
 typedef struct s_mlx	t_mlx;
 typedef struct s_img	t_img;
 
@@ -40,17 +41,23 @@ typedef struct s_map
 	float 			player_orientation;
 }			t_map;
 
+//draw_all_pixels.c
+void	draw_all_pixels(t_cub3d *cub3d, t_texture *texture,
+				unsigned int wall_start, unsigned int wall_end);
+
 //draw_column.c
 void	draw_column(t_cub3d *cub3d);
 
-//print_screen.c
-void	print_screen(t_cub3d *cub3d);
+//draw_one_pixel.c
+int	    draw_one_pixel(t_mlx *mlx, unsigned int pixel_color);
 
 //exec.c
 int		exec(t_cub3d *cub3d);
 
-//draw.c
-int	    draw_pixel(t_cub3d *cub3d, char *area, unsigned int pixel);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+//init_player_data.c
+void	init_player_data(t_cub3d *cub3d);
+
+//print_screen.c
+void	print_screen(t_cub3d *cub3d);
 
 #endif

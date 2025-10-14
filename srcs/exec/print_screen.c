@@ -6,6 +6,7 @@
 // one dist_next_x or y. then everytime we move to the next edge, we keep an
 // eye on where we are by updating the map_x or y with the right step(+1 or -1).
 // the side variable is here to indicate if we hit a wall on the x or y side.
+
 void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			unsigned int dist_next_x,unsigned int dist_next_y)
 {
@@ -34,6 +35,7 @@ void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 // So to find the distance between the player and the first time we enconter
 // the x edge, we add dist_next_x that we multipy by a number bellow 1.
 // here 4 + 1 - 4.8 = 0.2. so dist_next_x will be multiplied by 0.2. 
+
 void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
 													unsigned int dist_next_y)
 {
@@ -69,6 +71,7 @@ void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
 // the same as this distance(x to x + 1). So we also find this exact distance.
 // Now it's easy, from where we are now, (wich is exactly on the edge of an 
 // axe), we add dist_next_x or y to be exactly on the next edge x or y.
+
 void	detect_first_wall(t_cub3d *cub3d)
 {
 	unsigned int	dist_next_x;
@@ -86,6 +89,7 @@ void	detect_first_wall(t_cub3d *cub3d)
 // and then we move to the next ray.
 // for every time we calculate a ray direction, the camera orient a tiny bit to
 // the left, updating itself with the current ray_dir we are calculating.
+
 void	curr_ray_dir(t_cub3d *cub3d)
 {
 	float	camera;
@@ -97,7 +101,7 @@ void	curr_ray_dir(t_cub3d *cub3d)
 					(cub3d->ray->main_ray_plane_y * camera);
 }
 
-print_screen(t_cub3d *cub3d)
+void	print_screen(t_cub3d *cub3d)
 {
 	cub3d->curr_column = 0;
 	while (cub3d->curr_column < WIN_WIDTH)

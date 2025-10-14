@@ -5,7 +5,8 @@
 // the start of the wall will be at the center of the screen with substracting
 // the the height of the wall with win_height, but we went to far, so we only
 // keep the half of this result.
-// by doing so, we start and stop exactly at the same distance from the center. 
+// by doing so, we start and stop exactly at the same distance from the center.
+
 void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
 				unsigned int *wall_start, unsigned int *wall_end)
 {
@@ -25,6 +26,7 @@ void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
 // the perpendicular distance with the main_ray.
 // and we find the wall_height thanks to the win_height divided by the
 // perp_wall_dist.
+
 void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 {
 	if (ray->side = 0)
@@ -43,6 +45,7 @@ void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 // them ? 50% or 124.6518% ?
 // and know we can take the right pixels of our texture, to print them on our
 // screen img.
+
 void	draw_column(t_cub3d *cub3d)
 {
 	unsigned int	wall_start;
@@ -53,5 +56,5 @@ void	draw_column(t_cub3d *cub3d)
 	identify_wall_height(cub3d->ray, cub3d->map, cub3d->texture);
 	pinpoint_wall_start_end(cub3d->texture->wall_pixel_height, &wall_start,
 																&wall_end);
-	draw_all_pixels(cub3d, wall_start, wall_end);
+	draw_all_pixels(cub3d, cub3d->texture, wall_start, wall_end);
 }
