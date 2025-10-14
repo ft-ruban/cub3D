@@ -30,6 +30,6 @@ int	draw_one_pixel(t_mlx *mlx, unsigned int pixel_color)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img->img, 0, 0);
 	return (0);
 }

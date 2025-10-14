@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/12 14:41:47 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:35:37 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-// We init them at those value for further processing in the parsing
-void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d)
-{
-	parsing->buff = NULL;
-	parsing->rp_no = NULL;
-	parsing->rp_so = NULL;
-	parsing->rp_we = NULL;
-	parsing->rp_ea = NULL;
-	parsing->ceil_r = NONE_ASSIGNED;
-	parsing->ceil_g = NONE_ASSIGNED;
-	parsing->ceil_b = NONE_ASSIGNED;
-	parsing->floor_r = NONE_ASSIGNED;
-	parsing->floor_g = NONE_ASSIGNED;
-	parsing->floor_b = NONE_ASSIGNED;
-	cub3d->parsing = parsing;
-}
 
 // free everything in set (may be nice to modify that function to create smth)
 // that handle all of our struct maybe?

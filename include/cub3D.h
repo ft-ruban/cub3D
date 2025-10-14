@@ -6,7 +6,10 @@
 # include <stdlib.h> //size_t
 
 typedef struct s_parsing	t_parsing;
-typedef struct s_map	t_map;
+typedef struct s_map		t_map;
+typedef struct s_ray		t_ray;
+typedef struct s_mlx		t_mlx;
+typedef struct s_texture	t_texture;
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1

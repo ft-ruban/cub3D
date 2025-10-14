@@ -10,6 +10,7 @@
 typedef struct s_mlx	t_mlx;
 typedef struct s_img	t_img;
 
+
 typedef struct s_ray
 {
 	float 		radian;
