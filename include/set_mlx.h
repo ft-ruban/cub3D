@@ -32,20 +32,34 @@ typedef struct s_texture
 	t_img *t_we;
 }				t_texture;
 
-
 typedef struct s_mlx
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_img		img;
+	t_img		*screen;
 }				t_mlx;
+
+typedef struct s_texture
+{
+	unsigned int	wall_pixel_height;
+	unsigned int	pixel_color;
+	unsigned int	*ceil_hex;
+	unsigned int	*floor_hex;
+	float			render;
+	unsigned int	y;
+	unsigned int	x;
+	t_img			*no;
+	t_img			*so;
+	t_img			*we;
+	t_img			*ea;
+}				t_texture;
 
 // commands.c
 int	handle_keys(int keycode, t_mlx *screen);
 int	close_window(t_mlx *screen);
 
 // mlx_utils.c
-void 	hook_and_loop(t_mlx *screen);
+void 	hook_and_loop(t_cub3d *cub3d, t_mlx *screen);
 void 	destroy_free_screen(t_mlx *screen);
 void	*init_screen_mlx(t_mlx *t_mlx);
 // int				free_all_mlx(t_mlx *screen, t_set_call *param, int error_code);

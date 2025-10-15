@@ -55,7 +55,8 @@ int		error_handler(t_cub3d *cub3d, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c
-bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height, int fd);
+bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
+																		int fd);
 bool	find_map_start(t_parsing *parsing, int fd);
 
 //free_map.c
@@ -86,7 +87,14 @@ char	*ft_strchr(const char *s, int c);
 
 //get_the_map_utils.c
 bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d);
-bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map, t_cub3d *cub3d);
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map,
+												t_cub3d *cub3d);
 bool	find_map_first_line(char **line, int fd);
+
+//init_struct_01.c
+bool	init_struct(t_cub3d *cub3d);
+
+//init_struct_02.c
+bool	init_texture_struct(t_cub3d *cub3d);
 
 # endif

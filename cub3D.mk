@@ -42,6 +42,8 @@ override UTILSSRC := error \
 					 ft_strlen \
 					 get_next_line_utils \
 					 get_next_line \
+					 init_struct_01 \
+					 init_struct_02 \
 					 map_check_utils \
 					 map_collect_utils
 
@@ -50,4 +52,9 @@ override DEBUGSRC := print_struct_set
 override MLXSETSRC := commands \
 					  mlx_utils
 
-override EXECSRC := draw
+override EXECSRC := draw_all_pixels \
+					draw_column \
+					draw_one_pixel \
+					exec \
+					init_player_data \
+					print_screen

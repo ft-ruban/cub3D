@@ -105,6 +105,7 @@ static int init_mlx_texture_img(t_cub3d *cub3d)
 
 // TODO util main function to clean up things depending of the error case!
 // TODO when work is finished to describe the main in commentaries
+
 int	main(int argc, char *argv[])
 {
 	t_cub3d		*cub3d;
