@@ -48,23 +48,23 @@ void	find_texture_x(t_ray *ray, t_map *map, t_texture *texture)
 // west texture.
 // if side = 1, on the y axe, the texture will be the north or south one.
 
-char	*right_texture_addr(t_ray *ray, t_texture *texture)
+t_img	*right_texture_addr(t_ray *ray, t_texture *texture)
 {
-	char	*ptr_texture;
+	t_img	*ptr_texture;
 
 	if (ray->side == 0)
 	{
 		if (ray->dir_x < 0)
-			ptr_texture = texture->we->addr;
+			ptr_texture = texture->we->img;
 		else
-			ptr_texture = texture->ea->addr;
+			ptr_texture = texture->ea->img;
 	}
 	else
 	{
 		if (ray->dir_y < 0)
-			ptr_texture = texture->so->addr;
+			ptr_texture = texture->so->img;
 		else
-			ptr_texture = texture->no->addr;
+			ptr_texture = texture->no->img;
 	}
 	return (ptr_texture);
 }
@@ -74,10 +74,9 @@ char	*right_texture_addr(t_ray *ray, t_texture *texture)
 // to our position in the texture.
 // after this being done, we can find the right pixel color we need.
 
-void	get_right_pixel_tex(t_cub3d *cub3d, unsigned int wall_pixel,
-												unsigned int wall_start)
+void	get_right_pixel_tex(t_cub3d *cub3d, unsigned int wall_pixel)
 {
-	char	*texture_addr;
+	t_img	*texture_addr;
 
 	texture_addr = right_texture_addr(cub3d->ray, cub3d->texture);
 	find_texture_x(cub3d->ray, cub3d->map, cub3d->texture);
@@ -101,20 +100,20 @@ void	draw_all_pixels(t_cub3d *cub3d, t_texture *texture,
 	wall_pixel = 0;
 	while (pixel < wall_start)
 	{
-		draw_pixel(cub3d->mlx->img, 0x004211d6);
+		draw_one_pixel(cub3d->mlx, cub3d->texture->ceil_hex);
 		pixel++;
 	}
 	texture->render = (double)TEXTURE_HEIGHT / texture->wall_pixel_height;
 	while (pixel <= wall_end)
 	{
-		get_right_pixel_tex(cub3d, wall_pixel, wall_start);
-		draw_pixel(cub3d->mlx->img, texture->pixel_color);
+		get_right_pixel_tex(cub3d, wall_pixel);
+		draw_one_pixel(cub3d->mlx, texture->pixel_color);
 		wall_pixel++;
 		pixel++;
 	}
 	while(pixel < WIN_HEIGHT)
 	{
-		draw_pixel(cub3d->mlx->img, 0x0014b346);
+		draw_one_pixel(cub3d->mlx, cub3d->texture->floor_hex);
 		pixel++;
 	}
 }

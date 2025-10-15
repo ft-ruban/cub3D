@@ -10,7 +10,7 @@ DEPS := $(OBJS:.o=.d)
 all: $(NAME)
 
 MLX_LIB := $(MLX_DIR)/libmlx.a
-MLXFLAGS := -L$(MLX_DIR) -lmlx -lX11 -lXext
+MLXFLAGS := -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
 
 $(NAME): Makefile $(MLX_LIB) $(OBJS) | $(EXEC_DIR)
 	echo "$(PURPLE)Compiling $(NAME) in progress...$(RESET)"

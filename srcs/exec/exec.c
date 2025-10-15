@@ -8,8 +8,13 @@
 // we need in that linear tab of char going from .
 bool	get_texture_data(t_cub3d *cub3d, t_img *img, char *path)
 {
+	int	width;
+	int	height;
+
+	width = TEXTURE_WIDTH;
+	height = TEXTURE_HEIGHT;
 	img->img = mlx_xpm_file_to_image(cub3d->mlx->mlx, path,
-								TEXTURE_WIDTH, TEXTURE_HEIGHT); // TODO LDEV : protect
+								&width, &height); // TODO LDEV : protect
 	if (!img->img)
 		return (error_handler(cub3d, MAL_ERR_SET, "exec:TOFILL ", MSG_1));
 	img->addr = mlx_get_data_addr(img->img,
@@ -24,4 +29,5 @@ int		exec(t_cub3d *cub3d)
 {
 	init_player_data(cub3d);
 	print_screen(cub3d);
+	return (RETURN_SUCCESS);
 }

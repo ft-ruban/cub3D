@@ -16,13 +16,13 @@ void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
 
 void	assign_player_orientation(t_map *map, char player_tile)
 {
-	if (player_tile = 'N')
+	if (player_tile == 'N')
 		map->player_orientation = PI * 0.5;
-	if (player_tile = 'S')
+	if (player_tile == 'S')
 		map->player_orientation = PI + PI * 0.5;
-	if (player_tile = 'W')
+	if (player_tile == 'W')
 		map->player_orientation = PI;
-	if (player_tile = 'E')
+	if (player_tile == 'E')
 		map->player_orientation = 0.0;
 }
 

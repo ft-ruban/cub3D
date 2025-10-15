@@ -80,7 +80,7 @@ void	detect_first_wall(t_cub3d *cub3d)
 	dist_next_x = 1 / cub3d->ray->dir_x;
 	dist_next_y = 1 / cub3d->ray->dir_y;
 	stop_at_first_edge(cub3d->ray, cub3d->map, dist_next_x, dist_next_y);
-	until_we_hit_a_wall(cub3d->map, cub3d->map->map, dist_next_x, dist_next_y);
+	until_we_hit_a_wall(cub3d->map, cub3d->ray, dist_next_x, dist_next_y);
 }
 
 // after getting the main_ray_dir and his plane vecteur, we calculate the rays

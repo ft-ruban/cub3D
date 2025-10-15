@@ -4,7 +4,7 @@
 // + coordinates X(WIDTH) Y(HEIGHT) and the hexadecimal code for the color
 // ALWAYS DEFINE A COLOR IF NEEDED dont put it raw you psycho.
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+static void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	*(unsigned int *)(img->addr + (y * img->line_length + x
 				* (img->bits_per_pixel))) = color;
@@ -25,11 +25,11 @@ int	draw_one_pixel(t_mlx *mlx, unsigned int pixel_color)
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
-			my_mlx_pixel_put(&(mlx->img), x, y, pixel_color);
+			my_mlx_pixel_put(mlx->screen, x, y, pixel_color);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img->img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->screen->img, 0, 0);
 	return (0);
 }

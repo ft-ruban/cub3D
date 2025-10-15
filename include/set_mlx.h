@@ -4,6 +4,8 @@
 # include "../minilibx-linux/mlx.h"
 # include "cub3D.h"
 
+typedef struct s_cub3d	t_cub3d;
+
 # define TRUE 1
 # define FALSE 0
 # define WIN_WIDTH 500
@@ -22,16 +24,6 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
-typedef struct s_texture
-{
-	int floor_hex;
-	int ceil_hex;
-	t_img *t_no;
-	t_img *t_so;
-	t_img *t_ea;
-	t_img *t_we;
-}				t_texture;
-
 typedef struct s_mlx
 {
 	void		*mlx;
@@ -43,11 +35,11 @@ typedef struct s_texture
 {
 	unsigned int	wall_pixel_height;
 	unsigned int	pixel_color;
-	unsigned int	*ceil_hex;
-	unsigned int	*floor_hex;
-	float			render;
+	unsigned int	ceil_hex;
+	unsigned int	floor_hex;
 	unsigned int	y;
 	unsigned int	x;
+	float			render;
 	t_img			*no;
 	t_img			*so;
 	t_img			*we;

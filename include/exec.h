@@ -4,12 +4,14 @@
 # include "cub3D.h"
 # include "set_mlx.h"
 # include "math.h"
+# include "stdbool.h"
 
 # define PI 3.14159
 
 typedef struct s_mlx	t_mlx;
 typedef struct s_img	t_img;
-
+typedef struct s_cub3d	t_cub3d;
+typedef struct s_texture	t_texture;
 
 typedef struct s_ray
 {
@@ -60,5 +62,8 @@ void	init_player_data(t_cub3d *cub3d);
 
 //print_screen.c
 void	print_screen(t_cub3d *cub3d);
+
+//draw.c
+int	draw(t_mlx *mlx);
 
 #endif

@@ -29,7 +29,7 @@ void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
 
 void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 {
-	if (ray->side = 0)
+	if (ray->side == 0)
 		ray->perp_wall_dist = (map->wall_pos_x - map->player_pos_x +
 						(1 - ray->step_x) / 2) / ray->dir_x;
 	else

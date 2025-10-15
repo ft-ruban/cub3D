@@ -34,10 +34,10 @@ static bool malloc_cardinal_point_struct(t_texture *texture)
 	ea = malloc(sizeof(t_img));
 	if (!no || !so || !we || !ea)
 		return(free_all_err(no, ea, so, we));
-	texture->t_no = no;
-	texture->t_so = so;
-	texture->t_we = we;
-	texture->t_ea = ea;
+	texture->no = no;
+	texture->so = so;
+	texture->we = we;
+	texture->ea = ea;
 	return(RETURN_SUCCESS);
 }
 
@@ -55,13 +55,13 @@ static bool init_img_texture(t_img *texture, t_mlx *mlx, char *path)
 static void init_textures_img(t_cub3d *cub3d)
 {
 	malloc_cardinal_point_struct(cub3d->texture); //toprotect
-	if(init_img_texture(cub3d->texture->t_no, cub3d->mlx, cub3d->parsing->rp_no))
+	if(init_img_texture(cub3d->texture->no, cub3d->mlx, cub3d->parsing->rp_no))
 		printf("FAIL\n");//TOPROTECT
-	if(init_img_texture(cub3d->texture->t_so, cub3d->mlx, cub3d->parsing->rp_so))
+	if(init_img_texture(cub3d->texture->so, cub3d->mlx, cub3d->parsing->rp_so))
 		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures SO
-	if(init_img_texture(cub3d->texture->t_we, cub3d->mlx, cub3d->parsing->rp_we))
+	if(init_img_texture(cub3d->texture->we, cub3d->mlx, cub3d->parsing->rp_we))
 		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures EA
-	if(init_img_texture(cub3d->texture->t_ea, cub3d->mlx, cub3d->parsing->rp_ea))
+	if(init_img_texture(cub3d->texture->ea, cub3d->mlx, cub3d->parsing->rp_ea))
 		printf("FAIL\n"); //TOPROTECT
 }
 static bool init_ray(t_cub3d *cub3d)
@@ -109,17 +109,16 @@ static int init_mlx_texture_img(t_cub3d *cub3d)
 int	main(int argc, char *argv[])
 {
 	t_cub3d		*cub3d;
-	//t_mlx		*mlx;
 
-	//mlx = NULL;
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
 	cub3d->error_type = EXIT_SUCCESS;
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d, cub3d->parsing));
-	init_mlx_texture_img(cub3d); //TOPROTECT
-	hook_and_loop(cub3d->mlx);
+	if (init_mlx_texture_img(cub3d)) //TOPROTECT
+		return (1);
+	hook_and_loop(cub3d, cub3d->mlx);
 	destroy_free_screen(cub3d->mlx);
 	print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
 	free_map(cub3d->map);
