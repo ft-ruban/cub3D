@@ -41,13 +41,41 @@ static bool malloc_cardinal_point_struct(t_texture *texture)
 	return(RETURN_SUCCESS);
 }
 
-static void init_textures_img(t_texture *texture)
+static bool init_img_texture(t_img *texture, t_mlx *mlx, char *path)
 {
-	malloc_cardinal_point_struct(texture); //toprotect
-	//TODO init t_img des textures NO
-	//TODO init t_img des textures SO
-	//TODO init t_img des textures WE
-	//TODO init t_img des textures EA
+	texture->img = mlx_xpm_file_to_image(mlx->mlx, path,0,0); //TOASKMATHISU x2)
+	if(!texture->img)
+		return(RETURN_FAILURE);
+	texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel),
+	 &(texture->line_length), &(texture->endian));
+	texture->bits_per_pixel = texture->bits_per_pixel >> 3; //TO ASK ABOUT THE VALUE;
+	return(RETURN_SUCCESS);
+}
+
+static void init_textures_img(t_cub3d *cub3d)
+{
+	malloc_cardinal_point_struct(cub3d->texture); //toprotect
+	if(init_img_texture(cub3d->texture->t_no, cub3d->mlx, cub3d->parsing->rp_no))
+		printf("FAIL\n");//TOPROTECT
+	if(init_img_texture(cub3d->texture->t_so, cub3d->mlx, cub3d->parsing->rp_so))
+		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures SO
+	if(init_img_texture(cub3d->texture->t_we, cub3d->mlx, cub3d->parsing->rp_we))
+		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures EA
+	if(init_img_texture(cub3d->texture->t_ea, cub3d->mlx, cub3d->parsing->rp_ea))
+		printf("FAIL\n"); //TOPROTECT
+}
+static bool init_ray(t_cub3d *cub3d)
+{
+	t_ray *ray;
+
+	ray = malloc(sizeof(t_ray));
+	if(!ray)
+	{
+		return (RETURN_FAILURE); //TOPROTECT
+	}
+	cub3d->ray = ray;
+	//IF NEEDED we can assign default value HERE
+	return(RETURN_SUCCESS);
 }
 
 static int init_mlx_texture_img(t_cub3d *cub3d)
@@ -65,7 +93,8 @@ static int init_mlx_texture_img(t_cub3d *cub3d)
 		return (clean_and_exit(cub3d, cub3d->parsing));
 	}
 	cub3d->mlx = mlx;
-	init_textures_img(cub3d->texture);
+	init_textures_img(cub3d); //TOPROTECT?
+	init_ray(cub3d); //TOPROTECT
 	return(RETURN_SUCCESS);
 }
 
