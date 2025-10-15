@@ -4,6 +4,12 @@
 #include "set_mlx.h"
 #include <unistd.h> //write
 
+
+// static void init_mlx_texture_img()
+// {
+
+// }
+
 // WIP DOC : we init our setting structure, then its value then we parse the
 // arguments + content of the file in (parsing) before handling the initiation
 // of MLX that would lead to the loop/hook that handle event and interaction
@@ -14,30 +20,30 @@
 int	main(int argc, char *argv[])
 {
 	t_cub3d		*cub3d;
-	//t_mlx		*mlx;
-	//t_parsing	*parsing;
+	t_mlx		*mlx;
 
+	mlx = NULL;
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
 	cub3d->error_type = EXIT_SUCCESS;
 	if (parsing_init(argc, argv, cub3d))
+		return (clean_and_exit(cub3d, cub3d->parsing));
+	mlx = init_screen_mlx(mlx); // TOPROTECT
+	if (!mlx)
 	{
+		error_handler(cub3d, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
+		free_map(cub3d->map);
+		free(cub3d->map);
+		free(cub3d->texture);
 		return (clean_and_exit(cub3d, cub3d->parsing));
 	}
-	// WIP MLX
-	// t_mlx = init_screen_mlx(t_mlx); // TOPROTECT
-	// if (!t_mlx)
-	// {
-	// 	error_handler(set, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
-	// 	free_map(set);
-	// 	return (clean_and_exit(set));
-	// }
-	// hook_and_loop(t_mlx);
-	// destroy_free_screen(t_mlx);
+	hook_and_loop(mlx);
+	destroy_free_screen(mlx);
 	print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
 	free_map(cub3d->map);
 	free(cub3d->map);
+	free(cub3d->texture);
 	return (clean_and_exit(cub3d, cub3d->parsing));
 	return(0);
 }

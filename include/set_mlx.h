@@ -24,11 +24,12 @@ typedef struct s_img
 
 typedef struct s_texture
 {
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
+	int floor_hex;
+	int ceil_hex;
+	t_img *t_no;
+	t_img *t_so;
+	t_img *t_ea;
+	t_img *t_we;
 }				t_texture;
 
 

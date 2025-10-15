@@ -7,6 +7,7 @@
 
 typedef struct s_parsing	t_parsing;
 typedef struct s_map	t_map;
+typedef struct s_texture	t_texture;
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
@@ -40,7 +41,7 @@ typedef struct s_cub3d
     t_parsing   *parsing;
 	t_map  		*map;
     //t_ray     *ray;
-    //t_texture *texture;
+    t_texture *texture;
     //t_mlx     *mlx;
 	unsigned char error_type;
 }               t_cub3d;
