@@ -102,6 +102,6 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 		free(map_info);
 		return (RETURN_FAILURE);
 	}
-	texture_struct_setup(cub3d);
+	texture_struct_setup(cub3d); //TOPROTECT
 	return (RETURN_SUCCESS);
 }

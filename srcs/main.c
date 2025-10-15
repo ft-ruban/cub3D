@@ -4,11 +4,70 @@
 #include "set_mlx.h"
 #include <unistd.h> //write
 
+static bool free_all_err(t_img *no, t_img *ea, t_img *so, t_img *we)
+{
+	if(no)
+		free(no);	
+	if(ea)
+		free(ea);
+	if(so)
+		free(so);
+	if(we)
+		free(we);
+	return(1);
+}
 
-// static void init_mlx_texture_img()
-// {
+static bool malloc_cardinal_point_struct(t_texture *texture)
+{
+	t_img 		*no;
+	t_img  		*so;
+	t_img  		*we;
+	t_img  		*ea;
 
-// }
+	no = NULL; //superflu?
+	so = NULL;
+	we = NULL;
+	ea = NULL;
+	no = malloc(sizeof(t_img));
+	so = malloc(sizeof(t_img));
+	we = malloc(sizeof(t_img));
+	ea = malloc(sizeof(t_img));
+	if (!no || !so || !we || !ea)
+		return(free_all_err(no, ea, so, we));
+	texture->t_no = no;
+	texture->t_so = so;
+	texture->t_we = we;
+	texture->t_ea = ea;
+	return(RETURN_SUCCESS);
+}
+
+static void init_textures_img(t_texture *texture)
+{
+	malloc_cardinal_point_struct(texture); //toprotect
+	//TODO init t_img des textures NO
+	//TODO init t_img des textures SO
+	//TODO init t_img des textures WE
+	//TODO init t_img des textures EA
+}
+
+static int init_mlx_texture_img(t_cub3d *cub3d)
+{
+	t_mlx *mlx;
+
+	mlx = NULL;
+	mlx = init_screen_mlx(mlx); // TOPROTECT
+	if (!mlx)
+	{
+		error_handler(cub3d, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
+		free_map(cub3d->map);
+		free(cub3d->map);
+		free(cub3d->texture);
+		return (clean_and_exit(cub3d, cub3d->parsing));
+	}
+	cub3d->mlx = mlx;
+	init_textures_img(cub3d->texture);
+	return(RETURN_SUCCESS);
+}
 
 // WIP DOC : we init our setting structure, then its value then we parse the
 // arguments + content of the file in (parsing) before handling the initiation
@@ -20,26 +79,18 @@
 int	main(int argc, char *argv[])
 {
 	t_cub3d		*cub3d;
-	t_mlx		*mlx;
+	//t_mlx		*mlx;
 
-	mlx = NULL;
+	//mlx = NULL;
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
 	cub3d->error_type = EXIT_SUCCESS;
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d, cub3d->parsing));
-	mlx = init_screen_mlx(mlx); // TOPROTECT
-	if (!mlx)
-	{
-		error_handler(cub3d, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
-		free_map(cub3d->map);
-		free(cub3d->map);
-		free(cub3d->texture);
-		return (clean_and_exit(cub3d, cub3d->parsing));
-	}
-	hook_and_loop(mlx);
-	destroy_free_screen(mlx);
+	init_mlx_texture_img(cub3d); //TOPROTECT
+	hook_and_loop(cub3d->mlx);
+	destroy_free_screen(cub3d->mlx);
 	print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
 	free_map(cub3d->map);
 	free(cub3d->map);
