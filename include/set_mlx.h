@@ -22,6 +22,16 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
+typedef struct s_texture
+{
+	int floor_hex;
+	int ceil_hex;
+	t_img *t_no;
+	t_img *t_so;
+	t_img *t_ea;
+	t_img *t_we;
+}				t_texture;
+
 typedef struct s_mlx
 {
 	void		*mlx;
