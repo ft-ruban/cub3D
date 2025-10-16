@@ -9,7 +9,7 @@ void	hook_and_loop(t_cub3d *cub3d, t_mlx *mlx)
 	(void)cub3d;
 	mlx_hook(mlx->mlx_win, 17, 1L << 17, close_window, mlx);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, handle_keys, mlx);
-	mlx_loop_hook(mlx->mlx, draw, mlx);
+	mlx_loop_hook(mlx->mlx, exec, cub3d);
 	mlx_loop(mlx->mlx);
 }
 

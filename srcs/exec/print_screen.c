@@ -2,16 +2,23 @@
 #include "set_mlx.h"
 #include "exec.h"
 
-// we are now on the edge of x and y, so to go forward we are gonna add
-// one dist_next_x or y. then everytime we move to the next edge, we keep an
-// eye on where we are by updating the map_x or y with the right step(+1 or -1).
-// the side variable is here to indicate if we hit a wall on the x or y side.
+// 1) We are now on the edge of x and y, so to go forward we are gonna add
+//    one dist_next_x or y. 
+// 2) Before we have to choose; either go on the next x or y edge. To do so,
+//    we check if the next x will arrive sooner than the next y, if that's true,
+//    we add dist_next_x to wall_dist_x.
+//
+// Everytime we move to the next edge, we keep track of where we are by updating
+// the map_x or y with the right step(+1 or -1).
+// the side variable is here to indicate if we hit a wall on the x(0) or y(1)
+// side.
 
 void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			unsigned int dist_next_x,unsigned int dist_next_y)
 {
-	while (map->map[map->wall_pos_y][map->wall_pos_x] != 1)
+	while (map->map[map->wall_pos_y][map->wall_pos_x] != '1')
 	{
+		// printf("wall_y: %d, wall_x: %d\ncurr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 		if (ray->wall_dist_x < ray->wall_dist_y)
 		{
 			ray->wall_dist_x += dist_next_x;
@@ -25,16 +32,23 @@ void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			ray->side = 1;
 		}
 	}
+	// printf("wall_y: %d, wall_x: %d\ncurr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
+
 }
 
-// depending on where we are on a cellule of the map, we will be more or
-// less close to the edges. also this distance is different if we go on the
-// right, left, up or dow direction.
-// let's say pos_x = 4.8. then map_x = 4. if we go on the right direction, then
-// ray_dir_x > 0 and step = 1. 
-// So to find the distance between the player and the first time we enconter
-// the x edge, we add dist_next_x that we multipy by a number bellow 1.
-// here 4 + 1 - 4.8 = 0.2. so dist_next_x will be multiplied by 0.2. 
+// 1) Depending on where we are on a cellule of the map, we will be more or
+//    less close to the edges. This distance changes if we go on the right,
+//    left, up or down direction from where the player is.
+// 2) Let's say pos_x = 4.8. wich means: map_x = 4.
+//    If we go on the right direction(ray_dir_x > 0) step will be set at 1 to
+//    indicate that we go forward on the x axe. 
+// 3) To find the distance between the player and the first time we enconter
+//    the x edge it is gonna be the dist_next_x multiplied by the distance of
+//    the player with the edge.
+//    Here: 4 + 1 - 4.8 = 0.2. so dist_next_x will be multiplied by 0.2.
+//
+// The distance player-edge will always be under 1, or exactly 1, since we are
+// on cellules of 1 x 1.
 
 void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
 													unsigned int dist_next_y)
@@ -63,43 +77,56 @@ void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
 		ray->wall_dist_y = (map->wall_pos_y + 1 - map->player_pos_y) *
 															dist_next_y;
 	}
+	printf("x: %f, y: %f\n", ray->wall_dist_x, ray->wall_dist_y);
 }
 
-// we first want to know the distance we have to travel, giving the ray
-// direction, until we cross the next x or y edge.
-// then the distance in between the player and the next edge may not be exactly
-// the same as this distance(x to x + 1). So we also find this exact distance.
-// Now it's easy, from where we are now, (wich is exactly on the edge of an 
-// axe), we add dist_next_x or y to be exactly on the next edge x or y.
+// 1) We first want to know the distance we have to travel from an edge x or y,
+//    to another (this will depend on the ray direction).
+// 2) Then let's position ourself on the perfect edge of x and y.
+// 3) From where we are now, we add dist_next_x or y to be exactly on the next
+//    edge x or y.
+//
+// dist_next_x or y cannot be negatif and we turn them positif when needed.
 
 void	detect_first_wall(t_cub3d *cub3d)
 {
-	unsigned int	dist_next_x;
-	unsigned int	dist_next_y;
+	double	dist_next_x;
+	double	dist_next_y;
 
 	dist_next_x = 1 / cub3d->ray->dir_x;
+	if (dist_next_x < 0)
+		dist_next_x = -dist_next_x;
 	dist_next_y = 1 / cub3d->ray->dir_y;
+	if (dist_next_y < 0)
+		dist_next_y = -dist_next_y;
+	// printf("dist_next_x: %f, dist_next_y: %f\n", dist_next_x, dist_next_y);
 	stop_at_first_edge(cub3d->ray, cub3d->map, dist_next_x, dist_next_y);
 	until_we_hit_a_wall(cub3d->map, cub3d->ray, dist_next_x, dist_next_y);
 }
 
-// after getting the main_ray_dir and his plane vecteur, we calculate the rays
-// (for each camera position).
-// for every ray, we calculate the distance in between the player and the wall,
-// and then we move to the next ray.
-// for every time we calculate a ray direction, the camera orient a tiny bit to
-// the left, updating itself with the current ray_dir we are calculating.
+// 1) After getting the main_ray_dir and his plane vector, we search the rays
+//    direction with the camera orientation associated (begin on the far left).
+// 2) For every ray, the camera orient a tiny bit to the right, updating itself 
+//    with the current ray_dir we are calculating.
+//
+// Casting the curr_column and win_width in double ensure having a precised 
+// result. without it we had an overflow.
 
 void	curr_ray_dir(t_cub3d *cub3d)
 {
 	float	camera;
 
-	camera = 2 * (cub3d->curr_column / WIN_WIDTH) - 1;
+	camera = 2 * ((double)cub3d->curr_column / (double)WIN_WIDTH) - 1;
 	cub3d->ray->dir_x = cub3d->ray->main_ray_dir_x +
 					(cub3d->ray->main_ray_plane_x * camera);
 	cub3d->ray->dir_y = cub3d->ray->main_ray_dir_y +
 					(cub3d->ray->main_ray_plane_y * camera);
+	// printf("dir_x: %f, dir_y: %f\n", cub3d->ray->dir_x, cub3d->ray->dir_y);
 }
+
+// From our first column(0), to the last one(WIN_WIDTH - 1), we are looking for
+// precious informations to help us draw the right pixel(ceil, texture or
+// floor), at the right screen position.
 
 void	print_screen(t_cub3d *cub3d)
 {

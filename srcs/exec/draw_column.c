@@ -22,10 +22,12 @@ void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
 	}
 }
 
-// we don't use wall_dist, wich will create a fish eye. Instead we calculate
-// the perpendicular distance with the main_ray.
-// and we find the wall_height thanks to the win_height divided by the
-// perp_wall_dist.
+// 1) we don't use wall_dist, wich will create a fish eye. Instead we calculate
+//    the perpendicular distance with the main_ray.
+// 2) Find the wall_height thanks to the win_height divided by the
+//    perp_wall_dist.
+// 3) Aknoledge how much of the texture pixel we need, 100% of them ? 50% or
+//    124.6518% ?
 
 void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 {
@@ -39,11 +41,10 @@ void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 											ray->perp_wall_dist);
 }
 
-// First, find the right distance and deduct the wall height in pixel.
-// we then deduct where the wall start and stop on the screen.
-// a calcul must be done to know how much of the texture pixel we need, 100% of
-// them ? 50% or 124.6518% ?
-// and know we can take the right pixels of our texture, to print them on our
+// 1) Get the right distance and deduct the wall height(in pixel).
+// 2) Deduct where the wall start and stop on the screen.
+
+// And know we can locate the right pixels of our texture, to print them on our
 // screen img.
 
 void	draw_column(t_cub3d *cub3d)

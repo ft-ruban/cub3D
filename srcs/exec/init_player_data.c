@@ -2,9 +2,9 @@
 #include "set_mlx.h"
 #include "exec.h"
 
-// we are looking for the direction of the ray in the center of the player 
-// vision.
-// here 0 is x and 1 is y, two numbers for the main vecteur in 2D.
+// We are looking for the direction of the ray in the center of the player 
+// vision (main_ray).
+// Here 0 is x and 1 is y, two numbers for a vector in 2D.
 
 void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
 {
@@ -26,18 +26,20 @@ void	assign_player_orientation(t_map *map, char player_tile)
 		map->player_orientation = 0.0;
 }
 
-// first, find the exact position of our player, adding 0.5 to pu him in the 
+// First, find the exact position of our player, adding 0.5 to pu him in the 
 // center of the case mesuring 1 * 1.
 
 char	find_player_pos(t_map *map_info, char **map)
 {
-	int	width;
-	int	height;
+	int		width;
+	int		height;
+	char	player_tile;
 
 	width = 0;
 	height = 0;
 	while (map[height])
 	{
+		width = 0;
 		while (map[height][width])
 		{
 			if (map[height][width] == 'N' || map[height][width] == 'S' ||
@@ -47,14 +49,18 @@ char	find_player_pos(t_map *map_info, char **map)
 					map_info->wall_pos_y = height;
 					map_info->player_pos_x = width + 0.5;
 					map_info->player_pos_y = height + 0.5;
+					player_tile = map[height][width];
 					break;
 				}
 			width++;
 		}
 		height++;
 	}
-	return(map[height][width]);
+	return(player_tile);
 }
+
+// Locate where the player is, the direction he is facing, and the main_ray and
+// plane ray associated with it. 
 
 void	init_player_data(t_cub3d *cub3d)
 {
