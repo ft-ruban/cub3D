@@ -7,7 +7,7 @@
 // keep the half of this result.
 // by doing so, we start and stop exactly at the same distance from the center.
 
-void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
+static void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
 				unsigned int *wall_start, unsigned int *wall_end)
 {
 	if (wall_pixel_height >= WIN_HEIGHT)
@@ -29,7 +29,7 @@ void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
 // 3) Aknoledge how much of the texture pixel we need, 100% of them ? 50% or
 //    124.6518% ?
 
-void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
+static void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 {
 	if (ray->side == 0)
 		ray->perp_wall_dist = (map->wall_pos_x - map->player_pos_x +

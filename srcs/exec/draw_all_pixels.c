@@ -12,7 +12,7 @@
 // since the TEXTURE_WIDTH is equal to the number of pixel before next line,
 // and line_length is equal to the number of char berfore next line.
 
-unsigned int	get_texture_pixel(t_img *texture, int x, int y)
+static unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 {
 	char			*pixel_addr;
 	unsigned int	pixel_color;
@@ -29,7 +29,7 @@ unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 // then we adjust the value to where it match in the texture img.
 // finally we flip the image texture if we face north or east.
 
-void	find_texture_x(t_ray *ray, t_map *map, t_texture *texture)
+static void	find_texture_x(t_ray *ray, t_map *map, t_texture *texture)
 {
 	float	wall_hit_pos;
 
@@ -48,7 +48,7 @@ void	find_texture_x(t_ray *ray, t_map *map, t_texture *texture)
 // west texture.
 // if side = 1, on the y axe, the texture will be the north or south one.
 
-t_img	*right_texture_addr(t_ray *ray, t_texture *texture)
+static t_img	*right_texture_addr(t_ray *ray, t_texture *texture)
 {
 	t_img	*ptr_texture;
 
@@ -74,7 +74,7 @@ t_img	*right_texture_addr(t_ray *ray, t_texture *texture)
 // to our position in the texture.
 // after this being done, we can find the right pixel color we need.
 
-void	get_right_pixel_tex(t_cub3d *cub3d, unsigned int wall_pixel)
+static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 {
 	t_img	*texture_addr;
 
@@ -85,10 +85,12 @@ void	get_right_pixel_tex(t_cub3d *cub3d, unsigned int wall_pixel)
 							cub3d->texture->x, cub3d->texture->y);
 }
 
-// to draw the pixel, we call the draw function with a string wich define the
-// nature of the pixel (ceiling, wall, or floor).
-// the texture step will give us the distance with the next pixel we need to
-// copy.
+// 1) To keep track of the pixel(or the wall pixel) we are currently working on,
+//    it incremente itself everytime it is being draw. 
+// 2) the texture render will give us the distance with the next pixel we need
+//    to copy.
+//    If we are close to the wall, we might want to re use the same pixel
+//    texture, but if far away from one, we should skip some of them.
 
 void	draw_all_pixels(t_cub3d *cub3d, t_texture *texture,
 				unsigned int wall_start, unsigned int wall_end)
@@ -106,7 +108,7 @@ void	draw_all_pixels(t_cub3d *cub3d, t_texture *texture,
 	texture->render = (double)TEXTURE_HEIGHT / texture->wall_pixel_height;
 	while (pixel <= wall_end)
 	{
-		get_right_pixel_tex(cub3d, wall_pixel);
+		get_right_pixel_texture(cub3d, wall_pixel);
 		draw_one_pixel(cub3d->mlx, texture->pixel_color);
 		wall_pixel++;
 		pixel++;
