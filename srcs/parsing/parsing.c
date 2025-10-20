@@ -54,7 +54,7 @@ static void	convert_rgb_hex(t_parsing *parsing, t_texture *texture)
 		+ ((parsing->ceil_g & 0xff) << 8) + (parsing->ceil_b & 0xff);
 	texture->floor_hex = ((parsing->floor_r & 0xff) << 16)
 		+ ((parsing->floor_g & 0xff) << 8) + (parsing->floor_b & 0xff);
-	printf("\nceil = %X\n floor = %X\n", texture->ceil_hex, texture->floor_hex);
+	// printf("\nceil = %X\n floor = %X\n", texture->ceil_hex, texture->floor_hex);
 }
 
 static bool	texture_struct_setup(t_cub3d *cub3d)

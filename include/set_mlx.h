@@ -10,8 +10,8 @@ typedef struct s_cub3d	t_cub3d;
 # define FALSE 0
 # define WIN_WIDTH 500
 # define WIN_HEIGHT 500
-# define TEXTURE_WIDTH 1000
-# define TEXTURE_HEIGHT 1000
+# define TEXTURE_WIDTH 128
+# define TEXTURE_HEIGHT 128
 # define KEY_ESC 65307
 # define KEY_UNKNOWN 0
 
@@ -22,11 +22,13 @@ typedef struct s_img
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			width;
+	int			height;
 }				t_img;
 
 typedef struct s_mlx
 {
-	void		*mlx;
+	void		*ptr;
 	void		*mlx_win;
 	t_img		*screen;
 }				t_mlx;

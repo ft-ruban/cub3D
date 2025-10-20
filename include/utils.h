@@ -45,6 +45,7 @@ could be related to a failed malloc\n"
 # define MSG_15 "Map is not closed\n"
 # define MSG_16 "No player position found\n"
 # define MSG_17 "Malloc failure during init of parsing struct\n"
+# define MSG_18 "ft_strlen just failed\n"
 
 // element_check_utils.c
 bool	character_is_invalid(char c);

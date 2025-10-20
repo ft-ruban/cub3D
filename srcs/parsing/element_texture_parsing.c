@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   element_texture_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/13 07:32:44 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/20 19:04:48 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+static char	*element_without_eol(t_cub3d *cub3d, char *element)
+{
+	char *str;
+	int	i;
+
+	i = ft_strlen(element);
+	if (i == 0)
+	{
+		error_handler(cub3d, STRLEN_FAILED, "parsing_texture.c:38 ", MSG_18);
+		return (NULL);
+	}
+	if (element[i-1] == '\n')
+	{
+		element[i-1] = '\0';
+		str = ft_strdup(element);
+		if (!str)
+		{
+			error_handler(cub3d, STRDUP_FAILED, "parsing_texture.c:38 ", MSG_11);
+			return (NULL);
+		}
+	}
+	else
+		str = element;
+	return (str);
+}
 
 // read a single char, if EOF return error,
 // if space we read until it is not a space in the buff anymore
@@ -43,8 +69,12 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 				MSG_10));
 	}
 	free(element_buff);
+	*element = element_without_eol(cub3d, *element);
+	if (!*element)
+		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
+
 // if fail here it mean we already got the information
 // so invalid file's content. Else we go to find the path
 // to fill the ptr that point to the right variable in oru struct

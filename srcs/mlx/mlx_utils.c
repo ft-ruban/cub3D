@@ -9,8 +9,8 @@ void	hook_and_loop(t_cub3d *cub3d, t_mlx *mlx)
 	(void)cub3d;
 	mlx_hook(mlx->mlx_win, 17, 1L << 17, close_window, mlx);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, handle_keys, mlx);
-	mlx_loop_hook(mlx->mlx, exec, cub3d);
-	mlx_loop(mlx->mlx);
+	mlx_loop_hook(mlx->ptr, exec, cub3d);
+	mlx_loop(mlx->ptr);
 }
 
 // Destroy and free everything in the right order (mostly used when the init)
@@ -18,10 +18,10 @@ void	hook_and_loop(t_cub3d *cub3d, t_mlx *mlx)
 
 void	destroy_free_screen(t_mlx *mlx)
 {
-	mlx_destroy_image(mlx->mlx, mlx->screen->img);
-	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
+	mlx_destroy_image(mlx->ptr, mlx->screen->img);
+	mlx_destroy_window(mlx->ptr, mlx->mlx_win);
+	mlx_destroy_display(mlx->ptr);
+	free(mlx->ptr);
 	free(mlx);
 }
 
@@ -67,18 +67,18 @@ void	*init_screen_mlx(t_mlx *mlx)
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
 		return (NULL);
-	mlx->mlx = mlx_init();
-	if (!mlx->mlx)
+	mlx->ptr = mlx_init();
+	if (!mlx->ptr)
 		return (crush_kill_destroy(NULL, NULL, mlx));
-	mlx->mlx_win = mlx_new_window(mlx->mlx, WIN_WIDTH, WIN_HEIGHT,
+	mlx->mlx_win = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT,
 			"Unforeseen consequences");
 	if (!mlx->mlx_win)
-		return (crush_kill_destroy(mlx->mlx, NULL, mlx));
+		return (crush_kill_destroy(mlx->ptr, NULL, mlx));
 	if (init_screen(mlx))
 		return (NULL);
-	mlx->screen->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
+	mlx->screen->img = mlx_new_image(mlx->ptr, WIN_WIDTH, WIN_HEIGHT);
 	if (!mlx->screen->img)
-		return (crush_kill_destroy(mlx->mlx, mlx->mlx_win, mlx));
+		return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx));
 	mlx->screen->addr = mlx_get_data_addr(mlx->screen->img,
 			&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
 			&(mlx->screen->endian));

@@ -14,7 +14,7 @@
 
 int	close_window(t_mlx *screen)
 {
-	mlx_loop_end(screen->mlx);
+	mlx_loop_end(screen->ptr);
 	return (RETURN_SUCCESS);
 }
 

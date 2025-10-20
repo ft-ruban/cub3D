@@ -50,10 +50,10 @@ override DEBUGSRC := print_struct_set
 override MLXSETSRC := commands \
 					  mlx_utils
 
-override EXECSRC := draw_all_pixels \
-					draw_column \
-					draw_one_pixel \
+override EXECSRC := draw_screen \
 					draw \
 					exec \
+					get_column_data \
 					init_player_data \
-					print_screen
+					print_screen \
+					save_column_pixels

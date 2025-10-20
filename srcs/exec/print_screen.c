@@ -77,7 +77,6 @@ void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
 		ray->wall_dist_y = (map->wall_pos_y + 1 - map->player_pos_y) *
 															dist_next_y;
 	}
-	printf("x: %f, y: %f\n", ray->wall_dist_x, ray->wall_dist_y);
 }
 
 // 1) We first want to know the distance we have to travel from an edge x or y,
@@ -135,7 +134,9 @@ void	print_screen(t_cub3d *cub3d)
 	{
 		curr_ray_dir(cub3d);
 		detect_first_wall(cub3d);
-		draw_column(cub3d);
+		get_column_data(cub3d);
+		printf("hey\n");
 		cub3d->curr_column++;
 	}
+	draw_screen(cub3d->mlx);
 }

@@ -36,6 +36,8 @@ typedef enum e_error_status
 	STRJOIN_FAILED,
 	INV_MAP,
     INIT_LIBX_FAILED ,
+	STRLEN_FAILED,
+	STRDUP_FAILED,
 }					t_error_status;
 
 typedef struct s_cub3d

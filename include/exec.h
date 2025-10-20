@@ -44,15 +44,15 @@ typedef struct s_map
 	float 			player_orientation;
 }			t_map;
 
-//draw_all_pixels.c
-void	draw_all_pixels(t_cub3d *cub3d, t_texture *texture,
+//get_column_pixels.c
+void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 				unsigned int wall_start, unsigned int wall_end);
 
 //draw_column.c
-void	draw_column(t_cub3d *cub3d);
+void	get_column_data(t_cub3d *cub3d);
 
-//draw_one_pixel.c
-int	    draw_one_pixel(t_mlx *mlx, unsigned int pixel_color);
+//draw_screen.c
+int	    draw_screen(t_mlx *mlx);
 
 //exec.c
 int		exec(t_cub3d *cub3d);
