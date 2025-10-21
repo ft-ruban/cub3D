@@ -8,10 +8,10 @@ typedef struct s_cub3d	t_cub3d;
 
 # define TRUE 1
 # define FALSE 0
-# define WIN_WIDTH 500
+# define WIN_WIDTH 800
 # define WIN_HEIGHT 500
-# define TEXTURE_WIDTH 128
-# define TEXTURE_HEIGHT 128
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
 # define KEY_ESC 65307
 # define KEY_UNKNOWN 0
 

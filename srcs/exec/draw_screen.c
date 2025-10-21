@@ -1,34 +1,17 @@
 #include "exec.h"
 
-// put a single pixel in our image, we just require the mlx->img address
-// + coordinates X(WIDTH) Y(HEIGHT) and the hexadecimal code for the color
-// ALWAYS DEFINE A COLOR IF NEEDED dont put it raw you psycho.
-
-// static void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
-// {
-// 	*(unsigned int *)(img->addr + (y * img->line_length + x
-// 				* (img->bits_per_pixel))) = color;
-// }
-
 // function to draw our pixels
-// ATM it just paint all pixel into RED color simple
 
 int	draw_screen(t_mlx *mlx)
 {
-	// int	y;
-	// int	x;
+	// int	printed_column;
 
-	// y = 0;
-	// x = 0;
-	// while (y < WIN_HEIGHT)
+	// printed_column = 0;
+	// while (printed_column < WIN_WIDTH)
 	// {
-	// 	x = 0;
-	// 	while (x < WIN_WIDTH)
-	// 	{
-	// 		my_mlx_pixel_put(mlx->screen, x, y, pixel_color);
-	// 		x++;
-	// 	}
-	// 	y++;
+	// 	mlx_put_image_to_window(mlx->ptr, mlx->mlx_win, mlx->screen->img,
+	// 													printed_column, 0);
+	// 	printed_column++;
 	// }
 	mlx_put_image_to_window(mlx->ptr, mlx->mlx_win, mlx->screen->img, 0, 0);
 	return (0);

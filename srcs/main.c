@@ -79,10 +79,6 @@ static void init_textures_img(t_cub3d *cub3d)
 		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures EA
 	if(init_img_texture(cub3d->texture->ea, cub3d, cub3d->parsing->rp_ea))
 		printf("FAIL\n"); //TOPROTECT
-	printf("no addr: %s\n", cub3d->texture->no->addr);
-	printf("so addr: %s\n", cub3d->texture->so->addr);
-	printf("we addr: %s\n", cub3d->texture->we->addr);
-	printf("ea addr: %s\n", cub3d->texture->ea->addr);
 }
 static bool init_ray(t_cub3d *cub3d)
 {

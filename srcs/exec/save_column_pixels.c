@@ -2,17 +2,20 @@
 #include "set_mlx.h"
 #include "exec.h"
 
+// Save the pixel color in the right place x and y of the screen we are gonna
+// print once filled up entirely.
+
 static void	save_pixel(t_mlx *mlx, unsigned int color, unsigned int x,
 														unsigned int y)
 {
-	char	*dst;
+	char	*dst_addr;
 
-    dst = mlx->screen->addr + (y * mlx->screen->line_length +
-							x * (mlx->screen->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst_addr = mlx->screen->addr + (y * mlx->screen->line_length +
+		x * (int)(mlx->screen->bits_per_pixel));
+	*(unsigned int*)dst_addr = color;
 }
 
-// the texture is contain in a linear tab of char, so to find the pixel we want,
+// the texture is in a linear tab of char, so to find the pixel we want,
 // we are gonna find the right position in this tab, then we retrieve the pixel
 // by taking all the four char wich represent rgba at once in a int.
 // char = 8 bits, int = 32 bits. so casting an int to retrieve from a char tab,
@@ -29,7 +32,7 @@ static unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 
 	// printf("text_addr: %s\n", texture->addr);
 	pixel_addr = texture->addr + (y * texture->line_length + x *
-							texture->bits_per_pixel / 8);
+							(int)(texture->bits_per_pixel));
 	pixel_color = *(unsigned int *)pixel_addr;
 	return (pixel_color);
 }
@@ -127,7 +130,7 @@ static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 // 2) the texture render will give us the distance with the next pixel we need
 //    to copy.
 //    If we are close to the wall, we might want to re use the same pixel
-//    texture, but if far away from one, we should skip some of them.
+//    texture, but when far away from one, we should skip some of them.
 
 void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 				unsigned int wall_start, unsigned int wall_end)
@@ -137,6 +140,7 @@ void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 
 	pixel = 0;
 	wall_pixel = 0;
+	// printf("curr column: %d\n", cub3d->curr_column);
 	while (pixel < wall_start)
 	{
 		save_pixel(cub3d->mlx, texture->ceil_hex, cub3d->curr_column, pixel);

@@ -82,6 +82,7 @@ void	*init_screen_mlx(t_mlx *mlx)
 	mlx->screen->addr = mlx_get_data_addr(mlx->screen->img,
 			&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
 			&(mlx->screen->endian));
+	// printf("line length: %d, bpp: %d, addr: %p\n", mlx->screen->line_length, mlx->screen->bits_per_pixel, mlx->screen->addr);
 	mlx->screen->bits_per_pixel = mlx->screen->bits_per_pixel >> 3;
 	return (mlx);
 }

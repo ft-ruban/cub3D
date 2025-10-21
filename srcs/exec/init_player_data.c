@@ -26,14 +26,13 @@ void	assign_player_orientation(t_map *map, char player_tile)
 		map->player_orientation = 0.0;
 }
 
-// First, find the exact position of our player, adding 0.5 to pu him in the 
-// center of the case mesuring 1 * 1.
+// First, find the exact position of our player, then add 0.5 to put him in the 
+// center of the tile mesuring 1 * 1.
 
-char	find_player_pos(t_map *map_info, char **map)
+static void	find_player_pos(t_map *map_info, char **map)
 {
 	int		width;
 	int		height;
-	char	player_tile;
 
 	width = 0;
 	height = 0;
@@ -49,14 +48,12 @@ char	find_player_pos(t_map *map_info, char **map)
 					map_info->wall_pos_y = height;
 					map_info->player_pos_x = width + 0.5;
 					map_info->player_pos_y = height + 0.5;
-					player_tile = map[height][width];
 					break;
 				}
 			width++;
 		}
 		height++;
 	}
-	return(player_tile);
 }
 
 // Locate where the player is, the direction he is facing, and the main_ray and
@@ -64,9 +61,8 @@ char	find_player_pos(t_map *map_info, char **map)
 
 void	init_player_data(t_cub3d *cub3d)
 {
-	char	player_tile;
-
-	player_tile = find_player_pos(cub3d->map, cub3d->map->map);
-	assign_player_orientation(cub3d->map, player_tile);
+	find_player_pos(cub3d->map, cub3d->map->map);
+	assign_player_orientation(cub3d->map,
+			cub3d->map->map[cub3d->map->wall_pos_y][cub3d->map->wall_pos_x]);
 	set_main_ray_dir_and_plane(cub3d->ray, cub3d->map->player_orientation);
 }

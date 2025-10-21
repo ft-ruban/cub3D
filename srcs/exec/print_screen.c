@@ -14,11 +14,13 @@
 // side.
 
 void	until_we_hit_a_wall(t_map *map, t_ray *ray,
-			unsigned int dist_next_x,unsigned int dist_next_y)
+			double dist_next_x, double dist_next_y)
 {
+	map->wall_pos_x = (int)map->player_pos_x;
+	map->wall_pos_y = (int)map->player_pos_y;
+	printf("before: wall_y: %d, wall_x: %d, curr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 	while (map->map[map->wall_pos_y][map->wall_pos_x] != '1')
 	{
-		// printf("wall_y: %d, wall_x: %d\ncurr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 		if (ray->wall_dist_x < ray->wall_dist_y)
 		{
 			ray->wall_dist_x += dist_next_x;
@@ -32,8 +34,7 @@ void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			ray->side = 1;
 		}
 	}
-	// printf("wall_y: %d, wall_x: %d\ncurr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
-
+	printf("after: wall_y: %d, wall_x: %d, curr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 }
 
 // 1) Depending on where we are on a cellule of the map, we will be more or
@@ -50,8 +51,8 @@ void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 // The distance player-edge will always be under 1, or exactly 1, since we are
 // on cellules of 1 x 1.
 
-void	stop_at_first_edge(t_ray *ray, t_map *map, unsigned int dist_next_x,
-													unsigned int dist_next_y)
+void	stop_at_first_edge(t_ray *ray, t_map *map, double dist_next_x,
+													double dist_next_y)
 {
 	if (ray->dir_x < 0)
 	{
@@ -129,13 +130,14 @@ void	curr_ray_dir(t_cub3d *cub3d)
 
 void	print_screen(t_cub3d *cub3d)
 {
-	cub3d->curr_column = 0;
+	// cub3d->curr_column = 0;
 	while (cub3d->curr_column < WIN_WIDTH)
 	{
 		curr_ray_dir(cub3d);
 		detect_first_wall(cub3d);
 		get_column_data(cub3d);
-		printf("hey\n");
+		// printf("curr column: %d\n", cub3d->curr_column);
+		// printf("ray_dir_x: %f, ray_dir_y: %f\n", cub3d->ray->dir_x, cub3d->ray->dir_y);
 		cub3d->curr_column++;
 	}
 	draw_screen(cub3d->mlx);
