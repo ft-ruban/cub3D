@@ -8,10 +8,10 @@
 
 void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
 {
-	ray->main_ray_dir_x = cos(player_orientation);
-	ray->main_ray_dir_y = sin(player_orientation);
-	ray->main_ray_plane_x = cos(player_orientation + PI * 0.5);
-	ray->main_ray_plane_y = sin(player_orientation + PI * 0.5);
+	ray->main_dir_x = cos(player_orientation);
+	ray->main_dir_y = sin(player_orientation);
+	ray->main_plane_x = cos(player_orientation + PI * 0.5);
+	ray->main_plane_y = sin(player_orientation + PI * 0.5);
 }
 
 void	assign_player_orientation(t_map *map, char player_tile)

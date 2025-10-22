@@ -4,18 +4,6 @@
 #include "set_mlx.h"
 #include <unistd.h> //write
 
-static void	init_cardinal_points(t_texture *texture)
-{
-	texture->no->width = 0;
-	texture->no->height = 0;
-	texture->so->width = 0;
-	texture->so->height = 0;
-	texture->we->width = 0;
-	texture->we->height = 0;
-	texture->ea->width = 0;
-	texture->ea->height = 0;
-}
-
 static bool free_all_err(t_img *no, t_img *ea, t_img *so, t_img *we)
 {
 	if(no)
@@ -50,7 +38,6 @@ static bool malloc_cardinal_point_struct(t_texture *texture)
 	texture->so = so;
 	texture->we = we;
 	texture->ea = ea;
-	init_cardinal_points(texture);
 	return(RETURN_SUCCESS);
 }
 
@@ -111,6 +98,7 @@ static int init_mlx_texture_img(t_cub3d *cub3d)
 	cub3d->mlx = mlx;
 	init_textures_img(cub3d); //TOPROTECT?
 	init_ray(cub3d); //TOPROTECT
+	init_player_data(cub3d);
 	return(RETURN_SUCCESS);
 }
 
@@ -130,6 +118,7 @@ int	main(int argc, char *argv[])
 	if (!cub3d)
 		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
 	cub3d->error_type = EXIT_SUCCESS;
+	cub3d->print = true;
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d, cub3d->parsing));
 	if (init_mlx_texture_img(cub3d)) //TOPROTECT

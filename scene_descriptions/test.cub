@@ -1,15 +1,15 @@
 
-SO textures/South.xpm
-WE textures/West.xpm
-EA textures/East.xpm
-NO textures/North.xpm
-C 2,255,55
-F 220,100,0
+SO textures/Wolfenstein/South.xpm
+WE textures/Wolfenstein/West.xpm
+EA textures/Wolfenstein/East.xpm
+NO textures/Wolfenstein/North.xpm
+C 36,123,255
+F 135,21,15
 
 
-111111
+
 11111111111
-10000000001
-10010000W01
+10000000101
+11000W00001
 10000000001
 11111111111

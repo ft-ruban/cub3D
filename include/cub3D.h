@@ -4,6 +4,7 @@
 # include "debug.h"
 //#include "utils.h"
 # include <stdlib.h> //size_t
+# include <stdbool.h>
 
 typedef struct s_parsing	t_parsing;
 typedef struct s_map		t_map;
@@ -43,6 +44,7 @@ typedef enum e_error_status
 typedef struct s_cub3d
 {
 	unsigned int	curr_column; //Ray?
+	bool			print;
     t_parsing   	*parsing;
 	t_map  			*map;
     t_ray     		*ray;

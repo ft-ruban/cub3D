@@ -27,7 +27,8 @@
 
 int		exec(t_cub3d *cub3d)
 {
-	init_player_data(cub3d);
-	print_screen(cub3d);
+	if (cub3d->print == true)
+		print_screen(cub3d);
+	cub3d->print = false;
 	return (RETURN_SUCCESS);
 }

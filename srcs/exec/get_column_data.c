@@ -7,18 +7,23 @@
 // keep the half of this result.
 // by doing so, we start and stop exactly at the same distance from the center.
 
-static void	pinpoint_wall_start_end(unsigned int wall_pixel_height,
+static void	pinpoint_wall_start_end(t_texture *texture,
 				unsigned int *wall_start, unsigned int *wall_end)
 {
-	if (wall_pixel_height >= WIN_HEIGHT)
+	int	neg_offset;
+
+	neg_offset = 0;
+	if (texture->wall_pixel_height >= WIN_HEIGHT)
 	{
+		neg_offset = (int)((WIN_HEIGHT - (int)texture->wall_pixel_height) * 0.5);
+		texture->offset = -neg_offset;
 		*wall_start = 0;
 		*wall_end = WIN_HEIGHT - 1;
 	}
 	else
 	{
-		*wall_start = (WIN_HEIGHT - wall_pixel_height) / 2;
-		*wall_end = *wall_start + wall_pixel_height - 1;
+		*wall_start = (WIN_HEIGHT - texture->wall_pixel_height) * 0.5;
+		*wall_end = *wall_start + texture->wall_pixel_height - 1;
 	}
 }
 
@@ -55,7 +60,6 @@ void	get_column_data(t_cub3d *cub3d)
 	wall_start = 0;
 	wall_end = 0;
 	identify_wall_height(cub3d->ray, cub3d->map, cub3d->texture);
-	pinpoint_wall_start_end(cub3d->texture->wall_pixel_height, &wall_start,
-																&wall_end);
+	pinpoint_wall_start_end(cub3d->texture, &wall_start, &wall_end);
 	save_column_pixels(cub3d, cub3d->texture, wall_start, wall_end);
 }

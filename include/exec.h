@@ -17,10 +17,10 @@ typedef struct s_ray
 {
 	float 		radian;
 	float 		main_vector; //v_radian anciennement
-	float 		main_ray_dir_x;
-	float 		main_ray_dir_y;
-	float 		main_ray_plane_x;
-	float 		main_ray_plane_y;
+	float 		main_dir_x;
+	float 		main_dir_y;
+	float 		main_plane_x;
+	float 		main_plane_y;
 	float		dir_x;
 	float		dir_y;
 	float		dist_next_x;
@@ -50,9 +50,6 @@ void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 
 //draw_column.c
 void	get_column_data(t_cub3d *cub3d);
-
-//draw_screen.c
-int	    draw_screen(t_mlx *mlx);
 
 //exec.c
 int		exec(t_cub3d *cub3d);

@@ -16,9 +16,6 @@
 void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			double dist_next_x, double dist_next_y)
 {
-	map->wall_pos_x = (int)map->player_pos_x;
-	map->wall_pos_y = (int)map->player_pos_y;
-	printf("before: wall_y: %d, wall_x: %d, curr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 	while (map->map[map->wall_pos_y][map->wall_pos_x] != '1')
 	{
 		if (ray->wall_dist_x < ray->wall_dist_y)
@@ -34,7 +31,7 @@ void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			ray->side = 1;
 		}
 	}
-	printf("after: wall_y: %d, wall_x: %d, curr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
+	printf("wall_y: %d, wall_x: %d, curr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 }
 
 // 1) Depending on where we are on a cellule of the map, we will be more or
@@ -100,6 +97,8 @@ void	detect_first_wall(t_cub3d *cub3d)
 	if (dist_next_y < 0)
 		dist_next_y = -dist_next_y;
 	// printf("dist_next_x: %f, dist_next_y: %f\n", dist_next_x, dist_next_y);
+	cub3d->map->wall_pos_x = (int)cub3d->map->player_pos_x;
+	cub3d->map->wall_pos_y = (int)cub3d->map->player_pos_y;
 	stop_at_first_edge(cub3d->ray, cub3d->map, dist_next_x, dist_next_y);
 	until_we_hit_a_wall(cub3d->map, cub3d->ray, dist_next_x, dist_next_y);
 }
@@ -117,10 +116,10 @@ void	curr_ray_dir(t_cub3d *cub3d)
 	float	camera;
 
 	camera = 2 * ((double)cub3d->curr_column / (double)WIN_WIDTH) - 1;
-	cub3d->ray->dir_x = cub3d->ray->main_ray_dir_x +
-					(cub3d->ray->main_ray_plane_x * camera);
-	cub3d->ray->dir_y = cub3d->ray->main_ray_dir_y +
-					(cub3d->ray->main_ray_plane_y * camera);
+	cub3d->ray->dir_x = cub3d->ray->main_dir_x +
+					(cub3d->ray->main_plane_x * camera);
+	cub3d->ray->dir_y = cub3d->ray->main_dir_y +
+					(cub3d->ray->main_plane_y * camera);
 	// printf("dir_x: %f, dir_y: %f\n", cub3d->ray->dir_x, cub3d->ray->dir_y);
 }
 
@@ -130,15 +129,16 @@ void	curr_ray_dir(t_cub3d *cub3d)
 
 void	print_screen(t_cub3d *cub3d)
 {
-	// cub3d->curr_column = 0;
+	cub3d->curr_column = 0;
 	while (cub3d->curr_column < WIN_WIDTH)
 	{
 		curr_ray_dir(cub3d);
 		detect_first_wall(cub3d);
 		get_column_data(cub3d);
-		// printf("curr column: %d\n", cub3d->curr_column);
+		printf("curr column: %d\n", cub3d->curr_column);
 		// printf("ray_dir_x: %f, ray_dir_y: %f\n", cub3d->ray->dir_x, cub3d->ray->dir_y);
 		cub3d->curr_column++;
 	}
-	draw_screen(cub3d->mlx);
+	mlx_put_image_to_window(cub3d->mlx->ptr, cub3d->mlx->mlx_win,
+									cub3d->mlx->screen->img, 0, 0);
 }

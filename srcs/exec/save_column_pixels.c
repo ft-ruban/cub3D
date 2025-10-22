@@ -3,7 +3,7 @@
 #include "exec.h"
 
 // Save the pixel color in the right place x and y of the screen we are gonna
-// print once filled up entirely.
+// print.
 
 static void	save_pixel(t_mlx *mlx, unsigned int color, unsigned int x,
 														unsigned int y)
@@ -15,22 +15,22 @@ static void	save_pixel(t_mlx *mlx, unsigned int color, unsigned int x,
 	*(unsigned int*)dst_addr = color;
 }
 
-// the texture is in a linear tab of char, so to find the pixel we want,
-// we are gonna find the right position in this tab, then we retrieve the pixel
-// by taking all the four char wich represent rgba at once in a int.
-// char = 8 bits, int = 32 bits. so casting an int to retrieve from a char tab,
-// its gonna take four char at once (32 bits).
-// the x is the column of the pixel we want, y is the line.
-// to go from a line to the next one, we add line_length and not TEXTURE_WIDTH
-// since the TEXTURE_WIDTH is equal to the number of pixel before next line,
-// and line_length is equal to the number of char berfore next line.
+// 1) The texture is in a linear tab of char, so to find the pixel we want,
+//    we are gonna find the right position in this tab, then we retrieve the
+//    pixel by taking all the four char wich represent rgba at once in a int.
+//    Char = 8 bits, int = 32 bits. so casting an int to retrieve from a char
+//    tab, its gonna take four char at once (32 bits).
+// 2) The x is the column of the pixel we want, y is the line.
+//    To go from a line to the next one, we add line_length and not 
+//    TEXTURE_WIDTH since the TEXTURE_WIDTH is equal to the number of pixel 
+//    before next line, and line_length is equal to the number of char berfore
+//    next line.
 
 static unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 {
 	char			*pixel_addr;
 	unsigned int	pixel_color;
 
-	// printf("text_addr: %s\n", texture->addr);
 	pixel_addr = texture->addr + (y * texture->line_length + x *
 							(int)(texture->bits_per_pixel));
 	pixel_color = *(unsigned int *)pixel_addr;
@@ -49,8 +49,8 @@ static unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 //    Let's say TEXTURE_WIDTH is 200: 0.68 * 200 = 136. So we will take a pixel
 //    on the 136th column.
 //
-// If we face the east or north texture, we have to revert it so it shows up
-// right and not inverted.
+// If we face the east or north texture, we have to revert the way we print
+// the columns(x), so the texture appears in right.
 // Basicaly if texture is 200 and x is 136, our new x valu is:
 // 200 - 136 - 1 = 63.
 // The "- 1" is here because the case 200 - 200 is not possible, but we still
@@ -120,7 +120,8 @@ static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 
 	texture_addr = right_texture(cub3d->ray, cub3d->texture);
 	find_texture_x(cub3d->ray, cub3d->map, cub3d->texture);
-	cub3d->texture->y = wall_pixel * cub3d->texture->render;
+	// cub3d->texture->y = (wall_pixel + cub3d->texture->offset) * cub3d->texture->render;
+	cub3d->texture->y = (wall_pixel) * cub3d->texture->render;
 	cub3d->texture->pixel_color = get_texture_pixel(texture_addr,
 							cub3d->texture->x, cub3d->texture->y);
 }
@@ -140,7 +141,6 @@ void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 
 	pixel = 0;
 	wall_pixel = 0;
-	// printf("curr column: %d\n", cub3d->curr_column);
 	while (pixel < wall_start)
 	{
 		save_pixel(cub3d->mlx, texture->ceil_hex, cub3d->curr_column, pixel);
@@ -159,5 +159,4 @@ void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 		save_pixel(cub3d->mlx, texture->floor_hex, cub3d->curr_column, pixel);
 		pixel++;
 	}
-	// draw_screen(cub3d->mlx, cub3d->texture->floor_hex);
 }
