@@ -1,8 +1,8 @@
 
-SO textures/Wolfenstein/South.xpm
-WE textures/Wolfenstein/West.xpm
-EA textures/Wolfenstein/East.xpm
-NO textures/Wolfenstein/North.xpm
+SO textures/Prototype/South.xpm
+WE textures/Prototype/West.xpm
+EA textures/Prototype/East.xpm
+NO textures/Prototype/North.xpm
 C 36,123,255
 F 135,21,15
 
