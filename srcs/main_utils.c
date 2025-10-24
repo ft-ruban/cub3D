@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/14 10:35:37 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/10/23 10:19:40 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,32 @@ void	free_parsing_content(t_parsing *parsing)
 
 // call free all and return the error value
 
-int	clean_and_exit(t_cub3d *cub3d, t_parsing *parsing)
+int	clean_and_exit(t_cub3d *cub3d)
 {
 	unsigned char	return_value;
-
+	
 	return_value = cub3d->error_type;
 	printf("\n\nRETURN CODE : %u\n", return_value); // TORM THIS IS DEBBUG LINE
-	if(return_value <= BEFORE_PARSING_INIT && return_value != EXIT_SUCCESS)
+	
+	if(return_value >= 17)
+	{
+		free_map(cub3d->map);	
+	}
+	if(return_value >= 15)
+	{
+		free(cub3d->map->map);
+	}
+	if(return_value >= 13)
+	{
+		free(cub3d->map);	
+	}
+	if(return_value >= 5)
+	{
+		free(cub3d->parsing);	
+	}
+	if(return_value >= 2)
 	{
 		free(cub3d);
-		return(return_value);
 	}
-	free_parsing_content(parsing);
-	free(parsing);
-	free(cub3d);
 	return (return_value);
-
-	printf("fail malloc parsing\n");
-	free(cub3d);
-	return(2); //TODEFINE
 }

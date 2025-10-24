@@ -41,10 +41,12 @@ bool	init_screen(t_mlx *mlx)
 // in the right order then we return NULL to signal Main that something went
 // wrong
 
-static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx)
+static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx, t_img *screen)
 {
 	if (win)
 		mlx_destroy_window(mlx, win);
+	if (screen)
+		free(screen);
 	if (mlx)
 	{
 		mlx_destroy_display(mlx);
@@ -69,16 +71,16 @@ void	*init_screen_mlx(t_mlx *mlx)
 		return (NULL);
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
-		return (crush_kill_destroy(NULL, NULL, mlx));
+		return (crush_kill_destroy(NULL, NULL, mlx, NULL));
 	mlx->mlx_win = mlx_new_window(mlx->mlx, WIN_WIDTH, WIN_HEIGHT,
 			"Unforeseen consequences");
 	if (!mlx->mlx_win)
-		return (crush_kill_destroy(mlx->mlx, NULL, mlx));
+		return (crush_kill_destroy(mlx->mlx, NULL, mlx, NULL));
 	if (init_screen(mlx))
-		return (NULL);
+		return (crush_kill_destroy(mlx->mlx, mlx->mlx_win, mlx, NULL));
 	mlx->screen->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!mlx->screen->img)
-		return (crush_kill_destroy(mlx->mlx, mlx->mlx_win, mlx));
+		return (crush_kill_destroy(mlx->mlx, mlx->mlx_win, mlx, mlx->screen));
 	mlx->screen->addr = mlx_get_data_addr(mlx->screen->img,
 			&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
 			&(mlx->screen->endian));

@@ -18,7 +18,7 @@ unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 	unsigned int	pixel_color;
 
 	pixel_addr = texture->addr + (y * texture->line_length + x *
-							texture->bits_per_pixel / 8);
+							texture->bits_per_pixel / 8); // LDEV: BITSHIFT 3
 	pixel_color = *(unsigned int *)pixel_addr;
 	return (pixel_color);
 }

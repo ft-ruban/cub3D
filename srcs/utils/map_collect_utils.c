@@ -39,7 +39,7 @@ bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map, t_cub3d *cub3d)
 	{
 		result_read = read(fd, parsing->buff, 1);
 		if (result_read == READ_FAILED)
-			return (error_handler(cub3d, INV_READ, "get_the_map.c:41 ", MSG_6));
+			return (RETURN_FAILURE);
 		if (result_read == END_OF_FILE)
 		{
 			*in_map = false;

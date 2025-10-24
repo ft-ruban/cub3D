@@ -42,7 +42,7 @@ static bool	init_parsing_struct(t_cub3d *cub3d)
 // lowest 8 bits of each int values between 0 and 255 (in our project)
 // it is not that important considering we do not allow values above 255, this
 // was made to make that function usable elsewhere for a new project or for
-// someone else. << 16 is used so the red goes at 
+// someone else. << 16 is used so the red goes at
 // the highest byte position (16-23)
 // << 8 to make it at the middle position for the green value (8-15)
 //  blue is not shifted it stays in the lowest byte (0-7)
@@ -55,6 +55,7 @@ static void	convert_rgb_hex(t_parsing *parsing, t_texture *texture)
 	texture->floor_hex = ((parsing->floor_r & 0xff) << 16)
 		+ ((parsing->floor_g & 0xff) << 8) + (parsing->floor_b & 0xff);
 	printf("\nceil = %X\n floor = %X\n", texture->ceil_hex, texture->floor_hex);
+		// TORM THIS IS FOR DEBBUG
 }
 
 static bool	texture_struct_setup(t_cub3d *cub3d)
@@ -64,7 +65,9 @@ static bool	texture_struct_setup(t_cub3d *cub3d)
 	texture = malloc(sizeof(t_texture));
 	cub3d->texture = texture;
 	if (!texture)
-		return (RETURN_FAILURE);
+	{
+		return(error_handler(cub3d, INIT_TEXTURE_FAIL, "TOFILL", MSG_31));
+	}
 	convert_rgb_hex(cub3d->parsing, texture);
 	return (RETURN_SUCCESS);
 }
@@ -80,8 +83,7 @@ static bool	texture_struct_setup(t_cub3d *cub3d)
 
 int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 {
-	int		fd;
-	t_map	*map_info;
+	int	fd;
 
 	if (argc != 2)
 		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:TOFILL ", MSG_2));
@@ -93,15 +95,10 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 				MSG_17));
 	if (prepare_collect_elements(argv[1], cub3d, &fd, &cub3d->parsing->buff))
 		return (RETURN_FAILURE);
-	map_info = malloc(sizeof(t_map));
-	if (!map_info)
-		return (error_handler(cub3d, 42, "main:TOFILL ", MSG_1)); // tocomplete
-	cub3d->map = map_info;
-	if (get_and_check_map(argv[1], cub3d, fd, map_info))
-	{
-		free(map_info);
+	if (get_and_check_map(argv[1], cub3d, fd))
 		return (RETURN_FAILURE);
-	}
-	texture_struct_setup(cub3d); //TOPROTECT
+	if (texture_struct_setup(cub3d))
+		return (error_handler(cub3d, INIT_TEXTURE_FAIL, "parsing.c:TOFILL",
+				MSG_18)); // do right msg error_handler
 	return (RETURN_SUCCESS);
 }

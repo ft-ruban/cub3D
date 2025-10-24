@@ -28,7 +28,7 @@ typedef struct s_map		t_map;
 # define MSG_4 "Error while opening file be sure the file \
 exist in scene_descriptions folder\n"
 # define MSG_5 "Malloc error during buff setup\n"
-# define MSG_6 "a read function failed, it may be because of incorrect \
+# define MSG_6 "a read function failed while collecting elements, it may be because of incorrect \
 format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, \
 make sure it follow the expected form\n"
@@ -45,6 +45,31 @@ could be related to a failed malloc\n"
 # define MSG_15 "Map is not closed\n"
 # define MSG_16 "No player position found\n"
 # define MSG_17 "Malloc failure during init of parsing struct\n"
+# define MSG_18 "Malloc failure during init of texture struct\n"
+# define MSG_19 "Invalid content in your .cub file, \
+make sure you are using NO, EA, SO, WE for the wall textures\n"
+# define MSG_20 "error during malloc of our t_map structure\n"
+# define MSG_21 "error during the opening of our file while collecting the map \
+ datas\n"
+# define MSG_22 "read failed during the collect of map size. make sure map \
+ respect the right format\n"
+# define MSG_23 "error during malloc of our map double array.\n"
+# define MSG_24 "error while trying to copy the content of our map while \
+ collection \n"
+# define MSG_25 "error while reading our file during the map checking\n"
+# define MSG_26 "Map check failed, make sure you are respecting \
+ the right format (map seem to be cutdown or more than 1 map is present\n"
+# define MSG_27 "cub3d doesn't handle multiple players, please make sure there \
+is only 1 player token (N,E,S,W)"
+# define MSG_28 "Invalid character detected inside of the map it only accept \
+the following :\n0 for floors, 1 for walls\n(N,E,S,W) for player position + \
+initial direction\nplease check the content of your file and try again."
+# define MSG_29 "No player token (N,E,S,W) have been found on the map, check \
+your .cub file and make sure to have one of those token on your map to start \
+cub3d\n"
+# define MSG_30 "The map you provided is open, it should be enclosed. Make \
+sure 1(walls) close the map properly and restart the program."
+# define MSG_31 "Texture structure failed during memory allocation. \n"
 
 // element_check_utils.c
 bool	character_is_invalid(char c);
@@ -57,7 +82,7 @@ int		error_handler(t_cub3d *cub3d, int error_type,
 //find_map_size_utils.c
 bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 																		int fd);
-bool	find_map_start(t_parsing *parsing, int fd);
+bool	find_map_start(t_parsing *parsing, int fd, t_cub3d *cub3d);
 
 //free_map.c
 void    free_map(t_map *map_info);

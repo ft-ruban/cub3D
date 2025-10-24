@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:27:19 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/13 07:34:22 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/24 06:31:49 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	element_found(int fd_sd, t_cub3d *cub3d, char first_letter,
 		int element_type)
 {
 	if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
-		return (error_handler(cub3d, INV_READ,
+		return (error_handler(cub3d, ELEMENT_MISS,
 				"parsing_collect_elements.c:TOFILL ", MSG_6));
 	else if (element_type == TYPE_TEXTURE)
 	{
@@ -35,8 +35,8 @@ static bool	element_found(int fd_sd, t_cub3d *cub3d, char first_letter,
 	{
 		if (cub3d->parsing->buff[0] != ' '
 			&& ft_isnum((int)cub3d->parsing->buff[0]))
-			return (error_handler(cub3d, INV_CON,
-					"parsing_collect_elements.c:34 ", MSG_7));
+			return (error_handler(cub3d, INV_CON_RGB,
+					"parsing_collect_elements.c:34 ", MSG_7)); //8
 		else if (is_rgb_valid(fd_sd, cub3d, first_letter, false))
 			return (RETURN_FAILURE);
 	}
@@ -63,7 +63,7 @@ static bool	browse_to_find_elements(int fd_sd, t_cub3d *cub3d,
 	while (an_element_is_missing(parsing))
 	{
 		if (read(fd_sd, read_buff, 1) == -1)
-			return (error_handler(cub3d, INV_READ,
+			return (error_handler(cub3d, ELEMENT_MISSING,
 					"parsing_collect_elements.c:80 ", MSG_6));
 		element_type = which_element_type(read_buff[0], parsing);
 		if (element_type == TYPE_RGB || element_type == TYPE_TEXTURE)
@@ -72,7 +72,7 @@ static bool	browse_to_find_elements(int fd_sd, t_cub3d *cub3d,
 				return (RETURN_FAILURE);
 		}
 		else if (element_type != TYPE_EMPTY_LINE)
-			return (error_handler(cub3d, INV_CON,
+			return (error_handler(cub3d, INV_CON_ELE,
 					"parsing_collect_elements.c:TOFILL ", MSG_7));
 	}
 	return (RETURN_SUCCESS);
@@ -94,7 +94,7 @@ bool	prepare_collect_elements(char *cub_file, t_cub3d *cub3d, int *fd_sd,
 {
 	*fd_sd = open_sd_file_give_fd(cub_file);
 	if (*fd_sd == OPEN_FAILED)
-		return (error_handler(cub3d, INV_FAIL,
+		return (error_handler(cub3d, OPEN_FD_ELE,
 				"parsing_collect_elements.c:TOFILL ", MSG_4));
 	*read_buff = malloc(2);
 	if (!*read_buff)
