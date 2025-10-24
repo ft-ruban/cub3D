@@ -46,40 +46,34 @@ static void	turn_right(float *main_dir_x, float *main_dir_y,
 
 static void	go_backward(t_cub3d *cub3d, t_ray *ray, t_map *map)
 {
-	float step;
-
-	step = STEP;
 	if (map->map
 		[(int)map->player_pos_y]
-		[(int)(map->player_pos_x - (step * ray->main_dir_x))] != '1')
+		[(int)(map->player_pos_x - (STEP * ray->main_dir_x))] != '1')
 	{
-		map->player_pos_x -= (step * ray->main_dir_x);
+		map->player_pos_x -= (STEP * ray->main_dir_x);
 	}
 	if (map->map
-		[(int)(map->player_pos_y - (step * ray->main_dir_y))]
+		[(int)(map->player_pos_y - (STEP * ray->main_dir_y))]
 		[(int)map->player_pos_x] != '1')
 	{
-		map->player_pos_y -= (step * ray->main_dir_y);
+		map->player_pos_y -= (STEP * ray->main_dir_y);
 	}
 	cub3d->print = true;
 }
 
 static void	go_forward(t_cub3d *cub3d, t_ray *ray, t_map *map)
 {
-	float step;
-
-	step = STEP;
 	if (map->map
 		[(int)map->player_pos_y]
-		[(int)(map->player_pos_x + (step * ray->main_dir_x))] != '1')
+		[(int)(map->player_pos_x + (STEP * ray->main_dir_x))] != '1')
 	{
-		map->player_pos_x += (step * ray->main_dir_x);
+		map->player_pos_x += (STEP * ray->main_dir_x);
 	}
 	if (map->map
-		[(int)(map->player_pos_y + (step * ray->main_dir_y))]
+		[(int)(map->player_pos_y + (STEP * ray->main_dir_y))]
 		[(int)map->player_pos_x] != '1')
 	{
-		map->player_pos_y += (step * ray->main_dir_y);
+		map->player_pos_y += (STEP * ray->main_dir_y);
 	}
 	cub3d->print = true;
 }

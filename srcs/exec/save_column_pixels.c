@@ -120,8 +120,8 @@ static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 
 	texture_addr = right_texture(cub3d->ray, cub3d->texture);
 	find_texture_x(cub3d->ray, cub3d->map, cub3d->texture);
-	// cub3d->texture->y = (wall_pixel + cub3d->texture->offset) * cub3d->texture->render;
-	cub3d->texture->y = (wall_pixel) * cub3d->texture->render;
+	cub3d->texture->y = (wall_pixel + cub3d->texture->offset) * cub3d->texture->render;
+	//printf("render: %f\n", cub3d->texture->render);
 	cub3d->texture->pixel_color = get_texture_pixel(texture_addr,
 							cub3d->texture->x, cub3d->texture->y);
 }
@@ -146,7 +146,6 @@ void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 		save_pixel(cub3d->mlx, texture->ceil_hex, cub3d->curr_column, pixel);
 		pixel++;
 	}
-	texture->render = (double)TEXTURE_HEIGHT / texture->wall_pixel_height;
 	while (pixel <= wall_end)
 	{
 		get_right_pixel_texture(cub3d, wall_pixel);

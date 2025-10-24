@@ -15,7 +15,7 @@ typedef struct s_cub3d	t_cub3d;
 # define KEY_ESC 65307
 # define KEY_FORWARD 65362
 # define KEY_BACKWARD 65364
-# define STEP 2
+# define STEP 0.5
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define ROTATION 0.5
@@ -45,9 +45,9 @@ typedef struct s_texture
 	unsigned int	pixel_color;
 	unsigned int	ceil_hex;
 	unsigned int	floor_hex;
-	unsigned int	offset;
 	unsigned int	y;
 	unsigned int	x;
+	int				offset;
 	float			render;
 	t_img			*no;
 	t_img			*so;

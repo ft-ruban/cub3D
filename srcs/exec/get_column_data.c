@@ -10,13 +10,11 @@
 static void	pinpoint_wall_start_end(t_texture *texture,
 				unsigned int *wall_start, unsigned int *wall_end)
 {
-	int	neg_offset;
-
-	neg_offset = 0;
+	texture->offset = 0;
 	if (texture->wall_pixel_height >= WIN_HEIGHT)
 	{
-		neg_offset = (int)((WIN_HEIGHT - (int)texture->wall_pixel_height) * 0.5);
-		texture->offset = -neg_offset;
+		texture->offset = -((int)((WIN_HEIGHT - (int)texture->wall_pixel_height) * 0.5));
+		printf("offset: %d, wind_height: %d, wall_height: %d\n", texture->offset, WIN_HEIGHT, texture->wall_pixel_height);
 		*wall_start = 0;
 		*wall_end = WIN_HEIGHT - 1;
 	}
@@ -44,6 +42,7 @@ static void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 						(1 - ray->step_y) / 2) / ray->dir_y;
 	texture->wall_pixel_height = (unsigned int)(WIN_HEIGHT /
 											ray->perp_wall_dist);
+	texture->render = (double)TEXTURE_HEIGHT / texture->wall_pixel_height;
 }
 
 // 1) Get the right distance and deduct the wall height(in pixel).
