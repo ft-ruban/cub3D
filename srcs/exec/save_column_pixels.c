@@ -2,19 +2,6 @@
 #include "set_mlx.h"
 #include "exec.h"
 
-// Save the pixel color in the right place x and y of the screen we are gonna
-// print.
-
-static void	save_pixel(t_mlx *mlx, unsigned int color, unsigned int x,
-														unsigned int y)
-{
-	char	*dst_addr;
-
-	dst_addr = mlx->screen->addr + (y * mlx->screen->line_length +
-		x * (int)(mlx->screen->bits_per_pixel));
-	*(unsigned int*)dst_addr = color;
-}
-
 // 1) The texture is in a linear tab of char, so to find the pixel we want,
 //    we are gonna find the right position in this tab, then we retrieve the
 //    pixel by taking all the four char wich represent rgba at once in a int.
@@ -120,7 +107,8 @@ static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 
 	texture_addr = right_texture(cub3d->ray, cub3d->texture);
 	find_texture_x(cub3d->ray, cub3d->map, cub3d->texture);
-	cub3d->texture->y = (wall_pixel + cub3d->texture->offset) * cub3d->texture->render;
+	cub3d->texture->y = (wall_pixel + cub3d->texture->offset) *
+												cub3d->texture->render;
 	//printf("render: %f\n", cub3d->texture->render);
 	cub3d->texture->pixel_color = get_texture_pixel(texture_addr,
 							cub3d->texture->x, cub3d->texture->y);
@@ -143,19 +131,19 @@ void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
 	wall_pixel = 0;
 	while (pixel < wall_start)
 	{
-		save_pixel(cub3d->mlx, texture->ceil_hex, cub3d->curr_column, pixel);
+		my_mlx_pixel_put(cub3d->mlx, texture->ceil_hex, cub3d->curr_column, pixel);
 		pixel++;
 	}
 	while (pixel <= wall_end)
 	{
 		get_right_pixel_texture(cub3d, wall_pixel);
-		save_pixel(cub3d->mlx, texture->pixel_color, cub3d->curr_column, pixel);
+		my_mlx_pixel_put(cub3d->mlx, texture->pixel_color, cub3d->curr_column, pixel);
 		wall_pixel++;
 		pixel++;
 	}
 	while(pixel < WIN_HEIGHT)
 	{
-		save_pixel(cub3d->mlx, texture->floor_hex, cub3d->curr_column, pixel);
+		my_mlx_pixel_put(cub3d->mlx, texture->floor_hex, cub3d->curr_column, pixel);
 		pixel++;
 	}
 }

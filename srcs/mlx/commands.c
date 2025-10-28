@@ -12,6 +12,13 @@
 // stop the loop to make our loop stop to close the windows properly and exit
 // the program
 
+
+// 1) With a negative rotation, here we are gonna update every data related to
+//    our orientation.
+//    So we multiply the current variables by the degre of rotation we want.
+// 2) Old dir_x and plane_x are just here because we need to base the calculs
+//    on the current orientation, not the one already updated.
+
 static void	turn_left(float *main_dir_x, float *main_dir_y, float *main_plane_x,
 															float *main_plane_y)
 {
@@ -27,6 +34,12 @@ static void	turn_left(float *main_dir_x, float *main_dir_y, float *main_plane_x,
 	*main_plane_x = *main_plane_x * cos(r) - *main_plane_y * sin(r);
 	*main_plane_y = old_plane_x * sin(r) + *main_plane_y * cos(r);
 }
+
+// 1) With a positive rotation, here we are gonna update every data related to
+//    our orientation.
+//    So we multiply the current variables by the degre of rotation we want.
+// 2) Old dir_x and plane_x are just here because we need to base the calculs
+//    on the current orientation, not the one already updated.
 
 static void	turn_right(float *main_dir_x, float *main_dir_y,
 							float *main_plane_x, float *main_plane_y)
@@ -44,44 +57,19 @@ static void	turn_right(float *main_dir_x, float *main_dir_y,
 	*main_plane_y = old_plane_x * sin(r) + *main_plane_y * cos(r);
 }
 
-static void	go_backward(t_cub3d *cub3d, t_ray *ray, t_map *map)
-{
-	if (map->map
-		[(int)map->player_pos_y]
-		[(int)(map->player_pos_x - (STEP * ray->main_dir_x))] != '1')
-	{
-		map->player_pos_x -= (STEP * ray->main_dir_x);
-	}
-	if (map->map
-		[(int)(map->player_pos_y - (STEP * ray->main_dir_y))]
-		[(int)map->player_pos_x] != '1')
-	{
-		map->player_pos_y -= (STEP * ray->main_dir_y);
-	}
-	cub3d->print = true;
-}
-
-static void	go_forward(t_cub3d *cub3d, t_ray *ray, t_map *map)
-{
-	if (map->map
-		[(int)map->player_pos_y]
-		[(int)(map->player_pos_x + (STEP * ray->main_dir_x))] != '1')
-	{
-		map->player_pos_x += (STEP * ray->main_dir_x);
-	}
-	if (map->map
-		[(int)(map->player_pos_y + (STEP * ray->main_dir_y))]
-		[(int)map->player_pos_x] != '1')
-	{
-		map->player_pos_y += (STEP * ray->main_dir_y);
-	}
-	cub3d->print = true;
-}
-
 int	close_window(t_mlx *screen)
 {
 	mlx_loop_end(screen->ptr);
 	return (RETURN_SUCCESS);
+}
+
+static int key_movement_check(int keycode)
+{
+	if (keycode == KEY_FORWARD || keycode == KEY_BACKWARD ||
+		keycode == KEY_LEFT || keycode == KEY_RIGHT || keycode == KEY_W ||
+		keycode == KEY_S || keycode == KEY_A || keycode == KEY_D)
+		return (1);
+	return (0);
 }
 
 // handle keys entered during the exec or program
@@ -92,14 +80,17 @@ int	close_window(t_mlx *screen)
 int	handle_keys(int keycode, t_cub3d *cub3d)
 {
 	printf("key : %d\n", keycode); // TODL USED TO FIND KEY CODES
-	if (keycode == KEY_FORWARD || keycode == KEY_BACKWARD ||
-					keycode == KEY_LEFT || keycode == KEY_RIGHT)
+	if (key_movement_check(keycode))
 	{
 		cub3d->print = true;
-	if (keycode == KEY_FORWARD)
+	if (keycode == KEY_FORWARD || keycode == KEY_W)
 		go_forward(cub3d, cub3d->ray, cub3d->map);
-	if (keycode == KEY_BACKWARD)
+	if (keycode == KEY_BACKWARD || keycode == KEY_S)
 		go_backward(cub3d, cub3d->ray, cub3d->map);
+	if (keycode == KEY_A)
+		go_left(cub3d, cub3d->ray, cub3d->map);
+	if (keycode == KEY_D)
+		go_right(cub3d, cub3d->ray, cub3d->map);
 	if (keycode == KEY_LEFT)
 		turn_left(&cub3d->ray->main_dir_x, &cub3d->ray->main_dir_y, 
 				&cub3d->ray->main_plane_x, &cub3d->ray->main_plane_y);
@@ -111,13 +102,3 @@ int	handle_keys(int keycode, t_cub3d *cub3d)
 		return (close_window(cub3d->mlx));
 	return (KEY_UNKNOWN);
 }
-
-// ex of use for ex
-// if (keycode == 65361 || keycode == 65362 || keycode == 65363
-// 	|| keycode == 65364)
-// 	return (key_move(keycode & 0x7, param));
-// else
-// {
-// 	if (change_color(&param->color_factor) == 1)
-// 		return (close_window(param));
-// }

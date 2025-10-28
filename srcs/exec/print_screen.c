@@ -2,16 +2,22 @@
 #include "set_mlx.h"
 #include "exec.h"
 
-// 1) We are now on the edge of x and y, so to go forward we are gonna add
-//    one dist_next_x or y. 
-// 2) Before we have to choose; either go on the next x or y edge. To do so,
-//    we check if the next x will arrive sooner than the next y, if that's true,
-//    we add dist_next_x to wall_dist_x.
-//
-// Everytime we move to the next edge, we keep track of where we are by updating
-// the map_x or y with the right step(+1 or -1).
-// the side variable is here to indicate if we hit a wall on the x(0) or y(1)
-// side.
+/******************************************************************************
+ *
+ * 1) We are now on the edge of x and y, so to go forward we are gonna add
+ *   one dist_next_x or y. 
+ * 2) Before we have to choose; either go on the next x or y edge. To do so,
+ *   we check if the next x will arrive sooner than the next y, if that's true,
+ *   we add dist_next_x to wall_dist_x.
+ *
+ * Everytime we move to the next edge, we keep track of where we are by updating
+ * the map_x or y with the right step(+1 or -1).
+ * the side variable is here to indicate if we hit a wall on the x(0) or y(1)
+ * side.
+ *
+ * @param map TRyrugrggvegve.
+ *
+ ******************************************************************************/
 
 void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			double dist_next_x, double dist_next_y)
@@ -31,10 +37,9 @@ void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			ray->side = 1;
 		}
 	}
-	printf("wall_y: %d, wall_x: %d, curr_cell: %c\n", map->wall_pos_y, map->wall_pos_x, map->map[map->wall_pos_y][map->wall_pos_x]);
 }
 
-// 1) Depending on where we are on a cellule of the map, we will be more or
+// 1) Depending on where we are on a tile of the map, we will be more or
 //    less close to the edges. This distance changes if we go on the right,
 //    left, up or down direction from where the player is.
 // 2) Let's say pos_x = 4.8. wich means: map_x = 4.
@@ -96,7 +101,6 @@ void	detect_first_wall(t_cub3d *cub3d)
 	dist_next_y = 1 / cub3d->ray->dir_y;
 	if (dist_next_y < 0)
 		dist_next_y = -dist_next_y;
-	// printf("dist_next_x: %f, dist_next_y: %f\n", dist_next_x, dist_next_y);
 	cub3d->map->wall_pos_x = (int)cub3d->map->player_pos_x;
 	cub3d->map->wall_pos_y = (int)cub3d->map->player_pos_y;
 	stop_at_first_edge(cub3d->ray, cub3d->map, dist_next_x, dist_next_y);
@@ -120,7 +124,6 @@ void	curr_ray_dir(t_cub3d *cub3d)
 					(cub3d->ray->main_plane_x * camera);
 	cub3d->ray->dir_y = cub3d->ray->main_dir_y +
 					(cub3d->ray->main_plane_y * camera);
-	// printf("dir_x: %f, dir_y: %f\n", cub3d->ray->dir_x, cub3d->ray->dir_y);
 }
 
 // From our first column(0), to the last one(WIN_WIDTH - 1), we are looking for
@@ -135,8 +138,6 @@ void	print_screen(t_cub3d *cub3d)
 		curr_ray_dir(cub3d);
 		detect_first_wall(cub3d);
 		get_column_data(cub3d);
-		printf("curr column: %d\n", cub3d->curr_column);
-		// printf("ray_dir_x: %f, ray_dir_y: %f\n", cub3d->ray->dir_x, cub3d->ray->dir_y);
 		cub3d->curr_column++;
 	}
 	mlx_put_image_to_window(cub3d->mlx->ptr, cub3d->mlx->mlx_win,

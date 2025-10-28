@@ -60,7 +60,8 @@ void	init_player_data(t_cub3d *cub3d);
 //print_screen.c
 void	print_screen(t_cub3d *cub3d);
 
-//draw.c
-int	draw(t_mlx *mlx);
+//my_mlx_pixel_put.c
+void	my_mlx_pixel_put(t_mlx *mlx, unsigned int color, unsigned int x,
+														unsigned int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/20 19:33:40 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/10/28 18:35:40 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 			return (RETURN_FAILURE);
 		}
 	}
+	map_info->map[map_height] = NULL;
 	free(line);
 	return (RETURN_SUCCESS);
 }

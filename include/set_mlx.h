@@ -15,11 +15,18 @@ typedef struct s_cub3d	t_cub3d;
 # define KEY_ESC 65307
 # define KEY_FORWARD 65362
 # define KEY_BACKWARD 65364
+# define KEY_W 119
+# define KEY_S 115
 # define STEP 0.5
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_A 97
+# define KEY_D 100
 # define ROTATION 0.5
 # define KEY_UNKNOWN 0
+
+typedef struct s_ray	t_ray;
+typedef struct s_map	t_map;
 
 typedef struct s_img
 {
@@ -59,9 +66,16 @@ typedef struct s_texture
 int	handle_keys(int keycode, t_cub3d *cub3d);
 int	close_window(t_mlx *screen);
 
+//directions.c
+void	go_forward(t_cub3d *cub3d, t_ray *ray, t_map *map);
+void	go_backward(t_cub3d *cub3d, t_ray *ray, t_map *map);
+void	go_left(t_cub3d *cub3d, t_ray *ray, t_map *map);
+void	go_right(t_cub3d *cub3d, t_ray *ray, t_map *map);
+
+
 // mlx_utils.c
 void 	hook_and_loop(t_cub3d *cub3d, t_mlx *screen);
 void 	destroy_free_screen(t_mlx *screen);
 void	*init_screen_mlx(t_mlx *t_mlx);
-// int				free_all_mlx(t_mlx *screen, t_set_call *param, int error_code);
+
 #endif

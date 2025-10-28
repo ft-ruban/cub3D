@@ -48,11 +48,12 @@ override UTILSSRC := error \
 override DEBUGSRC := print_struct_set
 
 override MLXSETSRC := commands \
+					  directions \
 					  mlx_utils
 
-override EXECSRC := draw \
-					exec \
+override EXECSRC := exec \
 					get_column_data \
 					init_player_data \
+					my_mlx_pixel_put \
 					print_screen \
 					save_column_pixels

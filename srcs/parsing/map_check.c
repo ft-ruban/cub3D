@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:25:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/13 10:25:40 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:51:54 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,33 @@
 #include "utils.h"
 
 // we check if the case surrounding a floor is valid
+
 static bool	surround_check(char **map, int i, int j)
 {
-	if (map[j][i - 1] == ' ' || map[j][i - 1] == '\n' || map[j][i - 1] == '\0'
-		|| map[j][i + 1] == ' ' || map[j][i + 1] == '\n' || map[j][i
-		+ 1] == '\0' || map[j - 1][i] == ' ' || map[j - 1][i] == '\n' || map[j
-		- 1][i] == '\0' || map[j + 1][i] == ' ' || map[j + 1][i] == '\n'
-		|| map[j + 1][i] == '\0')
+	if (!map[j + 1])
+		return (RETURN_FAILURE);
+	if (map[j][i - 1] == ' ' ||
+		map[j][i - 1] == '\n' ||
+		map[j][i - 1] == '\0')
+		return (RETURN_FAILURE);
+	if (map[j][i + 1] == ' ' ||
+		map[j][i + 1] == '\n' ||
+		map[j][i + 1] == '\0')
+		return (RETURN_FAILURE);
+	if (map[j - 1][i] == ' ' ||
+		map[j - 1][i] == '\n' ||
+		map[j - 1][i] == '\0')
+		return (RETURN_FAILURE);
+	if (map[j + 1][i] == ' ' ||
+		map[j + 1][i] == '\n' ||
+		map[j + 1][i] == '\0')
 		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
 }
 
 // While reading through the map with j (map height) and i (line_width),
 // we stop on each floor or the player position to check the surrounding cases.
+
 static bool	enclosed_check(char **map)
 {
 	size_t	height;
@@ -54,6 +68,7 @@ static bool	enclosed_check(char **map)
 
 // We check every single characteres of the map to see if it is a valid one.
 // We check if there is no more than one player position.
+
 static bool	map_character_check(char **map, t_cub3d *cub3d)
 {
 	int		width;
@@ -86,6 +101,7 @@ static bool	map_character_check(char **map, t_cub3d *cub3d)
 // We just collected the map with gnl, so our first read will be on the
 // character right after the map end.
 // From here we read until the EOF to be sure we only have '\n'.
+
 static bool	is_map_single(t_parsing *parsing, int fd, t_cub3d *cub3d)
 {
 	bool	eof;
