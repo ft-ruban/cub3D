@@ -12,6 +12,7 @@ bool	character_is_invalid(char c)
 
 bool	player_update_check(t_cub3d *cub3d, bool *player)
 {
+	printf("DL CUB? %d\n",cub3d->error_type); //TORM
 	if (*player == true)
 		return(RETURN_FAILURE);
 	else //more than one player

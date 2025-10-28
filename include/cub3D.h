@@ -45,7 +45,12 @@ typedef enum e_error_status
 	NO_PLAYER_FOUND,
 	MAP_NOT_ENCLOSED,
     INIT_TEXTURE_FAIL,
-	INIT_TEXTURE_FAIL
+	INIT_MLX_FAIL,
+	INIT_IMG_TEXT_FAIL,
+	TEXTURE_NO_FAIL,
+	TEXTURE_SO_FAIL,
+	TEXTURE_WE_FAIL,
+	TEXTURE_EA_FAIL,
 }					t_error_status;
 
 typedef struct s_cub3d

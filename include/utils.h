@@ -37,7 +37,7 @@ each color can receive a value between 0 and 255. Check .cub entries.\n"
 # define MSG_9 "Error during get_next_line, \
 could be related to a failed malloc\n"
 # define MSG_10 "Error during a ft_strjoin, \
-	probably related to a failed malloc\n"
+probably related to a failed malloc\n"
 # define MSG_11 "Error during a ft_strdup, probably related to a failed malloc\n"
 # define MSG_12 "Invalid map\n"
 # define MSG_13 "Found another player position\n"
@@ -70,7 +70,9 @@ cub3d\n"
 # define MSG_30 "The map you provided is open, it should be enclosed. Make \
 sure 1(walls) close the map properly and restart the program."
 # define MSG_31 "Texture structure failed during memory allocation. \n"
-
+# define MSG_32 "MLX structure failed during memory allocation. \n"
+# define MSG_33 "An error happened while trying to allocate memory for \
+	the img structure of our textures."
 // element_check_utils.c
 bool	character_is_invalid(char c);
 bool	player_update_check(t_cub3d *cub3d, bool *player);

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/24 08:28:52 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:08:26 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 		return (error_handler(cub3d, FAIL_MALLOC_MAP, "map_collect.c.c:66 ",
 				MSG_23));
 	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d);
-	if (fd == OPEN_FAILED)
+	if (fd == OPEN_FAILED || fd == MALLOC_ERR)
 	{
 		return(error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c.c:45 ", MSG_21));//15
 		free(map_info->map);

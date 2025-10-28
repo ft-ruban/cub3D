@@ -16,12 +16,12 @@ bool	get_texture_data(t_cub3d *cub3d, t_img *img, char *path)
 	img->img = mlx_xpm_file_to_image(cub3d->mlx->mlx, path,
 								&width, &height); // TODO LDEV : protect
 	if (!img->img)
-		return (error_handler(cub3d, MAL_ERR_SET, "exec:TOFILL ", MSG_1));
+		return (error_handler(cub3d, MAL_ERR_BUFF, "exec:TOFILL ", MSG_1));
 	img->addr = mlx_get_data_addr(img->img,
 			&(img->bits_per_pixel), &(img->line_length),
 			&(img->endian));
 	if (!img->addr)
-		return (error_handler(cub3d, MAL_ERR_SET, "exec:TOFILL ", MSG_1));
+		return (error_handler(cub3d, MAL_ERR_BUFF, "exec:TOFILL ", MSG_1));
 	return (RETURN_SUCCESS);
 }
 

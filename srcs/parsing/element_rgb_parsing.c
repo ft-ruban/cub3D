@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/24 06:51:18 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:47:57 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	retrieve_rgb(int fd_sd, t_cub3d *cub3d, int *ptr_data_to_fill,
 	{
 		if (ft_isnum((int)cub3d->parsing->buff[0]) || len_rgb_value > 3)
 			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:34 ",
-					MSG_8)); //11
+					MSG_8));
 		*ptr_data_to_fill = *ptr_data_to_fill * 10;
 		*ptr_data_to_fill = *ptr_data_to_fill
 			+ ft_atoi(&cub3d->parsing->buff[0]);
@@ -58,9 +58,9 @@ static bool	prepare_retrieve_rgb(int fd_sd, t_cub3d *cub3d, bool is_blue,
 	if (!is_blue)
 	{
 		if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:30 ", MSG_6)); //7
+			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:30 ", MSG_6));
 		if (ft_isnum((int)cub3d->parsing->buff[0]))
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:60 ", //11
+			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:60 ",
 					MSG_8));
 	}
 	return (RETURN_SUCCESS);

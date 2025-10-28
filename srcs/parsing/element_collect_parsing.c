@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:27:19 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/24 06:31:49 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:29:53 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ static bool	browse_to_find_elements(int fd_sd, t_cub3d *cub3d,
 		t_parsing *parsing, char *read_buff)
 {
 	int	element_type;
+	int res_read;
 
 	element_type = NONE_ASSIGNED;
 	while (an_element_is_missing(parsing))
 	{
-		if (read(fd_sd, read_buff, 1) == -1)
-			return (error_handler(cub3d, ELEMENT_MISSING,
+		//printf("coo\n");
+		res_read = read(fd_sd, read_buff, 1);
+		if(res_read == 0 || res_read == -1)
+			return (error_handler(cub3d, ELEMENT_MISS,
 					"parsing_collect_elements.c:80 ", MSG_6));
 		element_type = which_element_type(read_buff[0], parsing);
 		if (element_type == TYPE_RGB || element_type == TYPE_TEXTURE)
@@ -109,5 +112,6 @@ bool	prepare_collect_elements(char *cub_file, t_cub3d *cub3d, int *fd_sd,
 		close(*fd_sd);
 		return (RETURN_FAILURE);
 	}
+	//cub_file = "proutocu";
 	return (RETURN_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:25:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/24 09:22:27 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:16:41 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // we check if the case surrounding a floor is valid
 static bool	surround_check(char **map, int i, int j)
 {
-	if (map[j][i - 1] == ' ' || map[j][i - 1] == '\n' || map[j][i - 1] == '\0'
+	if (!map[j][i+1] || !map[j+1][i] || map[j][i - 1] == ' ' || map[j][i - 1] == '\n' || map[j][i - 1] == '\0'
 		|| map[j][i + 1] == ' ' || map[j][i + 1] == '\n' || map[j][i
 		+ 1] == '\0' || map[j - 1][i] == ' ' || map[j - 1][i] == '\n' || map[j
 		- 1][i] == '\0' || map[j + 1][i] == ' ' || map[j + 1][i] == '\n'

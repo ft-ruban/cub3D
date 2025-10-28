@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/23 10:19:40 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 09:02:38 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,46 @@ int	clean_and_exit(t_cub3d *cub3d)
 	return_value = cub3d->error_type;
 	printf("\n\nRETURN CODE : %u\n", return_value); // TORM THIS IS DEBBUG LINE
 	
-	if(return_value >= 17)
+	// if(return_value >= 26 || return_value == ALL_OK)
+	// {
+	// 	free(cub3d->texture->no);
+	// 	free(cub3d->texture->so);
+	// 	free(cub3d->texture->ea);
+	// 	free(cub3d->texture->we);
+	// }
+	// if(return_value >= 25|| return_value == ALL_OK)
+	// {
+	// 	free(cub3d->mlx);
+	// }
+	if(return_value >= 24 || return_value == ALL_OK)
+	{
+		free(cub3d->texture);
+	}
+	if(return_value >= 17 || return_value == ALL_OK)
 	{
 		free_map(cub3d->map);	
 	}
-	if(return_value >= 15)
+	else if(return_value >= 15 || return_value == ALL_OK)
 	{
 		free(cub3d->map->map);
 	}
-	if(return_value >= 13)
+	else if(return_value >= 13 || return_value == ALL_OK)
 	{
 		free(cub3d->map);	
 	}
-	if(return_value >= 5)
+	if(return_value >= 7 || return_value == ALL_OK)
+	{
+		//free(cub3d->parsing->buff);
+		free_parsing_content(cub3d->parsing);
+	}
+	if(return_value >= 5 || return_value == ALL_OK)
 	{
 		free(cub3d->parsing);	
 	}
-	if(return_value >= 2)
+	if(return_value >= 2 || return_value == ALL_OK)
 	{
 		free(cub3d);
 	}
+	get_next_line(-1);
 	return (return_value);
 }

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:02:25 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/12 14:16:41 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/28 07:59:41 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	error_handler(t_cub3d *cub3d, int error_type, char *emplacement_error_msg,
 {
 	write(2, emplacement_error_msg, ft_strlen(emplacement_error_msg));
 	write(2, err_msg, ft_strlen(err_msg));
-	if (error_type == MAL_ERR_SET)
-		return (MAL_ERR_SET);
+	if (error_type == CUB_SET_FAIL)
+		return (CUB_SET_FAIL);
 	cub3d->error_type = error_type;
 	return (RETURN_FAILURE);
 }

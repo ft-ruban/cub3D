@@ -8,7 +8,7 @@ bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 	{
 		free_map(cub3d->map);
 		close(fd);
-		return (error_handler(cub3d, MAL_ERR_SET, "get_the_map.c:10", MSG_1));
+		return (error_handler(cub3d, MAL_ERR_BUFF, "get_the_map.c:10", MSG_1));
 	}
 	return (RETURN_SUCCESS);
 }
