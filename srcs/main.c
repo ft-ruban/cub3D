@@ -80,25 +80,22 @@
 // 	return(RETURN_SUCCESS);
 // }
 
-// static int init_mlx_texture_img(t_cub3d *cub3d)
-// {
-// 	t_mlx *mlx;
+static int init_mlx_texture_img(t_cub3d *cub3d)
+{
+	t_mlx *mlx;
 
-// 	mlx = NULL;
-// 	mlx = init_screen_mlx(mlx);
-// 	if (!mlx)
-// 	{
-// 		error_handler(cub3d, INIT_MLX_FAIL, "main:TOFILL ", MSG_32);
-// 		// free_map(cub3d->map);
-// 		// free(cub3d->texture);
-// 		//return (clean_and_exit(cub3d, cub3d->parsing, NULL));
-// 	}
-// 	cub3d->mlx = mlx;
-// 	if(init_textures_img(cub3d))
-// 		return(RETURN_FAILURE); //TOPROTECT?
-// 	init_ray(cub3d); //TOPROTECT
-// 	return(RETURN_SUCCESS);
-// }
+	mlx = NULL;
+	mlx = init_screen_mlx(cub3d, mlx);
+	if (!mlx)
+	{
+		error_handler(cub3d, INIT_MLX_FAIL, "main:TOFILL ", MSG_32); // DOUBLE err message
+	}
+	cub3d->mlx = mlx;
+	// if(init_textures_img(cub3d))
+	// 	return(RETURN_FAILURE); //TOPROTECT?
+	// init_ray(cub3d); //TOPROTECT
+	return(RETURN_SUCCESS);
+}
 
 // WIP DOC : we init our setting structure, then its value then we parse the
 // arguments + content of the file in (parsing) before handling the initiation
@@ -119,9 +116,8 @@ int	main(int argc, char *argv[])
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d));
 
-	
-	//if (init_mlx_texture_img(cub3d)) //TOPROTECT
-	//	return (clean_and_exit(cub3d));
+	if (init_mlx_texture_img(cub3d)) //TOPROTECT
+		return (clean_and_exit(cub3d));
 	// hook_and_loop(cub3d, cub3d->mlx);
 	// destroy_free_screen(cub3d->mlx);
 	//print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set

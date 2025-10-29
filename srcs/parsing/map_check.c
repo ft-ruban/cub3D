@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:25:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/29 11:22:06 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/29 17:52:21 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	enclosed_check(char **map)
 		width = 0;
 		while (map[height][width])
 		{
-			printf("height = %zu, max= %zu\n", height, max_height); //TODL
+			// printf("height = %zu, max= %zu\n", height, max_height); //TODL
 			if((height == max_height) && (map[height][width] == '0' || map[height][width] == 'N'
 				|| map[height][width] == 'S' || map[height][width] == 'E'
 				|| map[height][width] == 'W')) //TODL

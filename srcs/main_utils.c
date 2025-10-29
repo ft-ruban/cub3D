@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/29 15:56:59 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/29 20:40:01 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	clean_and_exit(t_cub3d *cub3d)
 	// 	free(cub3d->texture->ea);
 	// 	free(cub3d->texture->we);
 	// }
-	// if(return_value >= 25|| return_value == ALL_OK)
-	// {
-	// 	free(cub3d->mlx);
-	// }
+	if(return_value >= 25|| return_value == ALL_OK)
+	{
+		free(cub3d->mlx);
+	}
 	if(return_value >= 24 || return_value == ALL_OK)
 	{
 		free(cub3d->texture);

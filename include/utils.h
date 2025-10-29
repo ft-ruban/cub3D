@@ -84,6 +84,8 @@ bool	player_update_check(t_cub3d *cub3d, bool *player);
 // error.c
 int		error_handler(t_cub3d *cub3d, int error_type,
 			char *emplacement_error_msg, char *err_msg);
+void	*error_handler_void(t_cub3d *cub3d, int error_type,
+			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c
 bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
