@@ -65,9 +65,14 @@ int	close_window(t_mlx *screen)
 
 static int key_movement_check(int keycode)
 {
-	if (keycode == KEY_FORWARD || keycode == KEY_BACKWARD ||
-		keycode == KEY_LEFT || keycode == KEY_RIGHT || keycode == KEY_W ||
-		keycode == KEY_S || keycode == KEY_A || keycode == KEY_D)
+	if (keycode == KEY_FORWARD ||
+		keycode == KEY_BACKWARD ||
+		keycode == KEY_LEFT ||
+		keycode == KEY_RIGHT ||
+		keycode == KEY_W ||
+		keycode == KEY_S ||
+		keycode == KEY_A ||
+		keycode == KEY_D)
 		return (1);
 	return (0);
 }

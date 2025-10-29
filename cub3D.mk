@@ -51,9 +51,9 @@ override MLXSETSRC := commands \
 					  directions \
 					  mlx_utils
 
-override EXECSRC := exec \
-					get_column_data \
+override EXECSRC := column_pixels_put \
+					column_pixels_update \
+					exec \
 					init_player_data \
 					my_mlx_pixel_put \
-					print_screen \
-					save_column_pixels
+					ray_casting

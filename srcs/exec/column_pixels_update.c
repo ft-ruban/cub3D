@@ -65,7 +65,7 @@ static void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 // And now we can locate the right pixels of our texture, to print them on our
 // screen img.
 
-void	get_column_data(t_cub3d *cub3d)
+void	column_pixels_update(t_cub3d *cub3d)
 {
 	unsigned int	wall_start;
 	unsigned int	wall_end;
@@ -74,5 +74,5 @@ void	get_column_data(t_cub3d *cub3d)
 	wall_end = 0;
 	identify_wall_height(cub3d->ray, cub3d->map, cub3d->texture);
 	pinpoint_wall_start_end(cub3d->texture, &wall_start, &wall_end);
-	save_column_pixels(cub3d, cub3d->texture, wall_start, wall_end);
+	column_pixels_put(cub3d, cub3d->texture, wall_start, wall_end);
 }

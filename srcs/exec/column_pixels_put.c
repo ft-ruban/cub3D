@@ -121,7 +121,7 @@ static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 //    If we are close to the wall, we might want to re use the same pixel
 //    texture, but when far away from one, we should skip some of them.
 
-void	save_column_pixels(t_cub3d *cub3d, t_texture *texture,
+void	column_pixels_put(t_cub3d *cub3d, t_texture *texture,
 				unsigned int wall_start, unsigned int wall_end)
 {
 	unsigned int	pixel;

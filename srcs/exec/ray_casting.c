@@ -2,22 +2,16 @@
 #include "set_mlx.h"
 #include "exec.h"
 
-/******************************************************************************
- *
- * 1) We are now on the edge of x and y, so to go forward we are gonna add
- *   one dist_next_x or y. 
- * 2) Before we have to choose; either go on the next x or y edge. To do so,
- *   we check if the next x will arrive sooner than the next y, if that's true,
- *   we add dist_next_x to wall_dist_x.
- *
- * Everytime we move to the next edge, we keep track of where we are by updating
- * the map_x or y with the right step(+1 or -1).
- * the side variable is here to indicate if we hit a wall on the x(0) or y(1)
- * side.
- *
- * @param map TRyrugrggvegve.
- *
- ******************************************************************************/
+// 1) We are now on the edge of x and y, so to go forward we are gonna add
+//   one dist_next_x or y. 
+// 2) Before we have to choose; either go on the next x or y edge. To do so,
+//   we check if the next x will arrive sooner than the next y, if that's true,
+//   we add dist_next_x to wall_dist_x.
+//
+// Everytime we move to the next edge, we keep track of where we are by updating
+// the map_x or y with the right step(+1 or -1).
+// the side variable is here to indicate if we hit a wall on the x(0) or y(1)
+// side.
 
 void	until_we_hit_a_wall(t_map *map, t_ray *ray,
 			double dist_next_x, double dist_next_y)
@@ -130,16 +124,8 @@ void	curr_ray_dir(t_cub3d *cub3d)
 // precious informations to help us draw the right pixel(ceil, texture or
 // floor), at the right screen position.
 
-void	print_screen(t_cub3d *cub3d)
+void	ray_casting(t_cub3d *cub3d)
 {
-	cub3d->curr_column = 0;
-	while (cub3d->curr_column < WIN_WIDTH)
-	{
 		curr_ray_dir(cub3d);
 		detect_first_wall(cub3d);
-		get_column_data(cub3d);
-		cub3d->curr_column++;
-	}
-	mlx_put_image_to_window(cub3d->mlx->ptr, cub3d->mlx->mlx_win,
-									cub3d->mlx->screen->img, 0, 0);
 }
