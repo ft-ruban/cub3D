@@ -32,8 +32,11 @@ exist in scene_descriptions folder\n"
 format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, \
 make sure it follow the expected form\n"
-# define MSG_8 "The RGB value of C or/and F seem to be bigger than 255. \
-each color can receive a value between 0 and 255. Check .cub entries.\n"
+# define MSG_8 "The RGB value of C or/and F seem to be incorrect. OR/AND \
+your file may be incorrect, (could be that there is nothing in the file right \
+after a C or a F.\nsetup your .cub in a way that F and C receive three value\
+each separated by ',' between 000 and 255 a map also need to be right below \
+your SO WE EA NO C and F. Check your .cub entries and retry.\n"
 # define MSG_9 "Error during get_next_line, \
 could be related to a failed malloc\n"
 # define MSG_10 "Error during a ft_strjoin, \
@@ -73,6 +76,7 @@ sure 1(walls) close the map properly and restart the program."
 # define MSG_32 "MLX structure failed during memory allocation. \n"
 # define MSG_33 "An error happened while trying to allocate memory for \
 	the img structure of our textures."
+	
 // element_check_utils.c
 bool	character_is_invalid(char c);
 bool	player_update_check(t_cub3d *cub3d, bool *player);

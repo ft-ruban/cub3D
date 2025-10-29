@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/28 15:32:49 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/29 15:48:12 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // We go to the map first line.
 // Until we copied all our map, we allocate the current line_index with the
 // result of get_next_line
+//TODO: ldev: il faut factoriser ceci 
 static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 {
 	char	*line;
@@ -30,12 +31,24 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 		map_info->map[line_index] = ft_strdup(line);
 		free(line);
 		if (!map_info->map[line_index])
-			return (RETURN_FAILURE);
+		{
+			free(map_info->map[line_index]);
+			while(line_index != 0)
+			{
+				free(map_info->map[line_index - 1]);
+				line_index--;
+			}
+			return(RETURN_FAILURE);
+		}
 		line_index++;
 		line = get_next_line(fd);
 		if (!line && line_index < map_height)
 		{
-			free(map_info->map[line_index - 1]);
+			while(line_index != 0)
+			{
+				free(map_info->map[line_index - 1]);
+				line_index--;
+			}
 			return (RETURN_FAILURE);
 		}
 	}
@@ -54,11 +67,17 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
 	close(fd);
 	path = ft_strjoin(MAP_FOLDER_PATH, file);
 	if (!path)
+	{
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c.c:45 ", MSG_21);
 		return (MALLOC_ERR);
+	}
 	new_fd = open(path, O_RDONLY);
 	free(path);
 	if (new_fd == OPEN_FAILED)
+	{
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c.c:45 ", MSG_21);
 		return (OPEN_FAILED);
+	}
 	if (skip_elements(parsing, new_fd, cub3d))
 		return (READ_OR_MALLOC_ERR);
 	return (new_fd);
@@ -120,14 +139,12 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d); //ICI
 	if (fd == OPEN_FAILED || fd == MALLOC_ERR)
 	{
-		return(error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c.c:45 ", MSG_21));//15
-		free(map_info->map);
 		return (RETURN_FAILURE);
 	}
 	if (copy_the_map(map_height, fd, map_info))
 	{
 		close(fd);
-		free(map_info->map);
+		//free(map_info->map);
 		return (error_handler(cub3d, FAIL_CP_MAP, "get_the_map.c:64 ", MSG_24)); //16
 	}
 	print_map(map_info); //TODL BEFORE RELEASE

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/28 09:02:38 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/29 15:56:59 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ int	clean_and_exit(t_cub3d *cub3d)
 	else if(return_value >= 15 || return_value == ALL_OK)
 	{
 		free(cub3d->map->map);
+		free(cub3d->map);
 	}
 	else if(return_value >= 13 || return_value == ALL_OK)
 	{
-		free(cub3d->map);	
+		free(cub3d->map);
 	}
 	if(return_value >= 7 || return_value == ALL_OK)
 	{

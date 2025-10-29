@@ -118,6 +118,8 @@ int	main(int argc, char *argv[])
 	cub3d->error_type = ALL_OK;
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d));
+
+	
 	//if (init_mlx_texture_img(cub3d)) //TOPROTECT
 	//	return (clean_and_exit(cub3d));
 	// hook_and_loop(cub3d, cub3d->mlx);
