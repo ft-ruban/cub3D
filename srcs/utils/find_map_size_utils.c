@@ -15,8 +15,13 @@ bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 
 bool	find_map_start(t_parsing *parsing, int fd, t_cub3d *cub3d)
 {
+	int read_value;
 	while (parsing->buff[0] == '\n')
-		if (read(fd, parsing->buff, 1) == -1)
+	{
+		read_value  = read(fd, parsing->buff, 1);
+		if(read_value == 0 || read_value == -1)
 			return (error_handler(cub3d, FAIL_READ_MAP, "get_the_map.c:104", MSG_22)); //13
+	}
+		
 	return (RETURN_SUCCESS);
 }
