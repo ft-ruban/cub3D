@@ -72,7 +72,6 @@ void	go_backward(t_cub3d *cub3d, t_ray *ray, t_map *map);
 void	go_left(t_cub3d *cub3d, t_ray *ray, t_map *map);
 void	go_right(t_cub3d *cub3d, t_ray *ray, t_map *map);
 
-
 // mlx_utils.c
 void 	hook_and_loop(t_cub3d *cub3d, t_mlx *screen);
 void 	destroy_free_screen(t_mlx *screen);
