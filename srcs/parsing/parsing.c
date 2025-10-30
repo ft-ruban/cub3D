@@ -66,7 +66,7 @@ static bool	texture_struct_setup(t_cub3d *cub3d)
 	cub3d->texture = texture;
 	if (!texture)
 	{
-		return(error_handler(cub3d, INIT_TEXTURE_FAIL, "TOFILL", MSG_31));
+		return(error_handler(cub3d, INIT_TEXTURE_FAIL, "TOFILL", MSG_31)); //DOUBLE err message
 	}
 	convert_rgb_hex(cub3d->parsing, texture);
 	return (RETURN_SUCCESS);
@@ -99,6 +99,6 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 		return (RETURN_FAILURE);
 	if (texture_struct_setup(cub3d))
 		return (error_handler(cub3d, INIT_TEXTURE_FAIL, "parsing.c:TOFILL",
-				MSG_18)); // do right msg error_handler
+				MSG_18)); // DOUBLE err message
 	return (RETURN_SUCCESS);
 }

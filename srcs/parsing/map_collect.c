@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_collect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/29 15:48:12 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/29 17:52:49 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 		//free(map_info->map);
 		return (error_handler(cub3d, FAIL_CP_MAP, "get_the_map.c:64 ", MSG_24)); //16
 	}
-	print_map(map_info); //TODL BEFORE RELEASE
+	// print_map(map_info); //TODL BEFORE RELEASE
 	return (RETURN_SUCCESS);
 }
