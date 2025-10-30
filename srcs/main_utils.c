@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/29 20:40:01 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/10/30 16:18:31 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,38 @@ int	clean_and_exit(t_cub3d *cub3d)
 	return_value = cub3d->error_type;
 	printf("\n\nRETURN CODE : %u\n", return_value); // TORM THIS IS DEBBUG LINE
 	
-	// if(return_value >= 26 || return_value == ALL_OK)
-	// {
-	// 	free(cub3d->texture->no);
-	// 	free(cub3d->texture->so);
-	// 	free(cub3d->texture->ea);
-	// 	free(cub3d->texture->we);
-	// }
+	if(return_value >= 30 || return_value == ALL_OK)
+	{
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->ea->img);
+		//free(cub3d->texture->ea);
+	}
+
+	if(return_value >= 29 || return_value == ALL_OK)
+	{
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->we->img);
+		//free(cub3d->texture->we);
+	}
+	if(return_value >= 28 || return_value == ALL_OK)
+	{
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->so->img);
+		//free(cub3d->texture->so);
+	}
+	if(return_value >= 27 || return_value == ALL_OK)
+	{
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->no->img);
+		//free(cub3d->texture->no);
+	}
+	if(return_value >= 26 || return_value == ALL_OK)
+	{
+		free(cub3d->texture->no);
+		free(cub3d->texture->so);
+		free(cub3d->texture->ea);
+		free(cub3d->texture->we);
+	}
 	if(return_value >= 25|| return_value == ALL_OK)
 	{
+		destroy_free_screen(cub3d->mlx);
+		free(cub3d->mlx->screen);
 		free(cub3d->mlx);
 	}
 	if(return_value >= 24 || return_value == ALL_OK)
@@ -71,6 +94,10 @@ int	clean_and_exit(t_cub3d *cub3d)
 	{
 		//free(cub3d->parsing->buff);
 		free_parsing_content(cub3d->parsing);
+		// free(cub3d->parsing->rp_no);
+		// free(cub3d->parsing->rp_so);
+		// free(cub3d->parsing->rp_ea);
+		// free(cub3d->parsing->rp_we);
 	}
 	if(return_value >= 5 || return_value == ALL_OK)
 	{

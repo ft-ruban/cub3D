@@ -28,7 +28,7 @@ typedef struct s_img
 
 typedef struct s_mlx
 {
-	void		*mlx;
+	void		*ptr;
 	void		*mlx_win;
 	t_img		*screen;
 }				t_mlx;

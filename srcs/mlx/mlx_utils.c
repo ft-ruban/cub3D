@@ -16,14 +16,14 @@
 // Destroy and free everything in the right order (mostly used when the init)
 // went well
 
-// void	destroy_free_screen(t_mlx *mlx)
-// {
-// 	mlx_destroy_image(mlx->mlx, mlx->screen->img);
-// 	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
-// 	mlx_destroy_display(mlx->mlx);
-// 	free(mlx->mlx);
-// 	free(mlx);
-// }
+void	destroy_free_screen(t_mlx *mlx)
+{
+	mlx_destroy_image(mlx->ptr, mlx->screen->img);
+	mlx_destroy_window(mlx->ptr, mlx->mlx_win);
+	mlx_destroy_display(mlx->ptr);
+	free(mlx->ptr);
+	//free(mlx);
+}
 
 bool	init_screen(t_mlx *mlx)
 {
@@ -69,19 +69,19 @@ void	*init_screen_mlx(t_cub3d *cub3d, t_mlx *mlx)
 {
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
-			return(NULL);//return(error_handler_void(cub3d, INIT_MLX_FAIL, "TOFILL", MSG_31));
-	mlx->mlx = mlx_init();
-	if (!mlx->mlx)
+			return(NULL);
+	mlx->ptr = mlx_init();
+	if (!mlx->ptr)
 		return (crush_kill_destroy(NULL, NULL, mlx, NULL));
-	mlx->mlx_win = mlx_new_window(mlx->mlx, WIN_WIDTH, WIN_HEIGHT,
+	mlx->mlx_win = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT,
 	 		"Unforeseen consequences");
 	if (!mlx->mlx_win)
-	 	return (crush_kill_destroy(mlx->mlx, NULL, mlx, NULL));
+	 	return (crush_kill_destroy(mlx->ptr, NULL, mlx, NULL));
 	if (init_screen(mlx))
-		return (crush_kill_destroy(mlx->mlx, mlx->mlx_win, mlx, NULL));
-	mlx->screen->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
+		return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, NULL));
+	mlx->screen->img = mlx_new_image(mlx->ptr, WIN_WIDTH, WIN_HEIGHT);
 		if (!mlx->screen->img)
-	 	return (crush_kill_destroy(mlx->mlx, mlx->mlx_win, mlx, mlx->screen));
+	 	return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, mlx->screen));
 	mlx->screen->addr = mlx_get_data_addr(mlx->screen->img,
 	 		&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
 	 		&(mlx->screen->endian));

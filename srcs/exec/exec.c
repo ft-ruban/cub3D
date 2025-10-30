@@ -13,7 +13,7 @@ bool	get_texture_data(t_cub3d *cub3d, t_img *img, char *path)
 
 	width = TEXTURE_WIDTH;
 	height = TEXTURE_HEIGHT;
-	img->img = mlx_xpm_file_to_image(cub3d->mlx->mlx, path,
+	img->img = mlx_xpm_file_to_image(cub3d->mlx->ptr, path,
 								&width, &height); // TODO LDEV : protect
 	if (!img->img)
 		return (error_handler(cub3d, MAL_ERR_BUFF, "exec:TOFILL ", MSG_1));
