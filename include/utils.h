@@ -75,7 +75,19 @@ sure 1(walls) close the map properly and restart the program."
 # define MSG_31 "Texture structure failed during memory allocation. \n"
 # define MSG_32 "MLX structure failed during memory allocation. \n"
 # define MSG_33 "An error happened while trying to allocate memory for \
-	the img structure of our textures."
+	the img structures of our textures."
+# define MSG_34 "An error occured while trying to initialize the NORTH texture \
+it may be because the path sent does not exist, or the texture file is invalid\
+ or memory related issues. Make sure your texture is a .xpm and does exist.\n"
+# define MSG_35 "An error occured while trying to initialize the SOUTH texture \
+it may be because the path sent does not exist, or the texture file is invalid\
+ or memory related issues. Make sure your texture is a .xpm and does exist.\n"
+# define MSG_36 "An error occured while trying to initialize the WEST texture \
+it may be because the path sent does not exist, or the texture file is invalid\
+ or memory related issues. Make sure your texture is a .xpm and does exist.\n"
+# define MSG_37 "An error occured while trying to initialize the EAST texture \
+it may be because the path sent does not exist, or the texture file is invalid\
+ or memory related issues. Make sure your texture is a .xpm and does exist.\n"
 	
 // element_check_utils.c
 bool	character_is_invalid(char c);
