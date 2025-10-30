@@ -66,7 +66,7 @@ bool map_check(t_cub3d *cub3d, int fd, t_map *map_info);
 bool 	map_collect(t_cub3d *cub3d, t_map *map, char *file, int fd);
 
 //parsing_map.c
-bool		get_and_check_map(char *file, t_cub3d *cub3d, int fd, t_map *map);
+bool		get_and_check_map(char *file, t_cub3d *cub3d, int fd);
 
 // parsing.c
 int		parsing_init(int argc, char *argv[], t_cub3d *cub3d);

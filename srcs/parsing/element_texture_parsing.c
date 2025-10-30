@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/20 19:04:48 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/10/30 14:40:10 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 
 	element_buff = NULL;
 	if (read(fd_sd, parsing->buff, 1) == -1)
-		return (error_handler(cub3d, INV_READ, "parsing_texture.c:27 ", MSG_6));
+		return (error_handler(cub3d, ELEMENT_MISS, "parsing_texture.c:27 ", MSG_6));
 	while (parsing->buff[0] == ' ')
 	{
 		if (read(fd_sd, parsing->buff, 1) == -1)
-			return (error_handler(cub3d, INV_READ, "parsing_texture.c:31 ",
+			return (error_handler(cub3d, ELEMENT_MISS, "parsing_texture.c:31 ",
 					MSG_6));
 	}
 	element_buff = get_next_line(fd_sd);
@@ -101,6 +101,6 @@ bool	is_texture_valid(int fd_sd, t_cub3d *cub3d, char fl, char sl)
 		return (find_texture_element_path(fd_sd, &cub3d->parsing->rp_ea,
 				cub3d->parsing, cub3d));
 	}
-	return (error_handler(cub3d, INV_CON, FILE_ERR_2, MSG_7));
+	return (error_handler(cub3d, INV_CON_ELE, FILE_ERR_2, MSG_19));
 	return (RETURN_FAILURE);
 }

@@ -24,7 +24,7 @@ static bool malloc_cardinal_point_struct(t_texture *texture)
 	t_img  		*we;
 	t_img  		*ea;
 
-	no = NULL; //superflu?
+	no = NULL;
 	so = NULL;
 	we = NULL;
 	ea = NULL;
@@ -40,11 +40,24 @@ static bool malloc_cardinal_point_struct(t_texture *texture)
 	texture->ea = ea;
 	return(RETURN_SUCCESS);
 }
+// static bool init_img_texture(t_img *texture, t_cub3d *cub3d, char *path)
+// {
+// 	texture->img = mlx_xpm_file_to_image(cub3d->mlx->ptr, path,
+// 								&texture->width, &texture->height); //TOASKMATHISU x2)
+// 	if(!texture->img)
+// 		return(RETURN_FAILURE);
+// 	texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel),
+// 	&(texture->line_length), &(texture->endian));
+// 	if(!texture->addr)
+// 		return(RETURN_FAILURE);
+// 	texture->bits_per_pixel = texture->bits_per_pixel >> 3; //TO ASK ABOUT THE VALUE;
+// 	return(RETURN_SUCCESS);
+// }
 
 static bool init_img_texture(t_img *texture, t_cub3d *cub3d, char *path)
 {
 	texture->img = mlx_xpm_file_to_image(cub3d->mlx->ptr, path,
-								&texture->width, &texture->height); //TOASKMATHISU x2)
+		&texture->width, &texture->height);
 	if(!texture->img)
 		return(RETURN_FAILURE);
 	texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel),
@@ -55,50 +68,57 @@ static bool init_img_texture(t_img *texture, t_cub3d *cub3d, char *path)
 	return(RETURN_SUCCESS);
 }
 
-static void init_textures_img(t_cub3d *cub3d)
+static bool init_textures_img(t_cub3d *cub3d)
 {
-	malloc_cardinal_point_struct(cub3d->texture); //toprotect
-	if(init_img_texture(cub3d->texture->no, cub3d, cub3d->parsing->rp_no))
-		printf("FAIL\n");//TOPROTECT
-	if(init_img_texture(cub3d->texture->so, cub3d, cub3d->parsing->rp_so))
-		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures SO
-	if(init_img_texture(cub3d->texture->we, cub3d, cub3d->parsing->rp_we))
-		printf("FAIL\n"); //TOPROTECT	//TODO init t_img des textures EA
-	if(init_img_texture(cub3d->texture->ea, cub3d, cub3d->parsing->rp_ea))
-		printf("FAIL\n"); //TOPROTECT
-}
-static bool init_ray(t_cub3d *cub3d)
-{
-	t_ray *ray;
-
-	ray = malloc(sizeof(t_ray));
-	if(!ray)
+	if(malloc_cardinal_point_struct(cub3d->texture))
+		return(error_handler(cub3d, INIT_IMG_TEXT_FAIL, "TOFILL", MSG_33));
+	if(init_img_texture(cub3d->texture->no, cub3d->mlx, cub3d->parsing->rp_no))
+		return(error_handler(cub3d, TEXTURE_NO_FAIL, "TOFILL", MSG_34));
+	if(init_img_texture(cub3d->texture->so, cub3d->mlx, cub3d->parsing->rp_so))
 	{
-		return (RETURN_FAILURE); //TOPROTECT
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->no->img);
+		return(error_handler(cub3d, TEXTURE_SO_FAIL, "TOFILL", MSG_35));
 	}
-	cub3d->ray = ray;
-	//IF NEEDED we can assign default value HERE
+	if(init_img_texture(cub3d->texture->we, cub3d->mlx, cub3d->parsing->rp_we))
+	{
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->no->img);
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->so->img);
+		return(error_handler(cub3d, TEXTURE_WE_FAIL, "TOFILL", MSG_36));
+	}
+	if(init_img_texture(cub3d->texture->ea, cub3d->mlx, cub3d->parsing->rp_ea))
+	{
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->no->img);
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->so->img);
+		mlx_destroy_image(cub3d->mlx->ptr, cub3d->texture->we->img);
+		return(error_handler(cub3d, TEXTURE_EA_FAIL, "TOFILL", MSG_37));
+	}
 	return(RETURN_SUCCESS);
 }
+// static bool init_ray(t_cub3d *cub3d)
+// {
+// 	t_ray *ray;
+
+// 	ray = malloc(sizeof(t_ray));
+// 	if(!ray)
+// 	{
+// 		return (RETURN_FAILURE); //TOPROTECT
+// 	}
+// 	cub3d->ray = ray;
+// 	//IF NEEDED we can assign default value HERE
+// 	return(RETURN_SUCCESS);
+// }
 
 static int init_mlx_texture_img(t_cub3d *cub3d)
 {
 	t_mlx *mlx;
 
 	mlx = NULL;
-	mlx = init_screen_mlx(mlx); // TOPROTECT
+	mlx = init_screen_mlx(cub3d, mlx);
 	if (!mlx)
-	{
-		error_handler(cub3d, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
-		free_map(cub3d->map);
-		free(cub3d->map);
-		free(cub3d->texture);
-		return (clean_and_exit(cub3d, cub3d->parsing));
-	}
-	cub3d->mlx = mlx;
-	init_textures_img(cub3d); //TOPROTECT?
-	init_ray(cub3d); //TOPROTECT
-	init_player_data(cub3d);
+		error_handler(cub3d, INIT_MLX_FAIL, "main:TOFILL ", MSG_32);
+	if(init_textures_img(cub3d))
+	 	return(RETURN_FAILURE); //TOPROTECT?
+	// init_ray(cub3d); //TOPROTECT
 	return(RETURN_SUCCESS);
 }
 
@@ -116,20 +136,20 @@ int	main(int argc, char *argv[])
 
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
-		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
-	cub3d->error_type = EXIT_SUCCESS;
-	cub3d->print = true;
+		return (error_handler(NULL, CUB_SET_FAIL, "main:TOFILL ", MSG_1));
+	cub3d->error_type = ALL_OK;
 	if (parsing_init(argc, argv, cub3d))
-		return (clean_and_exit(cub3d, cub3d->parsing));
+		return (clean_and_exit(cub3d));
+
 	if (init_mlx_texture_img(cub3d)) //TOPROTECT
-		return (1);
-	hook_and_loop(cub3d, cub3d->mlx);
-	destroy_free_screen(cub3d->mlx);
-	// print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
-	free_map(cub3d->map);
-	free(cub3d->map);
-	free(cub3d->texture);
-	return (clean_and_exit(cub3d, cub3d->parsing));
+		return (clean_and_exit(cub3d));
+	// hook_and_loop(cub3d, cub3d->mlx);
+	// destroy_free_screen(cub3d->mlx);
+	//print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
+	// free_map(cub3d->map);
+	// free(cub3d->map);
+	//free(cub3d->texture);
+	return (clean_and_exit(cub3d));
 	return(0);
 }
 //-----------------------------------------------------------------------------

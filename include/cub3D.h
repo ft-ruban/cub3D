@@ -23,22 +23,35 @@ typedef struct s_ray		t_ray;
 typedef enum e_error_status
 {
 	ALL_OK,
-	MAL_ERR_SET = 1,
-	ERR,
+	CUB_SET_FAIL,
 	PAR_NBR_ARGC,
 	PAR_EXTENSION,
 	PARSING_INIT_FAIL,
-	INV_FAIL,
+	OPEN_FD_ELE,
 	MAL_ERR_BUFF,
-	INV_CON,
-	INV_READ,
-	PAR_INV_RGB,
+	INV_CON_ELE,
+	ELEMENT_MISS,
+	INV_CON_RGB,
 	GNL_FAILED,
 	STRJOIN_FAILED,
-	INV_MAP,
-    INIT_LIBX_FAILED ,
-	STRLEN_FAILED,
-	STRDUP_FAILED,
+	FAIL_INIT_MAP,
+	FAIL_READ_MAP,
+	FAIL_MALLOC_MAP,
+	FAIL_OPEN_MAP,
+	FAIL_CP_MAP,
+	READ_MAP_CHECK,
+	MAP_NOT_SINGLE,
+	MULTIPLE_PLAYERS,
+	INVALID_MAP_CHAR,
+	NO_PLAYER_FOUND,
+	MAP_NOT_ENCLOSED,
+    INIT_TEXTURE_FAIL,
+	INIT_MLX_FAIL,
+	INIT_IMG_TEXT_FAIL,
+	TEXTURE_NO_FAIL,
+	TEXTURE_SO_FAIL,
+	TEXTURE_WE_FAIL,
+	TEXTURE_EA_FAIL,
 }					t_error_status;
 
 typedef struct s_cub3d
@@ -74,7 +87,7 @@ typedef struct s_cub3d
 //main_utils.c
 //void	init_parsing_struct(t_parsing *parsing, t_cub3d *cub3d);
 // void	free_all(t_settings *set);
-int	    clean_and_exit(t_cub3d *cub3d, t_parsing *parsing);
+int	    clean_and_exit(t_cub3d *cub3d);
 
 
 

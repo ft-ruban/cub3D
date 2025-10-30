@@ -8,15 +8,20 @@ bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 	{
 		free_map(cub3d->map);
 		close(fd);
-		return (error_handler(cub3d, MAL_ERR_SET, "get_the_map.c:10", MSG_1));
+		return (error_handler(cub3d, MAL_ERR_BUFF, "get_the_map.c:10", MSG_1));
 	}
 	return (RETURN_SUCCESS);
 }
 
-bool	find_map_start(t_parsing *parsing, int fd)
+bool	find_map_start(t_parsing *parsing, int fd, t_cub3d *cub3d)
 {
+	printf("DL CUB? %d\n",cub3d->error_type); //TORM ON LE GARDE CAR COMPILATEUR ET FLEMME 
+	int read_value;
 	while (parsing->buff[0] == '\n')
-		if (read(fd, parsing->buff, 1) == -1)
-			return(RETURN_FAILURE);
+	{
+		read_value  = read(fd, parsing->buff, 1);
+		if(read_value == 0 || read_value == -1)
+			return (RETURN_FAILURE);
+	}	
 	return (RETURN_SUCCESS);
 }

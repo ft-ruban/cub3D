@@ -41,10 +41,12 @@ bool	init_screen(t_mlx *mlx)
 // in the right order then we return NULL to signal Main that something went
 // wrong
 
-static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx)
+static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx, t_img *screen)
 {
 	if (win)
 		mlx_destroy_window(mlx, win);
+	if (screen)
+		free(screen);
 	if (mlx)
 	{
 		mlx_destroy_display(mlx);
@@ -53,6 +55,7 @@ static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx)
 	free(t_mlx);
 	return (NULL);
 }
+
 // here we malloc our t_mlx structure, then we init mlx then we use a
 // function(mlx_new_window) creates a new window on the screen
 // using the size_x and size_y parameters to determine its size
@@ -62,27 +65,27 @@ static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx)
 // allowing the user to modify it later if necessary.
 // if any of those fail then we exit properly thanks to crush_kill_destroy
 
-void	*init_screen_mlx(t_mlx *mlx)
+void	*init_screen_mlx(t_cub3d *cub3d, t_mlx *mlx)
 {
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
-		return (NULL);
+			return(NULL);//return(error_handler_void(cub3d, INIT_MLX_FAIL, "TOFILL", MSG_31));
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
-		return (crush_kill_destroy(NULL, NULL, mlx));
+		return (crush_kill_destroy(NULL, NULL, mlx, NULL));
 	mlx->mlx_win = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT,
-			"Unforeseen consequences");
+	 		"Unforeseen consequences");
 	if (!mlx->mlx_win)
-		return (crush_kill_destroy(mlx->ptr, NULL, mlx));
+	 	return (crush_kill_destroy(mlx->ptr, NULL, mlx, NULL));
 	if (init_screen(mlx))
-		return (NULL);
+		return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, NULL));
 	mlx->screen->img = mlx_new_image(mlx->ptr, WIN_WIDTH, WIN_HEIGHT);
-	if (!mlx->screen->img)
-		return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx));
+		if (!mlx->screen->img)
+	 	return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, mlx->screen));
 	mlx->screen->addr = mlx_get_data_addr(mlx->screen->img,
-			&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
-			&(mlx->screen->endian));
-	// printf("line length: %d, bpp: %d, addr: %p\n", mlx->screen->line_length, mlx->screen->bits_per_pixel, mlx->screen->addr);
+	 		&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
+	 		&(mlx->screen->endian));
 	mlx->screen->bits_per_pixel = mlx->screen->bits_per_pixel >> 3;
+	cub3d->mlx = mlx;
 	return (mlx);
 }
