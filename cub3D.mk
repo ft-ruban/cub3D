@@ -48,7 +48,8 @@ override UTILSSRC := error \
 override DEBUGSRC := print_struct_set
 
 override MLXSETSRC := commands \
-					  mlx_utils
+					  mlx_utils \
+					  texture \
 
 override EXECSRC := draw_all_pixels \
 					draw_column \

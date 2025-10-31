@@ -23,7 +23,8 @@ typedef struct s_map		t_map;
 # endif
 
 # define MSG_1 "error during malloc of cub3d structure\n"
-# define MSG_2 "invalid argc value, cub3D require a single and only arg\n"
+# define MSG_2 "invalid argc value, cub3D require a single arg that is the .cub\
+ file.\n"
 # define MSG_3 "invalid file's extension cub3d only support .cub files as arg\n"
 # define MSG_4 "Error while opening file be sure the file \
 exist in scene_descriptions folder\n"
@@ -33,8 +34,8 @@ format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, \
 make sure it follow the expected form\n"
 # define MSG_8 "The RGB value of C or/and F seem to be incorrect. OR/AND \
-your file may be incorrect, (could be that there is nothing in the file right \
-after a C or a F.\nsetup your .cub in a way that F and C receive three value\
+your file may be incorrect, (could be that there is no given values in the file\
+ right after a C or a F.\nsetup your .cub in a way that F and C receive three value\
 each separated by ',' between 000 and 255 a map also need to be right below \
 your SO WE EA NO C and F. Check your .cub entries and retry.\n"
 # define MSG_9 "Error during get_next_line, \

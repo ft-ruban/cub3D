@@ -6,13 +6,13 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 06:54:34 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/31 09:55:28 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static char	*new_line_remover(t_cub3d *cub3d, char *element)
+static char	*new_line_remover(char *element)
 {
 	char	*str;
 	int		len_string;
@@ -20,7 +20,7 @@ static char	*new_line_remover(t_cub3d *cub3d, char *element)
 	len_string = ft_strlen(element);
 	if (len_string == 0)
 	{
-		error_handler(cub3d, 15, "element_texture_parsing.c:TOFILL ", MSG_18);
+		free(element);
 		return (NULL);
 	}
 	if (element[len_string - 1] == '\n')
@@ -29,8 +29,7 @@ static char	*new_line_remover(t_cub3d *cub3d, char *element)
 		str = ft_strdup(element);
 		if (!str)
 		{
-			error_handler(cub3d, 15, "element_texture_parsing.c:TOFILL ",
-				MSG_11);
+			free(element);
 			return (NULL);
 		}
 	}
@@ -54,10 +53,8 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 	if (read(fd_sd, parsing->buff, 1) == -1)
 		return (error_handler(cub3d, ELEMENT_MISS, FILE_ERR_3, MSG_6));
 	while (parsing->buff[0] == ' ')
-	{
 		if (read(fd_sd, parsing->buff, 1) == -1)
 			return (error_handler(cub3d, ELEMENT_MISS, FILE_ERR_4, MSG_6));
-	}
 	element_buff = get_next_line(fd_sd);
 	if (!element_buff)
 		return (error_handler(cub3d, GNL_FAILED, FILE_ERR_5, MSG_9));
@@ -66,12 +63,13 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 	{
 		free(element_buff);
 		return (error_handler(cub3d, STRJOIN_FAILED,
-				"element_texture_parsing.c:65 ", MSG_10));
+				"element_texture_parsing.c:62 ", MSG_10));
 	}
 	free(element_buff);
-	*element = new_line_remover(cub3d, *element);
+	*element = new_line_remover(*element);
 	if (!*element)
-		return (RETURN_FAILURE);
+		return (error_handler(cub3d, ELEMENT_MISS,
+				"element_texture_parsing.c:69 ", MSG_6));
 	return (RETURN_SUCCESS);
 }
 // if fail here it mean we already got the information

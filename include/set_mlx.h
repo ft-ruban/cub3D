@@ -57,4 +57,8 @@ void 	hook_and_loop(t_cub3d *cub3d, t_mlx *screen);
 void 	destroy_free_screen(t_mlx *screen);
 void	*init_screen_mlx(t_cub3d *cub3d, t_mlx *t_mlx);
 // int				free_all_mlx(t_mlx *screen, t_set_call *param, int error_code);
+
+//texture.c
+int init_mlx_texture_img(t_cub3d *cub3d);
+
 #endif

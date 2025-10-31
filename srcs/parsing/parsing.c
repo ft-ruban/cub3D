@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 07:21:11 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 07:28:40 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/31 09:56:31 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 	if (!is_file_cub_extension(argv[1]))
 		return (error_handler(cub3d, PAR_EXTENSION, "parsing.c:98 ", MSG_3));
 	if (init_parsing_struct(cub3d))
-		return (error_handler(cub3d, PARSING_INIT_FAIL, "parsing.c:101 ",
+		return (error_handler(cub3d, PARSING_INIT_FAIL, "parsing.c:100 ",
 				MSG_17));
 	if (prepare_collect_elements(argv[1], cub3d, &fd, &cub3d->parsing->buff))
 		return (RETURN_FAILURE);
