@@ -134,7 +134,7 @@ int	main(int argc, char *argv[])
 		return (clean_and_exit(cub3d));
 	if (init_mlx_texture_img(cub3d)) //TOPROTECT
 		return (clean_and_exit(cub3d));
-	// hook_and_loop(cub3d, cub3d->mlx);
+	hook_and_loop(cub3d, cub3d->mlx);
 	//print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
 	// free_map(cub3d->map);
 	// free(cub3d->map);

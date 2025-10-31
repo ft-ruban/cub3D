@@ -4,14 +4,14 @@
 // Here we hook and loop for the libx to handle the interaction with the window
 // and loop until the ESC key is used or if the user click on the exit cross
 
-// void	hook_and_loop(t_cub3d *cub3d, t_mlx *mlx)
-// {
-// 	(void)cub3d;
-// 	mlx_hook(mlx->mlx_win, 17, 1L << 17, close_window, mlx);
-// 	mlx_hook(mlx->mlx_win, 2, 1L << 0, handle_keys, mlx);
-// 	mlx_loop_hook(mlx->mlx, draw, mlx);
-// 	mlx_loop(mlx->mlx);
-// }
+void	hook_and_loop(t_cub3d *cub3d, t_mlx *mlx)
+{
+	(void)cub3d;
+	mlx_hook(mlx->mlx_win, 17, 1L << 17, close_window, mlx);
+	mlx_hook(mlx->mlx_win, 2, 1L << 0, handle_keys, mlx);
+	mlx_loop_hook(mlx->ptr, draw, mlx);
+	mlx_loop(mlx->ptr);
+}
 
 // Destroy and free everything in the right order (mostly used when the init)
 // went well
@@ -22,7 +22,6 @@ void	destroy_free_screen(t_mlx *mlx)
 	mlx_destroy_window(mlx->ptr, mlx->mlx_win);
 	mlx_destroy_display(mlx->ptr);
 	free(mlx->ptr);
-	//free(mlx);
 }
 
 bool	init_screen(t_mlx *mlx)

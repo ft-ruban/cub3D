@@ -91,7 +91,7 @@ it may be because the path sent does not exist, or the texture file is invalid\
 	
 // element_check_utils.c
 bool	character_is_invalid(char c);
-bool	player_update_check(t_cub3d *cub3d, bool *player);
+bool	player_update_check(bool *player);
 
 // error.c
 int		error_handler(t_cub3d *cub3d, int error_type,
@@ -102,9 +102,10 @@ void	*error_handler_void(t_cub3d *cub3d, int error_type,
 //find_map_size_utils.c
 bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 																		int fd);
-bool	find_map_start(t_parsing *parsing, int fd, t_cub3d *cub3d);
+bool	find_map_start(t_parsing *parsing, int fd);
 
 //free_map.c
+bool 	free_map_cpmap_failed(size_t line_index, t_map *map_info);
 void    free_map(t_map *map_info);
 
 // ft_atoi.c
@@ -132,8 +133,7 @@ char	*ft_strchr(const char *s, int c);
 
 //get_the_map_utils.c
 bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d);
-bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map,
-												t_cub3d *cub3d);
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map);
 bool	find_map_first_line(char **line, int fd);
 
 //init_struct_01.c

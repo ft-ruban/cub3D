@@ -30,9 +30,8 @@ bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d)
 
 // We browse through the entire line until we find a '\n'
 // If we reach the end of the file, we are no longer in the map
-bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map, t_cub3d *cub3d)
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map)
 {
-	printf("DL CUB? %d\n",cub3d->error_type); //TORM ON LE GARDE CAR COMPILATEUR ET FLEMME 
 	int	result_read;
 
 	result_read = 0;
