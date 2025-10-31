@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:48:53 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 10:49:45 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/31 11:41:31 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "set_mlx.h"
+
+static bool init_ray(t_cub3d *cub3d)
+{
+	t_ray *ray;
+
+	ray = malloc(sizeof(t_ray));
+	if(!ray)
+	{
+		return (RETURN_FAILURE); //TOPROTECT
+	}
+	cub3d->ray = ray;
+	//IF NEEDED we can assign default value HERE
+	return(RETURN_SUCCESS);
+}
 
 static bool free_all_err(t_img *no, t_img *ea, t_img *so, t_img *we)
 {
@@ -94,6 +108,7 @@ int init_mlx_texture_img(t_cub3d *cub3d)
 		return(error_handler(cub3d, INIT_MLX_FAIL, "main:TOFILL ", MSG_32));
 	if(init_textures_img(cub3d))
 	 	return(RETURN_FAILURE);
-	//init_ray(cub3d); //TOPROTECT
+	init_ray(cub3d); //TOPROTECT
+	init_player_data(cub3d);
 	return(RETURN_SUCCESS);
 }

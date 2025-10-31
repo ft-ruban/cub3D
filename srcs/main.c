@@ -4,19 +4,7 @@
 #include "set_mlx.h"
 #include <unistd.h> //write
 
-// static bool init_ray(t_cub3d *cub3d)
-// {
-// 	t_ray *ray;
 
-// 	ray = malloc(sizeof(t_ray));
-// 	if(!ray)
-// 	{
-// 		return (RETURN_FAILURE); //TOPROTECT
-// 	}
-// 	cub3d->ray = ray;
-// 	//IF NEEDED we can assign default value HERE
-// 	return(RETURN_SUCCESS);
-// }
 
 
 // WIP DOC : we init our setting structure, then its value then we parse the
@@ -35,6 +23,7 @@ int	main(int argc, char *argv[])
 	if (!cub3d)
 		return (error_handler(NULL, CUB_SET_FAIL, "main:TOFILL ", MSG_1));
 	cub3d->error_type = ALL_OK;
+	cub3d->print = true;
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d));
 	if (init_mlx_texture_img(cub3d))
