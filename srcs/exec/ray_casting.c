@@ -53,26 +53,26 @@ void	stop_at_first_edge(t_ray *ray, t_map *map, double dist_next_x,
 	if (ray->dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->wall_dist_x = (map->player_pos_x - map->wall_pos_x) *
-															dist_next_x;
+		ray->wall_dist_x = (map->player_pos_x - map->wall_pos_x)
+			* dist_next_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->wall_dist_x = (map->wall_pos_x + 1 - map->player_pos_x) *
-															dist_next_x;
+		ray->wall_dist_x = (map->wall_pos_x + 1 - map->player_pos_x)
+			* dist_next_x;
 	}
 	if (ray->dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->wall_dist_y = (map->player_pos_y - map->wall_pos_y) *
-															dist_next_y;
+		ray->wall_dist_y = (map->player_pos_y - map->wall_pos_y)
+			* dist_next_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->wall_dist_y = (map->wall_pos_y + 1 - map->player_pos_y) *
-															dist_next_y;
+		ray->wall_dist_y = (map->wall_pos_y + 1 - map->player_pos_y)
+			* dist_next_y;
 	}
 }
 
@@ -114,10 +114,10 @@ void	curr_ray_dir(t_cub3d *cub3d)
 	float	camera;
 
 	camera = 2 * ((double)cub3d->curr_column / (double)WIN_WIDTH) - 1;
-	cub3d->ray->dir_x = cub3d->ray->main_dir_x +
-					(cub3d->ray->main_plane_x * camera);
-	cub3d->ray->dir_y = cub3d->ray->main_dir_y +
-					(cub3d->ray->main_plane_y * camera);
+	cub3d->ray->dir_x = cub3d->ray->main_dir_x
+		+ (cub3d->ray->main_plane_x * camera);
+	cub3d->ray->dir_y = cub3d->ray->main_dir_y
+		+ (cub3d->ray->main_plane_y * camera);
 }
 
 // From our first column(0), to the last one(WIN_WIDTH - 1), we are looking for
@@ -126,6 +126,6 @@ void	curr_ray_dir(t_cub3d *cub3d)
 
 void	ray_casting(t_cub3d *cub3d)
 {
-		curr_ray_dir(cub3d);
-		detect_first_wall(cub3d);
+	curr_ray_dir(cub3d);
+	detect_first_wall(cub3d);
 }

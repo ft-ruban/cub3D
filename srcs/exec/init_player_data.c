@@ -43,13 +43,13 @@ static void	find_player_pos(t_map *map_info, char **map)
 		{
 			if (map[height][width] == 'N' || map[height][width] == 'S' ||
 				map[height][width] == 'W' || map[height][width] == 'E')
-				{
-					map_info->wall_pos_x = width;
-					map_info->wall_pos_y = height;
-					map_info->player_pos_x = width + 0.5;
-					map_info->player_pos_y = height + 0.5;
-					break;
-				}
+			{
+				map_info->wall_pos_x = width;
+				map_info->wall_pos_y = height;
+				map_info->player_pos_x = width + 0.5;
+				map_info->player_pos_y = height + 0.5;
+				break ;
+			}
 			width++;
 		}
 		height++;
@@ -63,6 +63,6 @@ void	init_player_data(t_cub3d *cub3d)
 {
 	find_player_pos(cub3d->map, cub3d->map->map);
 	assign_player_orientation(cub3d->map,
-			cub3d->map->map[cub3d->map->wall_pos_y][cub3d->map->wall_pos_x]);
+		cub3d->map->map[cub3d->map->wall_pos_y][cub3d->map->wall_pos_x]);
 	set_main_ray_dir_and_plane(cub3d->ray, cub3d->map->player_orientation);
 }

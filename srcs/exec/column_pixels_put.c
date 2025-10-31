@@ -18,8 +18,8 @@ static unsigned int	get_texture_pixel(t_img *texture, int x, int y)
 	char			*pixel_addr;
 	unsigned int	pixel_color;
 
-	pixel_addr = texture->addr + (y * texture->line_length + x *
-							(int)(texture->bits_per_pixel));
+	pixel_addr = texture->addr + (y * texture->line_length + x
+			* (int)(texture->bits_per_pixel));
 	pixel_color = *(unsigned int *)pixel_addr;
 	return (pixel_color);
 }
@@ -53,9 +53,9 @@ static void	find_texture_x(t_ray *ray, t_map *map, t_texture *texture)
 		wall_hit_pos = map->player_pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_hit_pos -= (int)wall_hit_pos;
 	texture->x = (int)(wall_hit_pos * TEXTURE_WIDTH);
-	if ((ray->side == 0 && ray->dir_x > 0) ||
-		(ray->side == 1 && ray->dir_y < 0))
-	texture->x = TEXTURE_WIDTH - texture->x - 1;
+	if ((ray->side == 0 && ray->dir_x > 0)
+		|| (ray->side == 1 && ray->dir_y < 0))
+		texture->x = TEXTURE_WIDTH - texture->x - 1;
 }
 
 // 1) There are 4 textures available, so let's find the one we need.
@@ -107,11 +107,10 @@ static void	get_right_pixel_texture(t_cub3d *cub3d, unsigned int wall_pixel)
 
 	texture_addr = right_texture(cub3d->ray, cub3d->texture);
 	find_texture_x(cub3d->ray, cub3d->map, cub3d->texture);
-	cub3d->texture->y = (wall_pixel + cub3d->texture->offset) *
-												cub3d->texture->render;
-	//printf("render: %f\n", cub3d->texture->render);
+	cub3d->texture->y = (wall_pixel + cub3d->texture->offset)
+		* cub3d->texture->render;
 	cub3d->texture->pixel_color = get_texture_pixel(texture_addr,
-							cub3d->texture->x, cub3d->texture->y);
+			cub3d->texture->x, cub3d->texture->y);
 }
 
 // 1) To keep track of the pixel(or the wall pixel) we are currently working on,
@@ -131,19 +130,22 @@ void	column_pixels_put(t_cub3d *cub3d, t_texture *texture,
 	wall_pixel = 0;
 	while (pixel < wall_start)
 	{
-		my_mlx_pixel_put(cub3d->mlx, texture->ceil_hex, cub3d->curr_column, pixel);
+		my_mlx_pixel_put(cub3d->mlx, texture->ceil_hex, cub3d->curr_column,
+			pixel);
 		pixel++;
 	}
 	while (pixel <= wall_end)
 	{
 		get_right_pixel_texture(cub3d, wall_pixel);
-		my_mlx_pixel_put(cub3d->mlx, texture->pixel_color, cub3d->curr_column, pixel);
+		my_mlx_pixel_put(cub3d->mlx, texture->pixel_color, cub3d->curr_column,
+			pixel);
 		wall_pixel++;
 		pixel++;
 	}
-	while(pixel < WIN_HEIGHT)
+	while (pixel < WIN_HEIGHT)
 	{
-		my_mlx_pixel_put(cub3d->mlx, texture->floor_hex, cub3d->curr_column, pixel);
+		my_mlx_pixel_put(cub3d->mlx, texture->floor_hex, cub3d->curr_column,
+			pixel);
 		pixel++;
 	}
 }

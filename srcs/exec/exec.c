@@ -12,12 +12,11 @@ static void	print_screen(t_cub3d *cub3d)
 		cub3d->curr_column++;
 	}
 	mlx_put_image_to_window(cub3d->mlx->ptr, cub3d->mlx->mlx_win,
-									cub3d->mlx->screen->img, 0, 0);
+		cub3d->mlx->screen->img, 0, 0);
 }
 
-int		exec(t_cub3d *cub3d)
+int	exec(t_cub3d *cub3d)
 {
-	
 	if (cub3d->print == true)
 		print_screen(cub3d);
 	cub3d->print = false;

@@ -17,8 +17,8 @@ static void	pinpoint_wall_start_end(t_texture *texture,
 	texture->offset = 0;
 	if (texture->wall_pixel_height >= WIN_HEIGHT)
 	{
-		texture->offset = -((int)((WIN_HEIGHT -
-			(int)texture->wall_pixel_height) * 0.5));
+		texture->offset = -((int)((WIN_HEIGHT
+						- (int)texture->wall_pixel_height) * 0.5));
 		*wall_start = 0;
 		*wall_end = WIN_HEIGHT - 1;
 	}
@@ -49,13 +49,13 @@ static void	pinpoint_wall_start_end(t_texture *texture,
 static void	identify_wall_height(t_ray *ray, t_map *map, t_texture *texture)
 {
 	if (ray->side == 0)
-		ray->perp_wall_dist = (map->wall_pos_x - map->player_pos_x +
-						(1 - ray->step_x) * 0.5) / ray->dir_x;
+		ray->perp_wall_dist = (map->wall_pos_x - map->player_pos_x
+				+ (1 - ray->step_x) * 0.5) / ray->dir_x;
 	else
-		ray->perp_wall_dist = (map->wall_pos_y - map->player_pos_y +
-						(1 - ray->step_y) * 0.5) / ray->dir_y;
-	texture->wall_pixel_height = (unsigned int)(WIN_HEIGHT /
-											ray->perp_wall_dist);
+		ray->perp_wall_dist = (map->wall_pos_y - map->player_pos_y
+				+ (1 - ray->step_y) * 0.5) / ray->dir_y;
+	texture->wall_pixel_height = (unsigned int)(WIN_HEIGHT
+			/ ray->perp_wall_dist);
 	texture->render = (double)TEXTURE_HEIGHT / texture->wall_pixel_height;
 }
 
