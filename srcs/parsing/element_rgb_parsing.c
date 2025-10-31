@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/28 14:47:57 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/10/31 09:20:33 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,25 @@ static bool	retrieve_rgb(int fd_sd, t_cub3d *cub3d, int *ptr_data_to_fill,
 	len_rgb_value = 1;
 	*ptr_data_to_fill = ft_atoi(&cub3d->parsing->buff[0]);
 	if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
-		return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:30 ", MSG_6));
+		return (error_handler(cub3d, INV_CON_RGB, FILE_ERR_8, MSG_6));
 	if (is_blue && cub3d->parsing->buff[0] == '\n')
 		return (RETURN_SUCCESS);
 	while (cub3d->parsing->buff[0] != ',' || is_blue)
 	{
 		if (ft_isnum((int)cub3d->parsing->buff[0]) || len_rgb_value > 3)
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:34 ",
-					MSG_8));
+			return (error_handler(cub3d, INV_CON_RGB,
+					"element_rgb_parsing.c:36 ", MSG_8));
 		*ptr_data_to_fill = *ptr_data_to_fill * 10;
 		*ptr_data_to_fill = *ptr_data_to_fill
 			+ ft_atoi(&cub3d->parsing->buff[0]);
 		if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:39 ", MSG_6));
+			return (error_handler(cub3d, INV_CON_RGB, FILE_ERR_6, MSG_6));
 		len_rgb_value++;
 		if (is_blue && cub3d->parsing->buff[0] == '\n')
 			break ;
 	}
 	if (*ptr_data_to_fill < 0 || *ptr_data_to_fill > 255 || len_rgb_value > 3)
-		return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:45 ", MSG_8));
+		return (error_handler(cub3d, INV_CON_RGB, FILE_ERR_9, MSG_8));
 	return (RETURN_SUCCESS);
 }
 
@@ -58,10 +58,11 @@ static bool	prepare_retrieve_rgb(int fd_sd, t_cub3d *cub3d, bool is_blue,
 	if (!is_blue)
 	{
 		if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:30 ", MSG_6));
+			return (error_handler(cub3d, INV_CON_RGB,
+					"element_rgb_parsing.c:60 ", MSG_6));
 		if (ft_isnum((int)cub3d->parsing->buff[0]))
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:60 ",
-					MSG_8));
+			return (error_handler(cub3d, INV_CON_RGB,
+					"element_rgb_parsing.c:63 ", MSG_8));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -106,7 +107,7 @@ bool	is_rgb_valid(int fd_sd, t_cub3d *cub3d, char first_letter,
 		if (cub3d->parsing->buff[0] == ' ')
 		{
 			if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
-				return (error_handler(cub3d, INV_CON_RGB, FILE_ERR_1, MSG_6));
+				return (error_handler(cub3d, INV_CON_RGB, FILE_ERR_10, MSG_6));
 		}
 		if (!ft_isnum((int)cub3d->parsing->buff[0]) && cub3d->parsing->buff[0])
 		{
@@ -123,7 +124,7 @@ bool	is_rgb_valid(int fd_sd, t_cub3d *cub3d, char first_letter,
 			received_rgb_completed = true;
 		}
 		else if (cub3d->parsing->buff[0] != ' ')
-			return (error_handler(cub3d, INV_CON_RGB, "parsing_rgb.c:106 ", MSG_7)); //8
+			return (error_handler(cub3d, INV_CON_RGB, FILE_ERR_7, MSG_7));
 	}
 	return (RETURN_SUCCESS);
 }

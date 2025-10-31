@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 07:21:11 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/10/31 09:56:31 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 // Here we check if the file sent do possess the right
@@ -14,6 +26,8 @@ static bool	is_file_cub_extension(char *file)
 		return (false);
 	return (true);
 }
+
+// initiation of parsing struct and we set everything at NULL or -1 by default
 
 static bool	init_parsing_struct(t_cub3d *cub3d)
 {
@@ -54,9 +68,10 @@ static void	convert_rgb_hex(t_parsing *parsing, t_texture *texture)
 		+ ((parsing->ceil_g & 0xff) << 8) + (parsing->ceil_b & 0xff);
 	texture->floor_hex = ((parsing->floor_r & 0xff) << 16)
 		+ ((parsing->floor_g & 0xff) << 8) + (parsing->floor_b & 0xff);
-	printf("\nceil = %X\n floor = %X\n", texture->ceil_hex, texture->floor_hex);
-		// TORM THIS IS FOR DEBBUG
 }
+
+// here we set our texture struct 
+// and convert the rgb value we caught in the file into a hexadecimal value
 
 static bool	texture_struct_setup(t_cub3d *cub3d)
 {
@@ -65,9 +80,7 @@ static bool	texture_struct_setup(t_cub3d *cub3d)
 	texture = malloc(sizeof(t_texture));
 	cub3d->texture = texture;
 	if (!texture)
-	{
-		return(error_handler(cub3d, INIT_TEXTURE_FAIL, "TOFILL", MSG_31)); //DOUBLE err message
-	}
+		return (RETURN_FAILURE);
 	convert_rgb_hex(cub3d->parsing, texture);
 	return (RETURN_SUCCESS);
 }
@@ -75,30 +88,24 @@ static bool	texture_struct_setup(t_cub3d *cub3d)
 // we check if the user entered 1 param and nothing more.
 // we check if the param is a .cub to make sure it is the right extension
 // we open file to collect the elements above the map
-// TODO we parse the map and save its content inside of a variable(s)
-// TODO if in the end parsing can only end up in two ways, turn it into a bool
-
-// TODO msg error dans cub3d plutot ca serais mieux je pense.
-// je vais rentrer et je reprend demain c'est un peu difficile avec le chat
 
 int	parsing_init(int argc, char *argv[], t_cub3d *cub3d)
 {
 	int	fd;
 
 	if (argc != 2)
-		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:TOFILL ", MSG_2));
+		return (error_handler(cub3d, PAR_NBR_ARGC, "parsing.c:96 ", MSG_2));
 	if (!is_file_cub_extension(argv[1]))
-		return (error_handler(cub3d, PAR_EXTENSION, "parsing.c:TOFILL ",
-				MSG_3));
+		return (error_handler(cub3d, PAR_EXTENSION, "parsing.c:98 ", MSG_3));
 	if (init_parsing_struct(cub3d))
-		return (error_handler(cub3d, PARSING_INIT_FAIL, "parsing.c:TOFILL ",
+		return (error_handler(cub3d, PARSING_INIT_FAIL, "parsing.c:100 ",
 				MSG_17));
 	if (prepare_collect_elements(argv[1], cub3d, &fd, &cub3d->parsing->buff))
 		return (RETURN_FAILURE);
 	if (get_and_check_map(argv[1], cub3d, fd))
 		return (RETURN_FAILURE);
 	if (texture_struct_setup(cub3d))
-		return (error_handler(cub3d, INIT_TEXTURE_FAIL, "parsing.c:TOFILL",
-				MSG_18)); // DOUBLE err message
+		return (error_handler(cub3d, INIT_TEXTURE_FAIL, "parsing.c:108 ",
+				MSG_18));
 	return (RETURN_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:25:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/30 14:29:04 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/10/31 11:30:29 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,13 @@ static bool	enclosed_check(char **map)
 {
 	size_t	height;
 	size_t	width;
-	size_t 	max_height; //TODL
 
-	max_height = 4; //TODL
 	height = 0;
 	while (map[height])
 	{
 		width = 0;
 		while (map[height][width])
 		{
-			// printf("height = %zu, max= %zu\n", height, max_height); //TODL
-			if((height == max_height) && (map[height][width] == '0' || map[height][width] == 'N'
-				|| map[height][width] == 'S' || map[height][width] == 'E'
-				|| map[height][width] == 'W')) //TODL
-					return(RETURN_FAILURE);
 			if (map[height][width] == '0' || map[height][width] == 'N'
 				|| map[height][width] == 'S' || map[height][width] == 'E'
 				|| map[height][width] == 'W')
@@ -75,15 +68,11 @@ static bool	enclosed_check(char **map)
 
 // We check every single characteres of the map to see if it is a valid one.
 // We check if there is no more than one player position.
-
-static bool	map_character_check(char **map, t_cub3d *cub3d)
+static bool	map_character_check(char **map, t_cub3d *cub3d, int width,
+		int height)
 {
-	int		width;
-	int		height;
 	bool	player;
 
-	width = 0;
-	height = 0;
 	player = false;
 	while (map[height])
 	{
@@ -92,16 +81,19 @@ static bool	map_character_check(char **map, t_cub3d *cub3d)
 		{
 			if (map[height][width] == 'N' || map[height][width] == 'S'
 				|| map[height][width] == 'E' || map[height][width] == 'W')
-				if (player_update_check(cub3d, &player))
-					return (error_handler(cub3d, MULTIPLE_PLAYERS, "check_the_map.c.c:55 ", MSG_27));
+				if (player_update_check(&player))
+					return (error_handler(cub3d, MULTIPLE_PLAYERS,
+							"map_check.c:71 ", MSG_27));
 			if (character_is_invalid(map[height][width]))
-					return (error_handler(cub3d, INVALID_MAP_CHAR, "check_the_map.c.c:55 ", MSG_28));
+				return (error_handler(cub3d, INVALID_MAP_CHAR,
+						"map_check.c:74 ", MSG_28));
 			width++;
 		}
 		height++;
 	}
 	if (player == false)
-		return (error_handler(cub3d, NO_PLAYER_FOUND, "check_the_map.c.c:55 ", MSG_29));
+		return (error_handler(cub3d, NO_PLAYER_FOUND, "map_check.c:81 ",
+				MSG_29));
 	return (RETURN_SUCCESS);
 }
 
@@ -119,11 +111,13 @@ static bool	is_map_single(t_parsing *parsing, int fd, t_cub3d *cub3d)
 	{
 		read_result = read(fd, parsing->buff, 1);
 		if (read_result == READ_FAILED)
-			return (error_handler(cub3d, READ_MAP_CHECK, "map_check.c:89 ", MSG_25));//17
+			return (error_handler(cub3d, READ_MAP_CHECK, "map_check.c:99 ",
+					MSG_25));
 		if (read_result == END_OF_FILE)
 			eof = true;
 		if (parsing->buff[0] != '\n' && eof == false)
-			return (error_handler(cub3d, MAP_NOT_SINGLE, "map_check.c:93 ", MSG_26)); //18
+			return (error_handler(cub3d, MAP_NOT_SINGLE, "map_check.c:104 ",
+					MSG_26));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -135,9 +129,10 @@ bool	map_check(t_cub3d *cub3d, int fd, t_map *map_info)
 {
 	if (is_map_single(cub3d->parsing, fd, cub3d))
 		return (RETURN_FAILURE);
-	if (map_character_check(map_info->map, cub3d))
+	if (map_character_check(map_info->map, cub3d, 0, 0))
 		return (RETURN_FAILURE);
 	if (enclosed_check(map_info->map))
-		return (error_handler(cub3d, MAP_NOT_ENCLOSED, "map_check.c:35 ", MSG_30));//18
+		return (error_handler(cub3d, MAP_NOT_ENCLOSED, "map_check.c:120 ",
+				MSG_30));
 	return (RETURN_SUCCESS);
 }

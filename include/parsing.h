@@ -21,11 +21,22 @@ typedef struct s_cub3d	t_cub3d; //declaration anticipe
 # define CEIL 1
 # define FLOOR 0
 # define MAP_FOLDER_PATH "scene_descriptions/"
-# define FILE_ERR_1 "parsing_rgb.c:88 "
-# define FILE_ERR_2 "parsing_texture.c:56 "
-# define FILE_ERR_3 "parsing_texture.c:62 "
-# define FILE_ERR_4 "parsing_texture.c:68 "
-# define FILE_ERR_5 "parsing_texture.c:74 "
+
+# define FILE_ERR_2 "element_texture_parsing.c:103  "
+# define FILE_ERR_3 "element_texture_parsing.c:54 "
+# define FILE_ERR_4 "element_texture_parsing.c:58 "
+# define FILE_ERR_5 "element_texture_parsing.c:62 "
+# define FILE_ERR_6 "element_rgb_parsing.c:42 "
+# define FILE_ERR_7 "element_rgb_parsing.c:126 "
+# define FILE_ERR_8 "element_rgb_parsing.c:30 "
+# define FILE_ERR_9 "element_rgb_parsing.c:48 "
+# define FILE_ERR_10 "element_rgb_parsing.c:109 "
+# define FILE_ERR_11 "map_check.c:TOFILL "
+# define FILE_ERR_12 "map_check.c:TOFILL "
+# define FILE_ERR_13 "map_check.c:TOFILL "
+# define FILE_ERR_14 "map_check.c:TOFILL "
+
+
     
 typedef struct s_parsing
 {

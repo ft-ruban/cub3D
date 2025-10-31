@@ -2,8 +2,8 @@ SO textures/Prototype/West.xpm
 WE textures/Prototype/West.xpm
 EA textures/Prototype/East.xpm
 NO textures/Prototype/North.xpm
-C 36,123,255
-F 135,21,15
+C 250,55,55
+F 220,100,0
 
 1   1   1111
 11111111101

@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/30 14:40:51 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/10/31 11:30:07 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // We go to the map first line.
 // Until we copied all our map, we allocate the current line_index with the
 // result of get_next_line
-//TODO: ldev: il faut factoriser ceci 
 static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 {
 	char	*line;
@@ -33,24 +32,12 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 		if (!map_info->map[line_index])
 		{
 			free(map_info->map[line_index]);
-			while(line_index != 0)
-			{
-				free(map_info->map[line_index - 1]);
-				line_index--;
-			}
-			return(RETURN_FAILURE);
+			return (free_map_cpmap_failed(line_index, map_info));
 		}
 		line_index++;
 		line = get_next_line(fd);
 		if (!line && line_index < map_height)
-		{
-			while(line_index != 0)
-			{
-				free(map_info->map[line_index - 1]);
-				line_index--;
-			}
-			return (RETURN_FAILURE);
-		}
+			return (free_map_cpmap_failed(line_index, map_info));
 	}
 	map_info->map[map_height] = NULL;
 	free(line);
@@ -69,14 +56,14 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
 	path = ft_strjoin(MAP_FOLDER_PATH, file);
 	if (!path)
 	{
-		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c.c:45 ", MSG_21);
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:56 ", MSG_21);
 		return (MALLOC_ERR);
 	}
 	new_fd = open(path, O_RDONLY);
 	free(path);
 	if (new_fd == OPEN_FAILED)
 	{
-		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c.c:45 ", MSG_21);
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:63 ", MSG_21);
 		return (OPEN_FAILED);
 	}
 	if (skip_elements(parsing, new_fd, cub3d))
@@ -101,17 +88,16 @@ static bool	malloc_map_height(size_t map_height, t_map *map_info)
 // We read the map one character at a time, line by line, to know the largest
 // line (width) and the height that increase each time we cross a '\n'
 // We know we are out of the map if read = 0 or when we cross two '\n' together
-static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd,
-		t_cub3d *cub3d)
+static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd)
 {
 	bool	in_map;
 
 	in_map = true;
-	if (find_map_start(parsing, fd, cub3d))
-		return (RETURN_FAILURE); //13
+	if (find_map_start(parsing, fd))
+		return (RETURN_FAILURE);
 	while (in_map == true)
 	{
-		if (parse_map_line(parsing, fd, &in_map, cub3d))
+		if (parse_map_line(parsing, fd, &in_map))
 			return (RETURN_FAILURE);
 		if (read(fd, parsing->buff, 1) == READ_FAILED)
 			return (RETURN_FAILURE);
@@ -131,23 +117,20 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 	size_t	map_height;
 
 	map_height = 0;
-	if (find_map_size(cub3d->parsing, &map_height, fd, cub3d))
-		return (error_handler(cub3d, FAIL_READ_MAP, "map_collect.c.c:86 ",
-					MSG_22));
+	if (find_map_size(cub3d->parsing, &map_height, fd))
+		return (error_handler(cub3d, FAIL_READ_MAP, "map_collect.c:119 ",
+				MSG_22));
 	if (malloc_map_height(map_height, map_info))
-		return (error_handler(cub3d, FAIL_MALLOC_MAP, "map_collect.c.c:66 ",
+		return (error_handler(cub3d, FAIL_MALLOC_MAP, "map_collect.c:122 ",
 				MSG_23));
-	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d); //ICI
+	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d);
 	if (fd == OPEN_FAILED || fd == MALLOC_ERR)
-	{
 		return (RETURN_FAILURE);
-	}
 	if (copy_the_map(map_height, fd, map_info))
 	{
 		close(fd);
-		//free(map_info->map);
-		return (error_handler(cub3d, FAIL_CP_MAP, "get_the_map.c:64 ", MSG_24)); //16
+		return (error_handler(cub3d, FAIL_CP_MAP, "map_collect.c:130",
+				MSG_24));
 	}
-	// print_map(map_info); //TODL BEFORE RELEASE
 	return (RETURN_SUCCESS);
 }

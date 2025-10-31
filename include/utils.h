@@ -23,7 +23,8 @@ typedef struct s_map		t_map;
 # endif
 
 # define MSG_1 "error during malloc of cub3d structure\n"
-# define MSG_2 "invalid argc value, cub3D require a single and only arg\n"
+# define MSG_2 "invalid argc value, cub3D require a single arg that is the .cub\
+ file.\n"
 # define MSG_3 "invalid file's extension cub3d only support .cub files as arg\n"
 # define MSG_4 "Error while opening file be sure the file \
 exist in scene_descriptions folder\n"
@@ -33,8 +34,8 @@ format or reaching EOF during element collects\n"
 # define MSG_7 "Invalid content in your .cub, \
 make sure it follow the expected form\n"
 # define MSG_8 "The RGB value of C or/and F seem to be incorrect. OR/AND \
-your file may be incorrect, (could be that there is nothing in the file right \
-after a C or a F.\nsetup your .cub in a way that F and C receive three value\
+your file may be incorrect, (could be that there is no given values in the file\
+ right after a C or a F.\nsetup your .cub in a way that F and C receive three value\
 each separated by ',' between 000 and 255 a map also need to be right below \
 your SO WE EA NO C and F. Check your .cub entries and retry.\n"
 # define MSG_9 "Error during get_next_line, \
@@ -91,7 +92,7 @@ it may be because the path sent does not exist, or the texture file is invalid\
 	
 // element_check_utils.c
 bool	character_is_invalid(char c);
-bool	player_update_check(t_cub3d *cub3d, bool *player);
+bool	player_update_check(bool *player);
 
 // error.c
 int		error_handler(t_cub3d *cub3d, int error_type,
@@ -102,9 +103,10 @@ void	*error_handler_void(t_cub3d *cub3d, int error_type,
 //find_map_size_utils.c
 bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 																		int fd);
-bool	find_map_start(t_parsing *parsing, int fd, t_cub3d *cub3d);
+bool	find_map_start(t_parsing *parsing, int fd);
 
 //free_map.c
+bool 	free_map_cpmap_failed(size_t line_index, t_map *map_info);
 void    free_map(t_map *map_info);
 
 // ft_atoi.c
@@ -132,8 +134,7 @@ char	*ft_strchr(const char *s, int c);
 
 //get_the_map_utils.c
 bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d);
-bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map,
-												t_cub3d *cub3d);
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map);
 bool	find_map_first_line(char **line, int fd);
 
 //init_struct_01.c

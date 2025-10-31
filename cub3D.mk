@@ -49,7 +49,8 @@ override DEBUGSRC := print_struct_set
 
 override MLXSETSRC := commands \
 					  directions \
-					  mlx_utils
+					  mlx_utils \
+					  texture \
 
 override EXECSRC := column_pixels_put \
 					column_pixels_update \

@@ -22,7 +22,6 @@ void	destroy_free_screen(t_mlx *mlx)
 	mlx_destroy_window(mlx->ptr, mlx->mlx_win);
 	mlx_destroy_display(mlx->ptr);
 	free(mlx->ptr);
-	free(mlx);
 }
 
 bool	init_screen(t_mlx *mlx)
@@ -69,7 +68,7 @@ void	*init_screen_mlx(t_cub3d *cub3d, t_mlx *mlx)
 {
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
-			return(NULL);//return(error_handler_void(cub3d, INIT_MLX_FAIL, "TOFILL", MSG_31));
+			return(NULL);
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
 		return (crush_kill_destroy(NULL, NULL, mlx, NULL));

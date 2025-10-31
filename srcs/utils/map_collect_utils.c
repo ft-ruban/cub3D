@@ -14,13 +14,13 @@ bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d)
 	{
 		if (read(new_fd, parsing->buff, 1) == READ_FAILED)
 			return (error_handler(cub3d, FAIL_OPEN_MAP,
-					"map_collect_utils.c:16 ", MSG_6));
+					"map_collect_utils.c:15 ", MSG_6));
 		if (parsing->buff[0] != '\n')
 		{
 			line = get_next_line(new_fd);
 			if (!line)
 				return (error_handler(cub3d, FAIL_OPEN_MAP,
-						"map_collect_utils.c:22 ", MSG_9));
+						"map_collect_utils.c:21 ", MSG_9));
 			free(line);
 			i++;
 		}
@@ -30,9 +30,8 @@ bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d)
 
 // We browse through the entire line until we find a '\n'
 // If we reach the end of the file, we are no longer in the map
-bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map, t_cub3d *cub3d)
+bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map)
 {
-	printf("DL CUB? %d\n",cub3d->error_type); //TORM ON LE GARDE CAR COMPILATEUR ET FLEMME 
 	int	result_read;
 
 	result_read = 0;
