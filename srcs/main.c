@@ -6,19 +6,19 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:02:31 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 15:57:10 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:15:59 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "cub3D.h"
 
-// WIP DOC : we init our cub3d structure, then we parse the
-// arguments + content of the file in (parsing) before handling the initiation
-// of the textures (and store the necessary data related to the textures of the
-// project then come the init of hook_andloop that would lead to the loop/hook
-// that handle event and interaction with our project before AND during the exec
-
-// TODO last 1 leak (the ray things)
+// 1) we init our cub3d structure, and give a default value for the variable in
+// 2) parsing part
+// 3) init_mlx_texture_img handle the textures and mlx setups before launching
+// 4) malloc of our ray struct and init the data related to the "player"
+// 5) hook_and_loop to setup the loop that will make the program loop during
+// 	  execution until the user exit the program by choice.
+// 6) once the loops passed, use clean and exit to cleanup datas before exit
 
 int	main(int argc, char *argv[])
 {
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[])
 
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
-		return (error_handler(NULL, CUB_SET_FAIL, "main:TOFILL ", MSG_1));
+		return (error_handler(NULL, CUB_SET_FAIL, "main:29 ", MSG_1));
 	cub3d->error_type = ALL_OK;
 	cub3d->print = true;
 	if (parsing_init(argc, argv, cub3d))

@@ -6,13 +6,17 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 11:53:11 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 11:53:36 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:20:56 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-// initiation of parsing struct and we set everything at NULL or -1 by default
+// 1) malloc parsing structure
+// 2) link our cub3d with parsing for better convenience later on.
+// 3) setup the content into NULL if string of char and into NONE_ASSIGNED(-1)
+// 	  for int values(rgb related values) to allow our loop solution to work.
+//    (it continue the loop until we got the 6 required elements)
 
 bool	init_parsing_struct(t_cub3d *cub3d)
 {

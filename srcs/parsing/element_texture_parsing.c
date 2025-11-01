@@ -6,11 +6,14 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 11:45:37 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:39:22 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+// 1) Util function used to remove any potential \n(new_line char) from the
+//    string
 
 static char	*new_line_remover(char *element)
 {
@@ -39,10 +42,11 @@ static char	*new_line_remover(char *element)
 	return (str);
 }
 
-// read a single char, if EOF return error,
-// if space we read until it is not a space in the buff anymore
-// here we do a gnl to get the line that should have the right content
-// if not it would be detected during the init of minilibx anyway
+// 1) check if there is any space char between the path and the element type.
+//    we ignore them all until we reach a char that is not a space.
+// 2) gnl to retrieve the path that was given in the file in param
+// 3) remove the '\n'(new line char) from the string of char to get an usable
+//    path then leave once it is done.
 
 static bool	find_texture_element_path(int fd_sd, char **element,
 		t_parsing *parsing, t_cub3d *cub3d)
@@ -63,19 +67,20 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 	{
 		free(element_buff);
 		return (error_handler(cub3d, STRJOIN_FAILED,
-				"element_texture_parsing.c:62 ", MSG_10));
+				"element_texture_parsing.c:66 ", MSG_10));
 	}
 	free(element_buff);
 	*element = new_line_remover(*element);
 	if (!*element)
 		return (error_handler(cub3d, ELEMENT_MISS,
-				"element_texture_parsing.c:69 ", MSG_6));
+				"element_texture_parsing.c:74 ", MSG_6));
 	return (RETURN_SUCCESS);
 }
 
-// if fail here it mean we already got the information
-// so invalid file's content. Else we go to find the path
-// to fill the ptr that point to the right variable in oru struct
+// 1) check if the char next to the first one is the right one
+//    AND
+//    that we are not dealing with a double entry.
+//    if all clear we go to retrieve and convert the given path into our struct.
 
 bool	is_texture_valid(int fd_sd, t_cub3d *cub3d, char fl, char sl)
 {
