@@ -18,7 +18,6 @@ override SRCS		= $(addprefix $(SRCSDIR), $(SRC))
 
 
 override MAIN := main \
-				 main_utils
 
 override PARSERSRC := parsing \
 					  parsing_utils \
@@ -34,6 +33,7 @@ override PARSERSRC := parsing \
 override UTILSSRC := error \
 					 find_map_size_utils \
 					 free_map \
+					 free \
 					 ft_atoi \
 					 ft_bzero \
 					 ft_isnum \

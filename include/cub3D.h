@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:54 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:47:55 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 14:34:41 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef enum e_error_status
 	TEXTURE_SO_FAIL,
 	TEXTURE_WE_FAIL,
 	TEXTURE_EA_FAIL,
+	INIT_RAY_FAIL,
 }					t_error_status;
 
 typedef struct s_cub3d
@@ -71,8 +72,5 @@ typedef struct s_cub3d
 	t_mlx			*mlx;
 	unsigned char	error_type;
 }					t_cub3d;
-
-// main_utils.c
-int					clean_and_exit(t_cub3d *cub3d);
 
 #endif

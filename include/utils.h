@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:38:09 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:41:11 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 14:34:56 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ void	*error_handler_void(t_cub3d *cub3d, int error_type,
 bool	is_all_map_copied(t_cub3d *cub3d,
 			size_t line_index, size_t map_height, int fd);
 bool	find_map_start(t_parsing *parsing, int fd);
+
+// free.c
+int					clean_and_exit(t_cub3d *cub3d);
 
 //free_map.c
 bool	free_map_cpmap_failed(size_t line_index, t_map *map_info);
