@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:54 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 14:34:41 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:06:07 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 # define EXIT_FAILURE 1
 # define RETURN_SUCCESS 0
 # define RETURN_FAILURE 1
-# define NONE_ASSIGNED -1
-# define MSG_ERR_MLX "MLX initiation failed\n"
-# define BEFORE_PARSING_INIT 5
 
 typedef enum e_error_status
 {

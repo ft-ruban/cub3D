@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:02:31 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 14:02:37 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:57:10 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 int	main(int argc, char *argv[])
 {
 	t_cub3d	*cub3d;
+	t_ray	*ray;
 
 	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
@@ -33,6 +34,14 @@ int	main(int argc, char *argv[])
 		return (clean_and_exit(cub3d));
 	if (init_mlx_texture_img(cub3d))
 		return (clean_and_exit(cub3d));
+	ray = malloc(sizeof(t_ray));
+	if (!ray)
+	{
+		error_handler(cub3d, INIT_RAY_FAIL, "main:TOFILL ", MSG_32);
+		return (clean_and_exit(cub3d));
+	}
+	cub3d->ray = ray;
+	init_player_data(cub3d);
 	hook_and_loop(cub3d, cub3d->mlx);
 	return (clean_and_exit(cub3d));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:42:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:49:22 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:05:29 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 typedef struct s_cub3d	t_cub3d;
 typedef struct s_map	t_map;
 
+# define NONE_ASSIGNED -1
 # define OPEN_FAILED -1
 # define MALLOC_ERR -1
 # define READ_FAILED -1
@@ -42,10 +43,6 @@ typedef struct s_map	t_map;
 # define FILE_ERR_8 "element_rgb_parsing.c:30 "
 # define FILE_ERR_9 "element_rgb_parsing.c:48 "
 # define FILE_ERR_10 "element_rgb_parsing.c:109 "
-# define FILE_ERR_11 "map_check.c:TOFILL "
-# define FILE_ERR_12 "map_check.c:TOFILL "
-# define FILE_ERR_13 "map_check.c:TOFILL "
-# define FILE_ERR_14 "map_check.c:TOFILL "
 
 typedef struct s_parsing
 {

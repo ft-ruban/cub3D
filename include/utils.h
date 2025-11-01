@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:38:09 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 14:34:56 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:59:33 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_cub3d		t_cub3d;
 typedef struct s_map		t_map;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+# define BUFFER_SIZE 1
 
 # define MSG_1 "error during malloc of cub3d structure\n"
 # define MSG_2 "invalid argc value, cub3D require a single arg that is the .cub\
@@ -114,7 +112,7 @@ bool	is_all_map_copied(t_cub3d *cub3d,
 bool	find_map_start(t_parsing *parsing, int fd);
 
 // free.c
-int					clean_and_exit(t_cub3d *cub3d);
+int		clean_and_exit(t_cub3d *cub3d);
 
 //free_map.c
 bool	free_map_cpmap_failed(size_t line_index, t_map *map_info);
@@ -147,11 +145,5 @@ char	*ft_strchr(const char *s, int c);
 bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d);
 bool	parse_map_line(t_parsing *parsing, int fd, bool *in_map);
 bool	find_map_first_line(char **line, int fd);
-
-//init_struct_01.c
-bool	init_struct(t_cub3d *cub3d);
-
-//init_struct_02.c
-bool	init_texture_struct(t_cub3d *cub3d);
 
 #endif

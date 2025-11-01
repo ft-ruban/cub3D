@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/01 14:39:41 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/11/01 14:41:23 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 #include "set_mlx.h"
 
@@ -40,7 +52,8 @@ bool	init_screen(t_mlx *mlx)
 // in the right order then we return NULL to signal Main that something went
 // wrong
 
-static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx, t_img *screen)
+static char	*crush_kill_destroy(void *mlx, void *win, t_mlx *t_mlx,
+		t_img *screen)
 {
 	if (win)
 		mlx_destroy_window(mlx, win);
@@ -68,22 +81,22 @@ void	*init_screen_mlx(t_cub3d *cub3d, t_mlx *mlx)
 {
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
-			return(NULL);
+		return (NULL);
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
 		return (crush_kill_destroy(NULL, NULL, mlx, NULL));
 	mlx->mlx_win = mlx_new_window(mlx->ptr, WIN_WIDTH, WIN_HEIGHT,
-	 		"Unforeseen consequences");
+			"Unforeseen consequences");
 	if (!mlx->mlx_win)
-	 	return (crush_kill_destroy(mlx->ptr, NULL, mlx, NULL));
+		return (crush_kill_destroy(mlx->ptr, NULL, mlx, NULL));
 	if (init_screen(mlx))
 		return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, NULL));
 	mlx->screen->img = mlx_new_image(mlx->ptr, WIN_WIDTH, WIN_HEIGHT);
-		if (!mlx->screen->img)
-	 	return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, mlx->screen));
+	if (!mlx->screen->img)
+		return (crush_kill_destroy(mlx->ptr, mlx->mlx_win, mlx, mlx->screen));
 	mlx->screen->addr = mlx_get_data_addr(mlx->screen->img,
-	 		&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
-	 		&(mlx->screen->endian));
+			&(mlx->screen->bits_per_pixel), &(mlx->screen->line_length),
+			&(mlx->screen->endian));
 	mlx->screen->bits_per_pixel = mlx->screen->bits_per_pixel >> 3;
 	cub3d->mlx = mlx;
 	return (mlx);

@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:41:54 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:41:55 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:03:07 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "../minilibx-linux/mlx.h"
 # include "cub3D.h"
 
-# define TRUE 1
-# define FALSE 0
 # define WIN_WIDTH 1980
 # define WIN_HEIGHT 1080
 # define TEXTURE_WIDTH 64
@@ -27,12 +25,12 @@
 # define KEY_BACKWARD 65364
 # define KEY_W 119
 # define KEY_S 115
-# define STEP 0.5
+# define STEP 0.3
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_A 97
 # define KEY_D 100
-# define ROTATION 0.5
+# define ROTATION 0.2
 # define KEY_UNKNOWN 0
 
 typedef struct s_ray	t_ray;
