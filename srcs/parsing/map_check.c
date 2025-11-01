@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:25:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 11:30:29 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/11/01 11:55:29 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "utils.h"
+//#include "utils.h"
 
 // we check if the case surrounding a floor is valid
 

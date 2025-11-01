@@ -1,19 +1,19 @@
-#include "../minilibx-linux/mlx.h"
 #include "exec.h"
-#include "parsing.h"
-#include "set_mlx.h"
-#include <unistd.h> //write
+//#include "../minilibx-linux/mlx.h"
+//#include "parsing.h"
+//#include "set_mlx.h"
+//#include <unistd.h> //write
 
 
 
 
-// WIP DOC : we init our setting structure, then its value then we parse the
+// WIP DOC : we init our cub3d structure, then we parse the
 // arguments + content of the file in (parsing) before handling the initiation
-// of MLX that would lead to the loop/hook that handle event and interaction
-// with our project
+// of the textures (and store the necessary data related to the textures of the
+// project then come the init of hook_andloop that would lead to the loop/hook 
+// that handle event and interaction with our project before AND during the exec
 
-// TODO util main function to clean up things depending of the error case!
-// TODO when work is finished to describe the main in commentaries
+//TODO last 1 leak (the ray things)
 
 int	main(int argc, char *argv[])
 {
@@ -30,30 +30,6 @@ int	main(int argc, char *argv[])
 		return (clean_and_exit(cub3d));
 	hook_and_loop(cub3d, cub3d->mlx);
 	//print_struct_parsing(cub3d->parsing); // TODLDEBUG function to see content of struct set
-	// free_map(cub3d->map);
-	// free(cub3d->map);
-	//free(cub3d->texture);
 	return (clean_and_exit(cub3d));
 	return(0);
 }
-//-----------------------------------------------------------------------------
-// to free everything before leaving
-// CECI EST UNE FONCTION QUE J'AI FAIS DANS UN AUTRE PROJET QUI POURRAIT SERVIR
-// PLUS TARD POUR GAGNER DU TEMPS
-
-// int	free_all_mlx(t_mlx *screen, t_set_call *param, int error_code)
-// {
-// 	if (screen)
-// 		free(screen);
-// 	if (param->c)
-// 		free(param->c);
-// 	if (param->z)
-// 		free(param->z);
-// 	if (error_code == 6)
-// 		return (RETURN_FAILURE);
-// 	if (error_code == -1)
-// 		return (1);
-// 	else
-// 		return (RETURN_FAILURE);
-// }
-//-----------------------------------------------------------------------------

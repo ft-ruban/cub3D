@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_collect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 11:30:07 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/11/01 11:55:19 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "utils.h"
+//#include "utils.h"
 
 // We go to the map first line.
 // Until we copied all our map, we allocate the current line_index with the

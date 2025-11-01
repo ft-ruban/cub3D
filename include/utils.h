@@ -1,22 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/01 13:38:09 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/11/01 13:41:11 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_H
 # define UTILS_H
 # include "cub3D.h"
-# include "parsing.h"
-# include <fcntl.h>  //GNL (TOCHECKBCS OLD)
-# include <stdio.h>  //GNL
-# include <stdlib.h> //size_t
-# include <stdlib.h> //GNL (TOCHECKBCS OLD)
-# include <unistd.h> //GNL (TOCHECKBCS OLD)
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include <stdbool.h>
 
-// PARSING_NBR_ARGC_MSG
-// PARSING_FILE_EXTENSION_MSG
-
-typedef struct s_parsing	t_parsing; //declaration anticipe
+typedef struct s_parsing	t_parsing;
 typedef struct s_cub3d		t_cub3d;
 typedef struct s_map		t_map;
-
-
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -42,7 +47,8 @@ your SO WE EA NO C and F. Check your .cub entries and retry.\n"
 could be related to a failed malloc\n"
 # define MSG_10 "Error during a ft_strjoin, \
 probably related to a failed malloc\n"
-# define MSG_11 "Error during a ft_strdup, probably related to a failed malloc\n"
+# define MSG_11 "Error during a ft_strdup, probably related \
+to a failed malloc\n"
 # define MSG_12 "Invalid map\n"
 # define MSG_13 "Found another player position\n"
 # define MSG_14 "One of the map character or more is not valid\n"
@@ -89,7 +95,9 @@ it may be because the path sent does not exist, or the texture file is invalid\
 # define MSG_37 "An error occured while trying to initialize the EAST texture \
 it may be because the path sent does not exist, or the texture file is invalid\
  or memory related issues. Make sure your texture is a .xpm and does exist.\n"
-	
+# define MSG_38 "new_line_remover failed may be because of a malloc error \
+inside of the used ft_strdup."
+
 // element_check_utils.c
 bool	character_is_invalid(char c);
 bool	player_update_check(bool *player);
@@ -101,13 +109,13 @@ void	*error_handler_void(t_cub3d *cub3d, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c
-bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
-																		int fd);
+bool	is_all_map_copied(t_cub3d *cub3d,
+			size_t line_index, size_t map_height, int fd);
 bool	find_map_start(t_parsing *parsing, int fd);
 
 //free_map.c
-bool 	free_map_cpmap_failed(size_t line_index, t_map *map_info);
-void    free_map(t_map *map_info);
+bool	free_map_cpmap_failed(size_t line_index, t_map *map_info);
+void	free_map(t_map *map_info);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);
@@ -143,4 +151,4 @@ bool	init_struct(t_cub3d *cub3d);
 //init_struct_02.c
 bool	init_texture_struct(t_cub3d *cub3d);
 
-# endif
+#endif

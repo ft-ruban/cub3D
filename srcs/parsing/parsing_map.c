@@ -6,16 +6,16 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:38 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 09:53:31 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/01 11:55:00 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
-#include "linux/limits.h"
-#include "parsing.h"
 #include "utils.h"
-#include <stdbool.h> //bool duh
-#include <stdio.h>   //printf TORM
+//#include "debug.h"
+//#include "linux/limits.h"
+//#include "parsing.h"
+//#include <stdbool.h> //bool duh
+//#include <stdio.h>   //printf TORM
 
 // We collect the map wathever it is a valid one or not.
 // Then we check if the map respect our conditions

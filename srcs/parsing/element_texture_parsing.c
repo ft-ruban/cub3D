@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element_texture_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/31 11:31:17 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/11/01 11:45:37 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
