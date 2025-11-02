@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:02:25 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/29 20:36:29 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/11/02 09:15:42 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ void	*error_handler_void(t_cub3d *cub3d, int error_type,
 int	error_handler(t_cub3d *cub3d, int error_type, char *emplacement_error_msg,
 		char *err_msg)
 {
-	write(2, emplacement_error_msg, ft_strlen(emplacement_error_msg));
-	write(2, err_msg, ft_strlen(err_msg));
+	size_t emp_err_msg_len;
+	size_t err_msg_len;
+
+	emp_err_msg_len = ft_strlen(emplacement_error_msg);
+	err_msg_len = ft_strlen(err_msg);
+	write(2, emplacement_error_msg, emp_err_msg_len);
+	write(2, err_msg, err_msg_len);
 	if (error_type == CUB_SET_FAIL)
 		return (CUB_SET_FAIL);
 	cub3d->error_type = error_type;
