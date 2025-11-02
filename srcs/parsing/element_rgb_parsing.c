@@ -6,19 +6,17 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:26:56 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 11:50:23 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:23:57 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-// we get the first number, then we get into a loop that would continue
-// until we reach the ',' char or until an error is met. if the next char
-// is not a num error OR is bigger than 3digits ERROR
-// else we multiply by 10 and get the next number
-// into the ptr to our variable to get the right value in the end
-// if the value is not a num between 0 and 255 then it mean it is an invalid
-// rgb value
+// 1) here we fill the ptr to the variable that is supposed to hold the value
+//    it would be convert from char* into an int and check all the cases
+//    that could lead to error or invalid format. (like it doesnt overflow the
+//    0-255 value expected, that it is a number that we dont get more than 3 num
+//    that a ',' is truly between each color value...
 
 static bool	retrieve_rgb(int fd_sd, t_cub3d *cub3d, int *ptr_data_to_fill,
 		bool is_blue)
@@ -35,7 +33,7 @@ static bool	retrieve_rgb(int fd_sd, t_cub3d *cub3d, int *ptr_data_to_fill,
 	{
 		if (ft_isnum((int)cub3d->parsing->buff[0]) || len_rgb_value > 3)
 			return (error_handler(cub3d, INV_CON_RGB,
-					"element_rgb_parsing.c:36 ", MSG_8));
+					"element_rgb_parsing.c:34 ", MSG_8));
 		*ptr_data_to_fill = *ptr_data_to_fill * 10;
 		*ptr_data_to_fill = *ptr_data_to_fill
 			+ ft_atoi(&cub3d->parsing->buff[0]);
@@ -50,6 +48,11 @@ static bool	retrieve_rgb(int fd_sd, t_cub3d *cub3d, int *ptr_data_to_fill,
 	return (RETURN_SUCCESS);
 }
 
+// 1) we just call retrieve rgb here, but with an extra verification at the end
+//    if we are not dealing with a blue value (last one) then we read further
+//    and expect a num here if we dont catch one it mean the file is probably
+//    invalid so we return an error and stop the collect.
+
 static bool	prepare_retrieve_rgb(int fd_sd, t_cub3d *cub3d, bool is_blue,
 		int *ptr_data_to_fill)
 {
@@ -59,15 +62,16 @@ static bool	prepare_retrieve_rgb(int fd_sd, t_cub3d *cub3d, bool is_blue,
 	{
 		if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
 			return (error_handler(cub3d, INV_CON_RGB,
-					"element_rgb_parsing.c:60 ", MSG_6));
+					"element_rgb_parsing.c:63 ", MSG_6));
 		if (ft_isnum((int)cub3d->parsing->buff[0]))
 			return (error_handler(cub3d, INV_CON_RGB,
-					"element_rgb_parsing.c:63 ", MSG_8));
+					"element_rgb_parsing.c:66 ", MSG_8));
 	}
 	return (RETURN_SUCCESS);
 }
-
-// we call retrieve_rgb 3 time to fill the red part, green and blue one
+// 1) that function will just call 3 time for the three part of the data
+//    (red, greem, blue) and depending of the parameter sent it will know
+//		which data we are dealing with (if it is ceil or floor).
 
 static bool	ceil_or_floor_rgb(int fd_sd, t_cub3d *cub3d, bool ceil_or_floor)
 {
@@ -92,12 +96,12 @@ static bool	ceil_or_floor_rgb(int fd_sd, t_cub3d *cub3d, bool ceil_or_floor)
 	return (RETURN_SUCCESS);
 }
 
-// while we didnt retrieve our rgb value we stay in loop
-// we read char by char the content, if it is a num value
-// we redirect to the next function with the right parameter
-// depending if it is about floor or ceiling and put our bool at true
-// to exit the loop. If it is a space char we get back to the start of loop
-// else it mean it is an invalid content so in consequence return an error
+// 1) we know we are dealing with an rgb value, we ignore all spaces that could
+//    be between the declaration and the value.
+// 2) depending of what rgb value we are dealing with we go to ceil_or_floor
+//    with different parameters to fill the matching data.
+//    if for some reasons we stop having spaces before getting into a number
+//    we return an error.
 
 bool	is_rgb_valid(int fd_sd, t_cub3d *cub3d, char first_letter,
 		bool received_rgb_completed)

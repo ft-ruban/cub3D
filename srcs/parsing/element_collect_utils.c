@@ -6,17 +6,17 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:49:00 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/10/28 13:56:43 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:46:08 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-// here we open a given file by checking in
-// the map folder.
-// it return the fd that hold the return of our open.
-// if no readable file with the right name found fd would be = to -1
-// that should be checked by the calling function.
+// 1) here we open a given file by checking in
+// 	  the map folder.
+//    it return the fd that hold the return of our open.
+//    if no readable file with the right name found fd would be = to -1
+//    that should be checked by the calling function.
 
 int	open_sd_file_give_fd(char *file)
 {
@@ -31,6 +31,10 @@ int	open_sd_file_give_fd(char *file)
 	return (fd_sd);
 }
 
+// 1) return the element type we are dealing with, also check if we are dealing
+//    with a element type we already got, in that case we consider it as an
+//    file format error.
+
 int	which_element_type(char letter, t_parsing *parsing)
 {
 	if ((letter == 'F' && parsing->floor_r == NONE_ASSIGNED) || (letter == 'C'
@@ -44,10 +48,12 @@ int	which_element_type(char letter, t_parsing *parsing)
 		return (INVALID);
 }
 
-// that function's goal is to check if there is a missing element's
-// content in our set struct
-// if nothing is missed then return false to make the loop stop
-// else it send a true to make it continue
+// 1) that function's goal is to check if there is a missing element's
+// 	  content in our set struct
+//	  if all 6 elements have been assigned
+//    then return false to make the loop stop
+//    else it send a true to make it continue until we reach an error or
+//    everything is collected.
 
 bool	an_element_is_missing(t_parsing *parsing)
 {

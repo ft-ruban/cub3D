@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:42:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 16:05:29 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:34:07 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ typedef struct s_map	t_map;
 # define FLOOR 0
 # define MAP_FOLDER_PATH "scene_descriptions/"
 
-# define FILE_ERR_2 "element_texture_parsing.c:103  "
-# define FILE_ERR_3 "element_texture_parsing.c:54 "
-# define FILE_ERR_4 "element_texture_parsing.c:58 "
-# define FILE_ERR_5 "element_texture_parsing.c:62 "
-# define FILE_ERR_6 "element_rgb_parsing.c:42 "
-# define FILE_ERR_7 "element_rgb_parsing.c:126 "
-# define FILE_ERR_8 "element_rgb_parsing.c:30 "
-# define FILE_ERR_9 "element_rgb_parsing.c:48 "
-# define FILE_ERR_10 "element_rgb_parsing.c:109 "
+# define FILE_ERR_2 "element_texture_parsing.c:107  "
+# define FILE_ERR_3 "element_texture_parsing.c:57 "
+# define FILE_ERR_4 "element_texture_parsing.c:60 "
+# define FILE_ERR_5 "element_texture_parsing.c:63 "
+# define FILE_ERR_6 "element_rgb_parsing.c:40 "
+# define FILE_ERR_7 "element_rgb_parsing.c:130 "
+# define FILE_ERR_8 "element_rgb_parsing.c:28 "
+# define FILE_ERR_9 "element_rgb_parsing.c:46 "
+# define FILE_ERR_10 "element_rgb_parsing.c:113 "
 
 typedef struct s_parsing
 {

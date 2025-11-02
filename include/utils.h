@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:38:09 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 15:59:33 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 09:27:19 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ bool	player_update_check(bool *player);
 
 // error.c
 int		error_handler(t_cub3d *cub3d, int error_type,
-			char *emplacement_error_msg, char *err_msg);
-void	*error_handler_void(t_cub3d *cub3d, int error_type,
 			char *emplacement_error_msg, char *err_msg);
 
 //find_map_size_utils.c

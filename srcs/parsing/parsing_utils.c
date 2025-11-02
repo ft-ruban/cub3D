@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 11:53:11 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 16:20:56 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:08:38 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // 1) malloc parsing structure
 // 2) link our cub3d with parsing for better convenience later on.
 // 3) setup the content into NULL if string of char and into NONE_ASSIGNED(-1)
-// 	  for int values(rgb related values) to allow our loop solution to work.
+// 		for int values(rgb related values) to allow our loop solution to work.
 //    (it continue the loop until we got the 6 required elements)
 
 bool	init_parsing_struct(t_cub3d *cub3d)
@@ -40,9 +40,8 @@ bool	init_parsing_struct(t_cub3d *cub3d)
 	return (RETURN_SUCCESS);
 }
 
-// Here we check if the file sent do possess the right
-//.cub extension by checking the last characters in the
-// given string of char
+// 1) check if the file sent by the user is a .cub as we are looking for a .cub
+//    extension
 
 bool	is_file_cub_extension(char *file)
 {

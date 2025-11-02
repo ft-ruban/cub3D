@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:02:31 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 09:15:59 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:04:56 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	t_cub3d	*cub3d;
 	t_ray	*ray;
 
-	cub3d = NULL;//malloc(sizeof(t_cub3d));
+	cub3d = malloc(sizeof(t_cub3d));
 	if (!cub3d)
 		return (error_handler(NULL, CUB_SET_FAIL, "main:29 ", MSG_1));
 	cub3d->error_type = ALL_OK;

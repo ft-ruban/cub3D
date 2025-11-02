@@ -6,16 +6,15 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 11:55:19 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:49:39 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-//#include "utils.h"
 
-// We go to the map first line.
-// Until we copied all our map, we allocate the current line_index with the
-// result of get_next_line
+// 1) We go to the map first line.
+// 	  Until we copied all our map, we allocate the current line_index with the
+//    result of get_next_line
 static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 {
 	char	*line;
@@ -44,8 +43,8 @@ static bool	copy_the_map(size_t map_height, int fd, t_map *map_info)
 	return (RETURN_SUCCESS);
 }
 
-// Close then reopen fd to start the reading of the file from the beginning,
-// skip the 6 parameters and stop.
+// 1) Close then reopen fd to start the reading of the file from the beginning,
+// 	  skip the 6 parameters and stop.
 static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
 		int fd, t_cub3d *cub3d)
 {
@@ -56,14 +55,14 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
 	path = ft_strjoin(MAP_FOLDER_PATH, file);
 	if (!path)
 	{
-		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:56 ", MSG_21);
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:57 ", MSG_21);
 		return (MALLOC_ERR);
 	}
 	new_fd = open(path, O_RDONLY);
 	free(path);
 	if (new_fd == OPEN_FAILED)
 	{
-		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:63 ", MSG_21);
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:64 ", MSG_21);
 		return (OPEN_FAILED);
 	}
 	if (skip_elements(parsing, new_fd, cub3d))
@@ -71,8 +70,8 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
 	return (new_fd);
 }
 
-// allocate the suffiscient height memory, the individual lines will be
-// allocated later when copying the map.
+// 1) allocate the suffiscient height memory, the individual lines will be
+// 	  allocated later when copying the map.
 static bool	malloc_map_height(size_t map_height, t_map *map_info)
 {
 	size_t	i;
@@ -85,9 +84,10 @@ static bool	malloc_map_height(size_t map_height, t_map *map_info)
 	return (RETURN_SUCCESS);
 }
 
-// We read the map one character at a time, line by line, to know the largest
-// line (width) and the height that increase each time we cross a '\n'
-// We know we are out of the map if read = 0 or when we cross two '\n' together
+// 1) We read the map one character at a time, line by line, to know the largest
+// 	  line (width) and the height that increase each time we cross a '\n'
+//    We know we are out of the map if read = 0 or when we cross two '\n'
+//    together
 static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd)
 {
 	bool	in_map;
@@ -109,16 +109,17 @@ static bool	find_map_size(t_parsing *parsing, size_t *map_height, int fd)
 	return (RETURN_SUCCESS);
 }
 
-// We find the map height to then malloc it properly
-// We read with a new fd from the beginning of the map
-// we copy the map
+// 1) We find the map height to then malloc it properly
+// 2) We read with a new fd from the beginning of the map
+// 3) we copy the map
+
 bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 {
 	size_t	map_height;
 
 	map_height = 0;
 	if (find_map_size(cub3d->parsing, &map_height, fd))
-		return (error_handler(cub3d, FAIL_READ_MAP, "map_collect.c:119 ",
+		return (error_handler(cub3d, FAIL_READ_MAP, "map_collect.c:120 ",
 				MSG_22));
 	if (malloc_map_height(map_height, map_info))
 		return (error_handler(cub3d, FAIL_MALLOC_MAP, "map_collect.c:122 ",
