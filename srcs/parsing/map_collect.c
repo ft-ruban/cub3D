@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:51 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 10:49:39 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 12:03:09 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static int	reopen_file_and_skip_elements(char *file, t_parsing *parsing,
 	path = ft_strjoin(MAP_FOLDER_PATH, file);
 	if (!path)
 	{
-		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:57 ", MSG_21);
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:56 ", MSG_21);
 		return (MALLOC_ERR);
 	}
 	new_fd = open(path, O_RDONLY);
 	free(path);
 	if (new_fd == OPEN_FAILED)
 	{
-		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:64 ", MSG_21);
+		error_handler(cub3d, FAIL_OPEN_MAP, "map_collect.c:63 ", MSG_21);
 		return (OPEN_FAILED);
 	}
 	if (skip_elements(parsing, new_fd, cub3d))
@@ -119,10 +119,10 @@ bool	map_collect(t_cub3d *cub3d, t_map *map_info, char *file, int fd)
 
 	map_height = 0;
 	if (find_map_size(cub3d->parsing, &map_height, fd))
-		return (error_handler(cub3d, FAIL_READ_MAP, "map_collect.c:120 ",
+		return (error_handler(cub3d, FAIL_READ_MAP, "map_collect.c:121 ",
 				MSG_22));
 	if (malloc_map_height(map_height, map_info))
-		return (error_handler(cub3d, FAIL_MALLOC_MAP, "map_collect.c:122 ",
+		return (error_handler(cub3d, FAIL_MALLOC_MAP, "map_collect.c:124 ",
 				MSG_23));
 	fd = reopen_file_and_skip_elements(file, cub3d->parsing, fd, cub3d);
 	if (fd == OPEN_FAILED || fd == MALLOC_ERR)

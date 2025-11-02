@@ -6,12 +6,11 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:48:53 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 15:55:13 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 11:59:16 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "set_mlx.h"
 
 static bool	free_all_err(t_img *no, t_img *ea, t_img *so, t_img *we)
 {
@@ -65,20 +64,25 @@ static bool	init_img_texture(t_img *texture, t_cub3d *cub3d, char *path)
 static bool	init_textures_img(t_cub3d *cub3d)
 {
 	if (malloc_cardinal_point_struct(cub3d->texture))
-		return (error_handler(cub3d, INIT_IMG_TEXT_FAIL, "TOFILL", MSG_33));
+		return (error_handler(cub3d, INIT_IMG_TEXT_FAIL, "mlx_texture.c:66",
+				MSG_33));
 	if (init_img_texture(cub3d->texture->no, cub3d, cub3d->parsing->rp_no))
-		return (error_handler(cub3d, TEXTURE_NO_FAIL, "TOFILL", MSG_34));
+		return (error_handler(cub3d, TEXTURE_NO_FAIL, "mlx_texture.c:69 ",
+				MSG_34));
 	if (init_img_texture(cub3d->texture->so, cub3d, cub3d->parsing->rp_so))
 	{
-		return (error_handler(cub3d, TEXTURE_SO_FAIL, "TOFILL", MSG_35));
+		return (error_handler(cub3d, TEXTURE_SO_FAIL, "mlx_texture.c:72 ",
+				MSG_35));
 	}
 	if (init_img_texture(cub3d->texture->we, cub3d, cub3d->parsing->rp_we))
 	{
-		return (error_handler(cub3d, TEXTURE_WE_FAIL, "TOFILL", MSG_36));
+		return (error_handler(cub3d, TEXTURE_WE_FAIL, "mlx_texture.c:77 ",
+				MSG_36));
 	}
 	if (init_img_texture(cub3d->texture->ea, cub3d, cub3d->parsing->rp_ea))
 	{
-		return (error_handler(cub3d, TEXTURE_EA_FAIL, "TOFILL", MSG_37));
+		return (error_handler(cub3d, TEXTURE_EA_FAIL, "mlx_texture.c:82 ",
+				MSG_37));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -90,7 +94,8 @@ int	init_mlx_texture_img(t_cub3d *cub3d)
 	mlx = NULL;
 	mlx = init_screen_mlx(cub3d, mlx);
 	if (!mlx)
-		return (error_handler(cub3d, INIT_MLX_FAIL, "main:TOFILL ", MSG_32));
+		return (error_handler(cub3d, INIT_MLX_FAIL, "mlx_texture.c:96 ",
+				MSG_32));
 	if (init_textures_img(cub3d))
 		return (RETURN_FAILURE);
 	return (RETURN_SUCCESS);
