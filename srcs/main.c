@@ -1,60 +1,48 @@
-#include "../minilibx-linux/mlx.h"
-#include "exec.h"
-#include "parsing.h"
-#include "set_mlx.h"
-#include <unistd.h> //write
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/01 14:02:31 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/11/02 11:54:28 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// WIP DOC : we init our setting structure, then its value then we parse the
-// arguments + content of the file in (parsing) before handling the initiation
-// of MLX that would lead to the loop/hook that handle event and interaction
-// with our project
+#include "cub3D.h"
 
-// TODO util main function to clean up things depending of the error case!
-// TODO when work is finished to describe the main in commentaries
+// 1) we init our cub3d structure, and give a default value for the variable in
+// 2) parsing part
+// 3) init_mlx_texture_img handle the textures and mlx setups before launching
+// 4) malloc of our ray struct and init the data related to the "player"
+// 5) hook_and_loop to setup the loop that will make the program loop during
+// 	  execution until the user exit the program by choice.
+// 6) once the loops passed, use clean and exit to cleanup datas before exit
+
 int	main(int argc, char *argv[])
 {
-	t_mlx		*screen;
-	t_settings	*set;
+	t_cub3d	*cub3d;
+	t_ray	*ray;
 
-	screen = NULL;
-	set = malloc(sizeof(t_settings));
-	if (!set)
-		return (error_handler(NULL, MAL_ERR_SET, "main:TOFILL ", MSG_1));
-	init_struct_value(set);
-	if (parsing(argc, argv, set))
-		return (clean_and_exit(set));
-	// WIP MLX
-	screen = init_screen_mlx(screen); // TOPROTECT
-	if (!screen)
+	cub3d = malloc(sizeof(t_cub3d));
+	if (!cub3d)
+		return (error_handler(NULL, CUB_SET_FAIL, "main:29 ", MSG_1));
+	cub3d->error_type = ALL_OK;
+	cub3d->print = true;
+	if (parsing_init(argc, argv, cub3d))
+		return (clean_and_exit(cub3d));
+	if (init_mlx_texture_img(cub3d))
+		return (clean_and_exit(cub3d));
+	ray = malloc(sizeof(t_ray));
+	if (!ray)
 	{
-		error_handler(set, INIT_LIBX_FAILED, "main:TOFILL ", MSG_ERR_MLX);
-		free_map(set);
-		return (clean_and_exit(set));
+		error_handler(cub3d, INIT_RAY_FAIL, "main:38 ", MSG_32);
+		return (clean_and_exit(cub3d));
 	}
-	hook_and_loop(screen);
-	destroy_free_screen(screen);
-	print_struct_set(set); // TODLDEBUG function to see content of struct set
-	free_map(set);
-	return (clean_and_exit(set));
+	cub3d->ray = ray;
+	init_player_data(cub3d);
+	hook_and_loop(cub3d, cub3d->mlx);
+	return (clean_and_exit(cub3d));
+	return (0);
 }
-//-----------------------------------------------------------------------------
-// to free everything before leaving
-// CECI EST UNE FONCTION QUE J'AI FAIS DANS UN AUTRE PROJET QUI POURRAIT SERVIR
-// PLUS TARD POUR GAGNER DU TEMPS
-
-// int	free_all_mlx(t_mlx *screen, t_set_call *param, int error_code)
-// {
-// 	if (screen)
-// 		free(screen);
-// 	if (param->c)
-// 		free(param->c);
-// 	if (param->z)
-// 		free(param->z);
-// 	if (error_code == 6)
-// 		return (RETURN_FAILURE);
-// 	if (error_code == -1)
-// 		return (1);
-// 	else
-// 		return (RETURN_FAILURE);
-// }
-//-----------------------------------------------------------------------------

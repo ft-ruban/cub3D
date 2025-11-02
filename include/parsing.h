@@ -1,11 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/01 13:42:15 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/11/02 10:34:07 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "utils.h"
+# include "cub3D.h"
 # include <stdbool.h>
 
-typedef struct s_settings	t_settings; //declaration anticipe
+typedef struct s_cub3d	t_cub3d;
+typedef struct s_map	t_map;
 
+# define NONE_ASSIGNED -1
 # define OPEN_FAILED -1
 # define MALLOC_ERR -1
 # define READ_FAILED -1
@@ -19,39 +33,65 @@ typedef struct s_settings	t_settings; //declaration anticipe
 # define CEIL 1
 # define FLOOR 0
 # define MAP_FOLDER_PATH "scene_descriptions/"
-# define FILE_ERR_1 "parsing_rgb.c:88 "
-# define FILE_ERR_2 "parsing_texture.c:56 "
-# define FILE_ERR_3 "parsing_texture.c:62 "
-# define FILE_ERR_4 "parsing_texture.c:68 "
-# define FILE_ERR_5 "parsing_texture.c:74 "
+
+# define FILE_ERR_2 "element_texture_parsing.c:107  "
+# define FILE_ERR_3 "element_texture_parsing.c:57 "
+# define FILE_ERR_4 "element_texture_parsing.c:60 "
+# define FILE_ERR_5 "element_texture_parsing.c:63 "
+# define FILE_ERR_6 "element_rgb_parsing.c:40 "
+# define FILE_ERR_7 "element_rgb_parsing.c:130 "
+# define FILE_ERR_8 "element_rgb_parsing.c:28 "
+# define FILE_ERR_9 "element_rgb_parsing.c:46 "
+# define FILE_ERR_10 "element_rgb_parsing.c:113 "
+
+typedef struct s_parsing
+{
+	char	*buff;
+	char	*rp_no;
+	char	*rp_so;
+	char	*rp_we;
+	char	*rp_ea;
+	int		floor_r;
+	int		floor_g;
+	int		floor_b;
+	int		ceil_r;
+	int		ceil_g;
+	int		ceil_b;
+}			t_parsing;
 
 // element_collect_parsing.c
-bool	prepare_collect_elements(char *cub_file, t_settings *set, int *fd_sd,
-			char **read_buff);
+bool		prepare_collect_elements(char *cub_file, t_cub3d *cub3d, int *fd_sd,
+				char **read_buff);
 
 // element_collect_utils.c
-bool	an_element_is_missing(t_settings *set);
-int		which_element_type(char letter, t_settings *set);
-int		open_sd_file_give_fd(char *file);
+bool		an_element_is_missing(t_parsing *parsing);
+int			which_element_type(char letter, t_parsing *parsing);
+int			open_sd_file_give_fd(char *file);
 
 // element_rgb_parsing.c
-bool	is_rgb_valid(int fd_sd, t_settings *set, char first_letter,
-			bool received_rgb_completed);
+bool		is_rgb_valid(int fd_sd, t_cub3d *cub3d, char first_letter,
+				bool received_rgb_completed);
 
 // element_texture_parsing.c
-bool	is_texture_valid(int fd_sd, t_settings *set, char first_letter,
-			char second_letter);
+bool		is_texture_valid(int fd_sd, t_cub3d *cub3d, char fl, char sl);
 
-//map_check.c
-bool map_check(t_settings *set, int fd);
+// map_check.c
+bool		map_check(t_cub3d *cub3d, int fd, t_map *map_info);
 
-//map_collect.c
-bool 	map_collect(t_settings *set, char *file, int fd);
+// map_collect.c
+bool		map_collect(t_cub3d *cub3d, t_map *map, char *file, int fd);
 
-//parsing_map.c
-bool		get_and_check_map(char *file, t_settings *set, int fd);
+// parsing_map.c
+bool		get_and_check_map(char *file, t_cub3d *cub3d, int fd);
 
 // parsing.c
-int		parsing(int argc, char *argv[], t_settings *set);
+int			parsing_init(int argc, char *argv[], t_cub3d *cub3d);
+
+// parsing_utils.c
+bool		is_file_cub_extension(char *file);
+bool		init_parsing_struct(t_cub3d *cub3d);
+
+// texture.c
+bool		texture_struct_setup(t_cub3d *cub3d);
 
 #endif

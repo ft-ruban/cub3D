@@ -1,18 +1,13 @@
-
-WE prout
-SO xd
-
-EA ./path_to_the_east_texture
-NO ./path_to_the_north_texture    
-
-C 5,255,55
+SO textures/Prototype/West.xpm
+WE textures/Prototype/West.xpm
+EA textures/Prototype/East.xpm
+NO textures/Prototype/North.xpm
+C 250,55,55
 F 220,100,0
 
-
-
-11111111111
-11111000001
-100011100111111111
-1110E1 111000000001   
-111101111111111111
+1   1   1111
+11111111101
+100000001011111
+11000W00001
+10000000001
 11111111111

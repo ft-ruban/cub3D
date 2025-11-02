@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:00:27 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:01:09 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/11/02 10:54:25 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-#include <stddef.h> //NULL DEF
-#include <stdlib.h> //malloc
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

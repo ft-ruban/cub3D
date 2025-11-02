@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:02:06 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/09/14 12:02:08 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/11/02 10:52:32 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-#include "stdbool.h"
 
 int	convert_ascii_to_int(int i, const char *nptr, int negative)
 {

@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 13:59:25 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:59:28 by ldevoude         ###   ########.fr       */
+/*   Created: 2025/11/01 13:58:33 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/11/01 13:58:34 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "set_mlx.h"
+#include "exec.h"
 
-// here
-// TOTEST (should be good enough but you never know?)
-
-bool	free_map_cpmap_failed(size_t line_index, t_map *map_info)
+static void	print_screen(t_cub3d *cub3d)
 {
-	while (line_index != 0)
+	cub3d->curr_column = 0;
+	while (cub3d->curr_column < WIN_WIDTH)
 	{
-		free(map_info->map[line_index - 1]);
-		line_index--;
+		ray_casting(cub3d);
+		column_pixels_update(cub3d);
+		cub3d->curr_column++;
 	}
-	return (-1);
+	mlx_put_image_to_window(cub3d->mlx->ptr, cub3d->mlx->mlx_win,
+		cub3d->mlx->screen->img, 0, 0);
 }
 
-void	free_map(t_map *map_info)
+int	exec(t_cub3d *cub3d)
 {
-	int	i;
-
-	i = 0;
-	while (map_info->map[i])
-	{
-		free(map_info->map[i]);
-		i++;
-	}
-	free(map_info->map);
-	free(map_info);
+	if (cub3d->print == true)
+		print_screen(cub3d);
+	cub3d->print = false;
+	return (RETURN_SUCCESS);
 }
