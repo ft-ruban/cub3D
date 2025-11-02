@@ -6,11 +6,11 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:01:33 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 10:39:00 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:54:48 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "utils.h"
 
 // 1) We know that the elements of the file are valid.
 // 		We read until we find something else than a '\n'.

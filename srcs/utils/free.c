@@ -6,16 +6,16 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:32:39 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 14:37:21 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:53:38 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "utils.h"
 
 // free everything in set (may be nice to modify that function to create smth)
 // that handle all of our struct maybe?
 
-void	free_parsing_content(t_parsing *parsing)
+static void	free_parsing_content(t_parsing *parsing)
 {
 	if (parsing->buff)
 		free(parsing->buff);
