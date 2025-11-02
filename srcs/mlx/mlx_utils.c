@@ -6,11 +6,10 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:39:41 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 14:41:23 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:11:52 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "set_mlx.h"
 
 // Here we hook and loop for the libx to handle the interaction with the window

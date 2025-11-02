@@ -6,11 +6,11 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:59:17 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 12:04:26 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:13:08 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "utils.h"
 
 // Comparing the line_index to the map_height to be sure we got all the map
 bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
@@ -21,7 +21,7 @@ bool	is_all_map_copied(t_cub3d *cub3d, size_t line_index, size_t map_height,
 		free_map(cub3d->map);
 		close(fd);
 		return (error_handler(cub3d, MAL_ERR_BUFF, "find_map_size_utils.c:19 ",
-			 MSG_1));
+				MSG_1));
 	}
 	return (RETURN_SUCCESS);
 }

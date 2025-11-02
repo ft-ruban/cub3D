@@ -6,11 +6,11 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:48:53 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 11:59:16 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:11:36 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "set_mlx.h"
 
 static bool	free_all_err(t_img *no, t_img *ea, t_img *so, t_img *we)
 {

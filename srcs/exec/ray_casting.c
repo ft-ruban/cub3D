@@ -6,12 +6,10 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:58:40 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:58:41 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:15:07 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "set_mlx.h"
 #include "exec.h"
 
 // 1) We are now on the edge of x and y, so to go forward we are gonna add

@@ -6,12 +6,10 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:58:35 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 14:43:11 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:15:15 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "set_mlx.h"
 #include "exec.h"
 
 // We are looking for the direction of the ray in the center of the player 

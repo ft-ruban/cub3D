@@ -6,12 +6,10 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:58:33 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:58:34 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:15:19 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "set_mlx.h"
 #include "exec.h"
 
 static void	print_screen(t_cub3d *cub3d)

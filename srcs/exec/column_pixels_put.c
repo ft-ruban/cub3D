@@ -6,12 +6,10 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:55:02 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:55:03 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:15:25 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "set_mlx.h"
 #include "exec.h"
 
 // 1) The texture is in a linear tab of char, so to find the pixel we want,

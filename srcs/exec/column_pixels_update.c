@@ -6,12 +6,10 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:58:27 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 13:58:29 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:15:21 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "set_mlx.h"
 #include "exec.h"
 
 // 1) The start of the wall will be at the center of the screen (WIN_HEIGHT / 2)
