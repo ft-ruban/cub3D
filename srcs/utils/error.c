@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:02:25 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 09:27:01 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 16:28:01 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	error_handler(t_cub3d *cub3d, int error_type, char *emplacement_error_msg,
 	size_t	emp_err_msg_len;
 	size_t	err_msg_len;
 
+	write(2,"Error\n",6);
 	emp_err_msg_len = ft_strlen(emplacement_error_msg);
 	err_msg_len = ft_strlen(err_msg);
 	write(2, emplacement_error_msg, emp_err_msg_len);

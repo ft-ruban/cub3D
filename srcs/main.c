@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:02:31 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 11:54:28 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 16:34:11 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char *argv[])
 	cub3d->print = true;
 	if (parsing_init(argc, argv, cub3d))
 		return (clean_and_exit(cub3d));
-	if (init_mlx_texture_img(cub3d))
+	if (init_mlx_texture_img(cub3d)) // pk pas init dans le parsing ?
 		return (clean_and_exit(cub3d));
 	ray = malloc(sizeof(t_ray));
 	if (!ray)
