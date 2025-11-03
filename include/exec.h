@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:04 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/03 15:07:47 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:51:19 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ void						column_pixels_update(t_cub3d *cub3d);
 
 // exec.c
 int							exec(t_cub3d *cub3d);
+
+//init_exec_struct.c
+int							init_exec_struct(t_cub3d *cub3d);
+
+// init_mlx_texture_img.c
+int							init_mlx_texture_img(t_cub3d *cub3d);
 
 // init_player_data.c
 void						init_player_data(t_cub3d *cub3d);

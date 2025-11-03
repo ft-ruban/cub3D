@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 11:53:11 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 10:08:38 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:46:41 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_mlx.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:41:54 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/03 15:09:24 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:49:34 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,5 @@ void					go_right(t_cub3d *cub3d, t_ray *ray, t_map *map);
 void					hook_and_loop(t_cub3d *cub3d, t_mlx *screen);
 void					destroy_free_screen(t_mlx *screen);
 void					*init_screen_mlx(t_cub3d *cub3d, t_mlx *t_mlx);
-
-// mlx_texture.c
-int						init_mlx_texture_img(t_cub3d *cub3d);
 
 #endif

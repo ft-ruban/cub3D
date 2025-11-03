@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element_texture_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:30:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 10:09:47 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:50:11 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ static bool	find_texture_element_path(int fd_sd, char **element,
 	{
 		free(element_buff);
 		return (error_handler(cub3d, STRJOIN_FAILED,
-				"element_texture_parsing.c:66 ", MSG_10));
+				"(element_texture_parsing.c:66) ", MSG_10));
 	}
 	free(element_buff);
 	*element = new_line_remover(*element);
 	if (!*element)
 		return (error_handler(cub3d, ELEMENT_MISS,
-				"element_texture_parsing.c:74 ", MSG_6));
+				"(element_texture_parsing.c:74) ", MSG_6));
 	return (RETURN_SUCCESS);
 }
 

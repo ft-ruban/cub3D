@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element_collect_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:27:19 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/01 16:33:26 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:46:22 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	element_found(int fd_sd, t_cub3d *cub3d, char first_letter,
 {
 	if (read(fd_sd, cub3d->parsing->buff, 1) == -1)
 		return (error_handler(cub3d, ELEMENT_MISS,
-				"element_collect_parsing.c:22 ", MSG_6));
+				"(element_collect_parsing.c:22) ", MSG_6));
 	else if (element_type == TYPE_TEXTURE)
 	{
 		if (is_texture_valid(fd_sd, cub3d, first_letter,
@@ -33,7 +33,7 @@ static bool	element_found(int fd_sd, t_cub3d *cub3d, char first_letter,
 		if (cub3d->parsing->buff[0] != ' '
 			&& ft_isnum((int)cub3d->parsing->buff[0]))
 			return (error_handler(cub3d, INV_CON_RGB,
-					"element_collect_parsing.c:33 ", MSG_7));
+					"(element_collect_parsing.c:33) ", MSG_7));
 		else if (is_rgb_valid(fd_sd, cub3d, first_letter, false))
 			return (RETURN_FAILURE);
 	}
@@ -59,7 +59,7 @@ static bool	browse_to_find_elements(int fd_sd, t_cub3d *cub3d,
 		res_read = read(fd_sd, read_buff, 1);
 		if (res_read == 0 || res_read == -1)
 			return (error_handler(cub3d, ELEMENT_MISS,
-					"element_collect_parsing.c:60 ", MSG_6));
+					"(element_collect_parsing.c:60) ", MSG_6));
 		element_type = which_element_type(read_buff[0], parsing);
 		if (element_type == TYPE_RGB || element_type == TYPE_TEXTURE)
 		{
@@ -68,7 +68,7 @@ static bool	browse_to_find_elements(int fd_sd, t_cub3d *cub3d,
 		}
 		else if (element_type != TYPE_EMPTY_LINE)
 			return (error_handler(cub3d, INV_CON_ELE,
-					"element_collect_parsing.c:69 ", MSG_7));
+					"(element_collect_parsing.c:69) ", MSG_7));
 	}
 	return (RETURN_SUCCESS);
 }
@@ -85,13 +85,13 @@ bool	prepare_collect_elements(char *cub_file, t_cub3d *cub3d, int *fd_sd,
 	*fd_sd = open_sd_file_give_fd(cub_file);
 	if (*fd_sd == OPEN_FAILED)
 		return (error_handler(cub3d, OPEN_FD_ELE,
-				"element_collect_parsing.c:86 ", MSG_4));
+				"(element_collect_parsing.c:86) ", MSG_4));
 	*read_buff = malloc(2);
 	if (!*read_buff)
 	{
 		close(*fd_sd);
 		return (error_handler(cub3d, MAL_ERR_BUFF,
-				"element_collect_parsing.c:90 ", MSG_5));
+				"(element_collect_parsing.c:90) ", MSG_5));
 	}
 	(*read_buff)[1] = '\0';
 	if (browse_to_find_elements(*fd_sd, cub3d, cub3d->parsing, *read_buff))

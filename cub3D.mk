@@ -48,11 +48,12 @@ override UTILSSRC := error \
 override MLXSETSRC := commands \
 					  directions \
 					  mlx_utils \
-					  mlx_texture \
 
 override EXECSRC := column_pixels_put \
 					column_pixels_update \
 					exec \
+					init_exec_struct \
+					init_mlx_texture_img \
 					init_player_data \
 					my_mlx_pixel_put \
 					ray_casting

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:42:15 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/03 15:08:55 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:43:56 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ bool		map_collect(t_cub3d *cub3d, t_map *map, char *file, int fd);
 bool		get_and_check_map(char *file, t_cub3d *cub3d, int fd);
 
 // parsing.c
-int			parsing_init(int argc, char *argv[], t_cub3d *cub3d);
+int			parsing(int argc, char *argv[], t_cub3d *cub3d);
 
 // parsing_utils.c
 bool		is_file_cub_extension(char *file);

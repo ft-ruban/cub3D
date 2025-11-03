@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_check_utils.c                                  :+:      :+:    :+:   */
+/*   init_exec_struct.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 14:00:20 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/03 19:14:16 by maballet         ###   ########lyon.fr   */
+/*   Created: 2025/11/03 20:35:18 by maballet          #+#    #+#             */
+/*   Updated: 2025/11/03 21:11:49 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "cub3D.h"
 
-bool	character_is_invalid(char c)
+int	init_exec_struct(t_cub3d *cub3d)
 {
-	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W'
-		&& c != '\0' && c != '\n' && c != ' ')
-		return (RETURN_FAILURE);
-	else
-		return (RETURN_SUCCESS);
-}
+	t_ray	*ray;
 
-bool	player_update_check(bool *player)
-{
-	if (*player == true)
+	if (texture_struct_setup(cub3d))
+		return (error_handler(cub3d, INIT_TEXTURE_FAIL,
+				"(init_exec_struct.c:19) ", MSG_18));
+	if (init_mlx_texture_img(cub3d))
 		return (RETURN_FAILURE);
-	else
-		*player = true;
+	ray = malloc(sizeof(t_ray));
+	if (!ray)
+		return (error_handler(cub3d, INIT_RAY_FAIL,
+				"(init_exec_struct.c:25) ", MSG_32));
+	cub3d->ray = ray;
 	return (RETURN_SUCCESS);
 }

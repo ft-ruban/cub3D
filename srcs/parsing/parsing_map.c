@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 10:26:38 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 13:10:38 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:47:03 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	get_and_check_map(char *file, t_cub3d *cub3d, int fd)
 
 	map_info = malloc(sizeof(t_map));
 	if (!map_info)
-		return (error_handler(cub3d, FAIL_INIT_MAP, "parsing_map.c:25 ",
+		return (error_handler(cub3d, FAIL_INIT_MAP, "(parsing_map.c:25) ",
 				MSG_20));
 	cub3d->map = map_info;
 	if (map_collect(cub3d, map_info, file, fd))

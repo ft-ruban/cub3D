@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_collect_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:01:33 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 10:54:48 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:48:17 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ bool	skip_elements(t_parsing *parsing, int new_fd, t_cub3d *cub3d)
 	{
 		if (read(new_fd, parsing->buff, 1) == READ_FAILED)
 			return (error_handler(cub3d, FAIL_OPEN_MAP,
-					"map_collect_utils.c:27 ", MSG_6));
+					"(map_collect_utils.c:27) ", MSG_6));
 		if (parsing->buff[0] != '\n')
 		{
 			line = get_next_line(new_fd);
 			if (!line)
 				return (error_handler(cub3d, FAIL_OPEN_MAP,
-						"map_collect_utils.c:33 ", MSG_9));
+						"(map_collect_utils.c:33) ", MSG_9));
 			free(line);
 			i++;
 		}

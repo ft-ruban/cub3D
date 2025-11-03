@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_texture.c                                      :+:      :+:    :+:   */
+/*   init_mlx_texture_img.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:48:53 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/03 14:41:45 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:59:42 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,24 @@ static bool	init_img_texture(t_img *texture, t_cub3d *cub3d, char *path)
 static bool	init_textures_img(t_cub3d *cub3d)
 {
 	if (malloc_cardinal_point_struct(cub3d->texture))
-		return (error_handler(cub3d, INIT_IMG_TEXT_FAIL, "mlx_texture.c:66",
+		return (error_handler(cub3d, INIT_IMG_TEXT_FAIL, "(mlx_texture.c:66) ",
 				MSG_33));
 	if (init_img_texture(cub3d->texture->no, cub3d, cub3d->parsing->rp_no))
-		return (error_handler(cub3d, TEXTURE_NO_FAIL, "mlx_texture.c:69 ",
+		return (error_handler(cub3d, TEXTURE_NO_FAIL, "(mlx_texture.c:69) ",
 				MSG_34));
 	if (init_img_texture(cub3d->texture->so, cub3d, cub3d->parsing->rp_so))
 	{
-		return (error_handler(cub3d, TEXTURE_SO_FAIL, "mlx_texture.c:72 ",
+		return (error_handler(cub3d, TEXTURE_SO_FAIL, "(mlx_texture.c:72) ",
 				MSG_35));
 	}
 	if (init_img_texture(cub3d->texture->we, cub3d, cub3d->parsing->rp_we))
 	{
-		return (error_handler(cub3d, TEXTURE_WE_FAIL, "mlx_texture.c:77 ",
+		return (error_handler(cub3d, TEXTURE_WE_FAIL, "(mlx_texture.c:77) ",
 				MSG_36));
 	}
 	if (init_img_texture(cub3d->texture->ea, cub3d, cub3d->parsing->rp_ea))
 	{
-		return (error_handler(cub3d, TEXTURE_EA_FAIL, "mlx_texture.c:82 ",
+		return (error_handler(cub3d, TEXTURE_EA_FAIL, "(mlx_texture.c:82) ",
 				MSG_37));
 	}
 	return (RETURN_SUCCESS);
@@ -94,7 +94,7 @@ int	init_mlx_texture_img(t_cub3d *cub3d)
 	mlx = NULL;
 	mlx = init_screen_mlx(cub3d, mlx);
 	if (!mlx)
-		return (error_handler(cub3d, INIT_MLX_FAIL, "mlx_texture.c:96 ",
+		return (error_handler(cub3d, INIT_MLX_FAIL, "(mlx_texture.c:96) ",
 				MSG_32));
 	if (init_textures_img(cub3d))
 		return (RETURN_FAILURE);
