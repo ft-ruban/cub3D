@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player_data.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:58:35 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 13:15:15 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:12:37 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
 void	assign_player_orientation(t_map *map, char player_tile)
 {
 	if (player_tile == 'N')
-		map->player_orientation = PI * 0.5;
-	if (player_tile == 'S')
 		map->player_orientation = PI + PI * 0.5;
+	if (player_tile == 'S')
+		map->player_orientation = PI * 0.5;
 	if (player_tile == 'W')
 		map->player_orientation = PI;
 	if (player_tile == 'E')
