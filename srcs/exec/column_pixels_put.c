@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   column_pixels_put.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldevoude <ldevoude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:55:02 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/02 13:15:25 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:26:38 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static void	find_texture_x(t_ray *ray, t_map *map, t_texture *texture)
 		wall_hit_pos = map->player_pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_hit_pos -= (int)wall_hit_pos;
 	texture->x = (int)(wall_hit_pos * TEXTURE_WIDTH);
-	if ((ray->side == 0 && ray->dir_x > 0)
-		|| (ray->side == 1 && ray->dir_y < 0))
+	if ((ray->side == 0 && ray->dir_x < 0)
+		|| (ray->side == 1 && ray->dir_y > 0))
 		texture->x = TEXTURE_WIDTH - texture->x - 1;
 }
 
@@ -82,9 +82,9 @@ static t_img	*right_texture(t_ray *ray, t_texture *texture)
 	if (ray->side == 0)
 	{
 		if (ray->dir_x < 0)
-			ptr_texture = texture->we;
-		else
 			ptr_texture = texture->ea;
+		else
+			ptr_texture = texture->we;
 	}
 	else
 	{

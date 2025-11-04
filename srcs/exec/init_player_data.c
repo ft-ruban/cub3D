@@ -6,7 +6,7 @@
 /*   By: maballet <maballet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:58:35 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/11/04 14:12:37 by maballet         ###   ########lyon.fr   */
+/*   Updated: 2025/11/04 14:26:19 by maballet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	set_main_ray_dir_and_plane(t_ray *ray, float player_orientation)
 void	assign_player_orientation(t_map *map, char player_tile)
 {
 	if (player_tile == 'N')
-		map->player_orientation = PI + PI * 0.5;
-	if (player_tile == 'S')
 		map->player_orientation = PI * 0.5;
+	if (player_tile == 'S')
+		map->player_orientation = PI + PI * 0.5;
 	if (player_tile == 'W')
-		map->player_orientation = PI;
-	if (player_tile == 'E')
 		map->player_orientation = 0.0;
+	if (player_tile == 'E')
+		map->player_orientation = PI;
 }
 
 // First, find the exact position of our player, then add 0.5 to put him in the 
